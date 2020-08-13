@@ -10,30 +10,32 @@ const Entry = require('./models/item');
 app.use(cors());
 app.use(bodyParser.json());
 
-//const requestLogger = require('./middleware/requestLogger')
-//app.use(requestLogger)
-//app.use(unknownEndpoint)
+
+//Routes
+const itemRoutes = require('./api/item');
+
+app.use('/api/item', itemRoutes)
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello wolrd </h1>');
 });
 
+
+//Coupon
+app.get('/api/coupons', (req, res) => {
+  res.send('Coupon')
+})
+
+//menu item
 app.get('/api/items', (req, res) => {
   Entry.find({}).then((entries) => {
     res.json(entries.map((entry) => entry.toJSON()));
   });
 });
+//const requestLogger = require('./middleware/requestLogger')
+//app.use(requestLogger)
+//app.use(unknownEndpoint)
 
-app.post('/api/item', (req, res, nxt) => {
-  const body = req.body;
-  console.log('body', body);
-});
-
-app.put('/api/item/:id', (req, res) => {});
-
-app.get('/api/item/:id', (req, res) => {});
-
-app.delete('/api/item/:id', (req, res) => {});
 
 //app.use(errorHandler)
 //app.use(unknowEndpoint)

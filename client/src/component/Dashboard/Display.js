@@ -1,21 +1,38 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
+
+//styles
 import Color from '../../global/color';
+import styled from 'styled-components';
+
+//components
 import Create from './Create';
-import Entry from './Entry';
+import Hero from './Hero';
+import Items from './Items';
 import Summary from './Summary';
 import Traffic from './Traffic';
 
+const switchNav = [
+  { title: 'Create', route: 'create', component: Create },
+  { title: 'Hero', route: 'hero', component: Hero },
+  { title: 'Items', route: 'items', component: Items },
+  { title: 'Summary', route: 'summary', component: Summary },
+  { title: 'Traffic', route: 'traffic', component: Traffic },
+];
+
 const Display = () => {
-  let { path, url } = useRouteMatch();
+  let { path } = useRouteMatch();
   return (
     <DisplayContainer>
       <Switch>
-        <Route exact path={`${path}/entry/:id`} component={Entry} />
-        <Route exact path={`${path}/create`} component={Create} />
-        <Route path={`${path}/summary`} component={Summary} />
-        <Route path={`${path}/traffic`} component={Traffic} />
+        {switchNav.map((obj) => (
+          <Route
+            key={obj.title}
+            exact
+            path={`${path}/${obj.route}`}
+            component={obj.component}
+          />
+        ))}
       </Switch>
     </DisplayContainer>
   );

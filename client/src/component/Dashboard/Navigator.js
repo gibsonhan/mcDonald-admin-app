@@ -8,13 +8,13 @@ import { NavLink, useRouteMatch } from 'react-router-dom';
 const Navigator = ({ history }) => {
   let { path, url } = useRouteMatch();
   const nav = [
-    { title: 'Annoucement', route: 'annoucement' },
-    { title: 'Menu', route: 'menu' },
-    { title: 'Item', route: 'item' },
-    { title: 'Coupon', route: 'coupton' },
-    { title: 'Store Config', route: 'store' },
-    { title: 'Web Traffic', route: 'traffic' },
     { title: 'Summary', route: 'summary' },
+    { title: 'Web Traffic', route: 'traffic' },
+    { title: 'Store', route: 'store' },
+    { title: 'Hero', route: 'hero' },
+    { title: 'Menu', route: 'menu' },
+    { title: 'Items', route: 'items' },
+    { title: 'Coupon', route: 'coupton' },
     { title: 'Settings', route: 'setting' },
     { title: 'Create', route: 'create' },
   ];

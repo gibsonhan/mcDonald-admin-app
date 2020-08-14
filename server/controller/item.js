@@ -21,24 +21,9 @@ const singleItem = async (req, res, next) => {
 };
 
 const createItem = async (req, res, next) => {
-  let body = req.params;
-  console.log("firing");
-
-  //temp data
-  /*
-  const item = await new Item({
-    itemName: "Fries",
-    menuGroup: "Other",
-    subMenu: "None",
-
-    servingTime: ["Lunch", "Dinner"],
-    price: { S: 1.0, M: 2.0, L: 3.0 },
-    size: ["S", "M", "L"],
-  });
-  */
-
-  const item = await new item({ ...body });
-
+  let content = req.body;
+  const item = await new Item({ ...content });
+  console.log(item);
   try {
     await item.save();
     res.status(201).json(item);

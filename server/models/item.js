@@ -1,46 +1,39 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 //mongoose.set('useFindAndMondify', false)
 const url = process.env.MONGODB_URI;
 
 mongoose
   .connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => {
-    console.log(' connected to MONGOD DB!');
+    console.log(" connected to MONGOD DB!");
   })
   .catch((error) => {
-    console.log('error connecting to MONGOD DB', error.message);
+    console.log("error connecting to MONGOD DB", error.message);
   });
 
 const itemSchema = new mongoose.Schema({
-  itemName: String,
-  menuGroup: String,
-  subMenu: String,
+  collection: String,
+  name: String,
+  group: String,
+  subGroup: String,
+  couponGroup: String,
   servingTime: Array,
-
-  price: Object,
-  //mealPrice: Number,
-  //couponGroup: String,
-
-  //calories: Number,
-
   sizes: Object,
-  //defaultSize: String,
-
   //customize: Object,
   /*
   info: {
     ingredients: Object,
-    Nutriention: Object,
-  },
-  dateCreate: Date,
-  lastEdit: {
-    dateEdit: Date,
-    author: String,
+    nutriention: Object,
   },
   */
+  created: Date,
+  lastEdit: {
+    date: Date,
+    author: String,
+  },
 });
 
-itemSchema.set('toJSON', {
+itemSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
@@ -48,4 +41,4 @@ itemSchema.set('toJSON', {
   },
 });
 
-module.exports = mongoose.model('Item', itemSchema);
+module.exports = mongoose.model("Item", itemSchema);

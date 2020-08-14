@@ -57,31 +57,18 @@ const Create = ({ title }) => {
   });
 
   const onSubmit = async (data) => {
-    console.log('on Submit', data, url, path, route);
-    const {
-      collection,
-      name,
-      group,
-      subGroup,
-      couponGroup,
-      xSmall,
-      small,
-      regular,
-      large,
-      xLarge,
-      breakfst,
-      lunch,
-      dinner,
-    } = data;
+    //TODO: FP method? for CMS in the future?
+    const { collection, name, group, subGroup, couponGroup } = data;
 
-    const sizeObj = sizes.reduce((acc, curr) => {
-      console.log(curr);
-      console.log(data[curr]);
-      if (data[curr] === true) {
-        acc[curr] = { enable: true, price: 1.0 };
-      }
-      return acc;
-    }, {});
+    const sizeObj = sizes.reduce(
+      (acc, curr) => {
+        if (data[curr] === true) {
+          acc[curr] = { enable: true, price: 1.0 };
+        }
+        return acc;
+      },
+      { default: 'Regular' },
+    );
 
     const servingArr = serving.reduce((acc, curr) => {
       if (data[curr] === true) {
@@ -89,6 +76,8 @@ const Create = ({ title }) => {
       }
       return acc;
     }, []);
+
+    console.log(sizeObj);
 
     const item = {
       collection,
@@ -109,7 +98,7 @@ const Create = ({ title }) => {
     };
     const baseUrl = 'http://localhost:3001/api/item/create';
     try {
-      const response = await axios.post(baseUrl, item);
+      //const response = await axios.post(baseUrl, item);
     } catch (error) {
       console.log(error);
     }
@@ -134,7 +123,7 @@ const Create = ({ title }) => {
           {/* TODO: when user enable size, group price input**/}
           <SwitchButtonGroup
             key={'sizes'}
-            title={'Sizes'}
+            title={'Allowed Sizes'}
             data={sizes}
             register={register}
             control={control}

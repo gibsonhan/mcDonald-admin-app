@@ -1,18 +1,17 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 //mongoose.set('useFindAndMondify', false)
 const url = process.env.MONGODB_URI;
 
 mongoose
   .connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => {
-    console.log(" connected to MONGOD DB!");
+    console.log(' connected to MONGOD DB!');
   })
   .catch((error) => {
-    console.log("error connecting to MONGOD DB", error.message);
+    console.log('error connecting to MONGOD DB', error.message);
   });
 
 const itemSchema = new mongoose.Schema({
-  collection: String,
   name: String,
   group: String,
   subGroup: String,
@@ -33,7 +32,7 @@ const itemSchema = new mongoose.Schema({
   },
 });
 
-itemSchema.set("toJSON", {
+itemSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
@@ -41,4 +40,4 @@ itemSchema.set("toJSON", {
   },
 });
 
-module.exports = mongoose.model("Item", itemSchema);
+module.exports = mongoose.model('Item', itemSchema);

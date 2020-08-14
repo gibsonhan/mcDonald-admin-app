@@ -13,7 +13,6 @@ const Create = ({ title }) => {
   //TODO: FUTURE: CMS where it creates the shape
   const { path, route, url } = useRouteMatch();
   const inputs = [
-    'collection',
     'name',
     'group',
     'subMenu',
@@ -26,7 +25,6 @@ const Create = ({ title }) => {
   const serving = ['breakfast', 'lunch', 'dinner'];
 
   const defaultValues = {
-    collection: title || 'item',
     name: '',
     group: '',
     subGroup: '',

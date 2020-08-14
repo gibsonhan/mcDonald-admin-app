@@ -17,17 +17,17 @@ const itemSchema = new mongoose.Schema({
   subMenu: String,
   servingTime: Array,
 
-  price: Number,
-  mealPrice: Number,
-  couponGroup: String,
+  price: Object,
+  //mealPrice: Number,
+  //couponGroup: String,
 
-  calories: Number,
+  //calories: Number,
 
-  sizes: Array,
-  defaultSize: String,
+  sizes: Object,
+  //defaultSize: String,
 
-  customize: Array,
-
+  //customize: Object,
+  /*
   info: {
     ingredients: Object,
     Nutriention: Object,
@@ -37,6 +37,7 @@ const itemSchema = new mongoose.Schema({
     dateEdit: Date,
     author: String,
   },
+  */
 });
 
 itemSchema.set('toJSON', {
@@ -47,4 +48,4 @@ itemSchema.set('toJSON', {
   },
 });
 
-module.exports = mongoose.model('Entry', itemSchema);
+module.exports = mongoose.model('Item', itemSchema);

@@ -1,5 +1,4 @@
 const Item = require("../models/item");
-const { response } = require("express");
 const { update } = require("../models/item");
 
 const itemList = async (req, res, next) => {
@@ -26,6 +25,7 @@ const createItem = async (req, res, next) => {
   console.log("firing");
 
   //temp data
+  /*
   const item = await new Item({
     itemName: "Fries",
     menuGroup: "Other",
@@ -35,6 +35,9 @@ const createItem = async (req, res, next) => {
     price: { S: 1.0, M: 2.0, L: 3.0 },
     size: ["S", "M", "L"],
   });
+  */
+
+  const item = await new item({ ...body });
 
   try {
     await item.save();
@@ -64,7 +67,7 @@ const deleteItem = async (req, res) => {
   const id = req.params.id;
   try {
     const deleted = await Item.findByIdAndRemove(id);
-    const message = `${deleted.itemname} was succesfully deleted`;
+    const message = `${deleted.itemName} was succesfully deleted`;
     await res.status(200).json(message);
   } catch (error) {
     await res.status(500).json("fail to delete item", error);

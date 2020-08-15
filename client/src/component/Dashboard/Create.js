@@ -43,7 +43,7 @@ const Create = ({ title }) => {
 
   //TODO CMS schmea creator
   const itemSchema = inputs.reduce((acc, curr) => {
-    acc[curr] = yup.string();
+    acc[curr] = yup.string().i;
     return acc;
   }, {});
 

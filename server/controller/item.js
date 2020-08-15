@@ -1,12 +1,11 @@
-const Item = require("../models/item");
-const { update } = require("../models/item");
+const Item = require('../models/item');
 
 const itemList = async (req, res, next) => {
   try {
     const items = await Item.find({});
-    res.status(200).json(items);
+    res.status(200).json(items.map((item) => item.toJSON()));
   } catch (error) {
-    res.status(500).json("failed to fetch item list", error);
+    res.status(500).json('failed to fetch item list', error);
   }
 };
 
@@ -14,9 +13,9 @@ const singleItem = async (req, res, next) => {
   const id = req.params.id;
   try {
     const item = await Item.findById(id);
-    await res.status(200).json(item);
+    await res.status(200).json(item.toJSON());
   } catch (error) {
-    res.status(400).json("Failed to find Item", error);
+    res.status(400).json('Failed to find Item', error);
   }
 };
 
@@ -28,7 +27,7 @@ const createItem = async (req, res, next) => {
     await item.save();
     res.status(201).json(item);
   } catch (error) {
-    console.log("failed to save", error);
+    console.log('failed to save', error);
   }
 };
 
@@ -43,19 +42,22 @@ const updateItem = async (req, res) => {
     await Item.findByIdAndUpdate(id, updateItem, { new: true });
     res.status(200).json(message, updateItem);
   } catch (error) {
-    res.status(500).json("Failed to update item");
+    res.status(500).json('Failed to update item');
   }
 };
 
 //TODO: need to check this stuff?
 const deleteItem = async (req, res) => {
   const id = req.params.id;
+
+  console.log('hello world', id);
   try {
-    const deleted = await Item.findByIdAndRemove(id);
-    const message = `${deleted.itemName} was succesfully deleted`;
-    await res.status(200).json(message);
+    const deleted = await Item.findByIdAndRemove(id, {
+      useFindAndModify: false,
+    });
+    res.status(200).json(`${id} was successfully deleted`);
   } catch (error) {
-    await res.status(500).json("fail to delete item", error);
+    res.status(500).json('fail to delete item', error);
   }
 };
 

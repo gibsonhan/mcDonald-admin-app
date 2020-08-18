@@ -1,22 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Input = ({ type, register, errors }) => {
-  const firstLetter = type[0].toUpperCase();
-  const sliceWord = type.slice(1, type.length);
+const Input = ({ name, register, errors }) => {
+  const firstLetter = name[0].toUpperCase();
+  const sliceWord = name.slice(1, name.length);
   const title = firstLetter + sliceWord;
   return (
     <InputContainer>
-      <label htmlFor={type}>{title}</label>
+      <label htmlFor={name}>{title}</label>
       <input
         autoComplete="off"
         type="text"
-        name={type}
-        id={type}
+        name={name}
+        id={name}
         ref={register({ required: true, maxLength: 30 })}
       />
-      {errors[type] && errors[type].message}
-      {errors[type] && errors[type].type === 'required' && (
+      {errors[name] && errors[name].message}
+      {errors[name] && errors[name].name === 'required' && (
         <span>This is required</span>
       )}
     </InputContainer>

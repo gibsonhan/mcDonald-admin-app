@@ -9,14 +9,18 @@ import axios from 'axios';
 //https://github.com/reactjs/react-modal
 const Row = ({ index, data }) => {
   const hasCoupon = !!data[index].couponGroupID === false ? false : true;
-  const remove = (id) =>
-    async function removeItem() {
-      //TODO: pop up modul Confirm do you want to delete
-      //TODO: move the data stuff to app Context
+  async function removeItem(id) {
+    //TODO: pop up modul Confirm do you want to delete
+    //TODO: move the data stuff to app Context
+    try {
       const baseUrl = `http://localhost:3001/api/item/delete/${id}`;
-      let response = await axios.delete(baseUrl);
-      alert(response);
-    };
+      const response = await axios.delete(baseUrl);
+      console.log('resposne', response);
+    } catch (error) {
+      console.log('this is a weird error', error);
+    }
+  }
+
   const { name, group, subGroup, id } = data[index];
   return (
     <RowContainer>
@@ -27,7 +31,7 @@ const Row = ({ index, data }) => {
         Active Coupon: <ActiveBox active={hasCoupon} />
       </div>
       <button>Edit</button>
-      <button onClick={remove(id)}>Delete</button>
+      <button onClick={() => removeItem(id)}>Delete</button>
     </RowContainer>
   );
 };

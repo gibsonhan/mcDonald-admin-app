@@ -49,13 +49,13 @@ const updateItem = async (req, res) => {
 //TODO: need to check this stuff?
 const deleteItem = async (req, res) => {
   const id = req.params.id;
-
-  console.log('hello world', id);
+  const message = `${id} was successfully deleted`;
   try {
-    const deleted = await Item.findByIdAndRemove(id, {
+    await Item.findByIdAndRemove(id, {
       useFindAndModify: false,
     });
-    res.status(200).json(`${id} was successfully deleted`);
+    console.log('We deleted it');
+    res.status(200).json(message);
   } catch (error) {
     res.status(500).json('fail to delete item', error);
   }

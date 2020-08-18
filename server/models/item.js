@@ -17,7 +17,7 @@ const itemSchema = new mongoose.Schema({
   subGroup: String,
   couponGroup: String,
   servingTime: Array,
-  sizes: Object,
+  size: Object,
   //customize: Object,
   /*
   info: {

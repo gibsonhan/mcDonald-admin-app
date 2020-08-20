@@ -6,11 +6,13 @@ import { yupResolver } from '@hookform/resolvers';
 import * as yup from 'yup';
 
 import { Switch, TextField } from '@material-ui/core';
-import Input from '../common/Input';
 import { useRouteMatch } from 'react-router-dom';
 
 import { createServingTimeArr } from '../../util/createServingTimeArr';
-import { createsizeObj } from '../../util/createSizesObj';
+import { createSizeObj } from '../../util/createSizesObj';
+
+import Input from '../common/Input';
+import ImgUpload from '../common/ImgUpload';
 
 import {
   DEFAULTITEMVALUES as defaultValues,
@@ -48,15 +50,13 @@ const Create = ({ title }) => {
     console.log('formObjData', formObjData);
     const { name, group, subGroup, couponGroup, ...sizeObjInfo } = formObjData;
 
-    const servingTime = createServingTimeArr(formObjData, SERVINGTIMES);
-    const size = createsizeObj(ITEMSIZES, formObjData, sizeObjInfo);
     const item = {
       name,
       group,
       subGroup,
       couponGroup,
-      servingTime,
-      size,
+      servingTime: createServingTimeArr(formObjData, SERVINGTIMES),
+      size: createSizeObj(ITEMSIZES, formObjData, sizeObjInfo),
       created: new Date(),
       lastEdit: {
         date: new Date(),
@@ -64,7 +64,6 @@ const Create = ({ title }) => {
       },
     };
 
-    console.log(item);
     const config = {
       headers: { Authorization: 'temp' },
     };
@@ -75,6 +74,8 @@ const Create = ({ title }) => {
     } catch (error) {
       console.log('Failed to create item', error);
     }
+
+    console.log('item check', item);
   };
 
   return (
@@ -173,6 +174,7 @@ const PriceAndCalories = ({ title, control }) => {
           control={control}
         />
       ))}
+      <ImgUpload title={title} />
     </PriceAndCalContainer>
   );
 };

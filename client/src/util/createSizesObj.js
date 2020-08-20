@@ -1,9 +1,12 @@
 /**Create an array with values of Store's Serving Time
- * @param {Object} _obj
- * @param {String} _arr
+ * @param {Array} _obj
+ * @param {Object} _formObj
+ * @param {Object} _destrucObj
  * @return {Array}
  */
-function createSizesobj(_arr, _formObj, _destrucObj) {
+
+//This needs to be refactored
+export function createSizeObj(_arr, _formObj, _destrucObj) {
   return _arr.reduce(
     (acc, curr) => {
       if (_formObj[curr] === true) {

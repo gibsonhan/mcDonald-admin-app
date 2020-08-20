@@ -1,4 +1,4 @@
-const ITEMINPUTS = ['name', 'group', 'subMenu', 'couponGroup'];
+const ITEMINPUTS = ['name', 'group', 'subGroup', 'couponGroup'];
 const ITEMSIZES = ['xSmall', 'small', 'regular', 'large', 'xLarge'];
 const SERVINGTIMES = ['breakfast', 'lunch', 'dinner'];
 const SIZEMOREINFO = ['Price', 'Calories'];

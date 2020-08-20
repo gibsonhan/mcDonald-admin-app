@@ -9,54 +9,28 @@ import { Switch, TextField } from '@material-ui/core';
 import Input from '../common/Input';
 import { useRouteMatch } from 'react-router-dom';
 
-const inputs = ['name', 'group', 'subMenu', 'couponGroup'];
-const sizesArr = ['xSmall', 'small', 'regular', 'large', 'xLarge'];
-const sizesArrMoreInfo = ['Price', 'Calories'];
-const serving = ['breakfast', 'lunch', 'dinner'];
+import { createServingTimeArr } from '../../util/createServingTimeArr';
+import { createsizeObj } from '../../util/createSizesObj';
 
-const defaultValues = {
-  name: '',
-  group: '',
-  subGroup: '',
-  couponGroup: '',
-  //sizesArr
-  //xs = extra small
-  xSmall: false,
-  xSmallPrice: 0,
-  xSmallCalories: 0,
-  //s = small
-  small: false,
-  smallPrice: 0,
-  smallCalories: 0,
-  //r = regular
-  regular: false,
-  regularPrice: 0,
-  regularCalories: 0,
-  //l = large
-  large: false,
-  largePrice: 0,
-  largeCalories: 0,
-  //xl = extra large
-  xLarge: false,
-  xLargePrice: 0,
-  xLargeCalories: 0,
-  //serving
-  breakfast: true,
-  lunch: false,
-  dinner: false,
-};
+import {
+  DEFAULTITEMVALUES as defaultValues,
+  ITEMINPUTS,
+  ITEMSIZES,
+  SIZEMOREINFO,
+  SERVINGTIMES,
+} from '../../global/tempData';
 
 const Create = ({ title }) => {
   //TODO: FUTURE: CMS where it creates the shape
   const { path, route, url } = useRouteMatch();
   //TODO CMS schmea creator
   //functional program would be usefull her composeThree(a, b, c)
-  const inputSchema = inputs.reduce((acc, curr) => {
+  const inputSchema = ITEMINPUTS.reduce((acc, curr) => {
     acc[curr] = yup.string().required();
     return acc;
   }, {});
 
-  const sizesArrSchema = sizesArr.reduce((acc, curr) => {
+  const sizesArrSchema = ITEMSIZES.reduce((acc, curr) => {
     acc[curr] = yup.boolean().required();
     acc[curr + 'Price'] = yup.number().positive();
     acc[curr + 'Calories'] = yup.number().positive();
@@ -64,38 +38,18 @@ const Create = ({ title }) => {
   }, {});
 
   const schema = yup.object().shape({ ...inputSchema, ...sizesArrSchema });
-
   const { register, handleSubmit, errors, control } = useForm({
     defaultValues,
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (formObjData) => {
     //TODO: FP method? for CMS in the future?
-    console.log('data', data);
-    const { name, group, subGroup, couponGroup, ...sizesArrObjInfo } = data;
+    console.log('formObjData', formObjData);
+    const { name, group, subGroup, couponGroup, ...sizeObjInfo } = formObjData;
 
-    const size = sizesArr.reduce(
-      (acc, curr) => {
-        if (data[curr] === true) {
-          acc.list.push(curr);
-          acc[curr] = {
-            price: sizesArrObjInfo[curr + 'Price'],
-            cal: sizesArrObjInfo[curr + 'Calories'],
-          };
-        }
-        return acc;
-      },
-      { list: new Array() },
-    );
-
-    const servingTime = serving.reduce((acc, curr) => {
-      if (data[curr] === true) {
-        acc.push(curr);
-      }
-      return acc;
-    }, []);
-
+    const servingTime = createServingTimeArr(formObjData, SERVINGTIMES);
+    const size = createsizeObj(ITEMSIZES, formObjData, sizeObjInfo);
     const item = {
       name,
       group,
@@ -128,13 +82,13 @@ const Create = ({ title }) => {
       <DisplayContainer>Hello</DisplayContainer>
       <FormContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
-          {inputs.map((item) => (
+          {ITEMINPUTS.map((item) => (
             <Input key={item} name={item} register={register} errors={errors} />
           ))}
           <SwitchButtonGroup
             key={'serving'}
             title={'Serving'}
-            data={serving}
+            data={SERVINGTIMES}
             register={register}
             control={control}
           />
@@ -142,7 +96,7 @@ const Create = ({ title }) => {
           <SwitchButtonGroup
             key={'sizesArr'}
             title={'Allowed Sizes'}
-            data={sizesArr}
+            data={ITEMSIZES}
             register={register}
             control={control}
           />
@@ -176,7 +130,7 @@ const HighlightBtn = ({ title, control, register, error }) => {
   const [switchOn, setSwitchOn] = useState(false);
 
   useEffect(() => {
-    const showInput = !!sizesArr.includes(title) && !!switchOn;
+    const showInput = !!ITEMSIZES.includes(title) && !!switchOn;
     showInput ? setShowPriceAndCal(true) : setShowPriceAndCal(false);
   }, [switchOn]);
 
@@ -208,7 +162,7 @@ const HighlightBtn = ({ title, control, register, error }) => {
 const PriceAndCalories = ({ title, control }) => {
   return (
     <PriceAndCalContainer>
-      {sizesArrMoreInfo.map((item) => (
+      {SIZEMOREINFO.map((item) => (
         <Controller
           as={TextField}
           key={title + item}

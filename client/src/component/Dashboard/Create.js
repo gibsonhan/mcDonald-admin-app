@@ -1,24 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React from 'react';
 import axios from 'axios';
-import { useForm, Controller } from 'react-hook-form';
+import styled from 'styled-components';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
+import { useRouteMatch } from 'react-router-dom';
 import * as yup from 'yup';
 
-import { Switch, TextField, responsiveFontSizes } from '@material-ui/core';
-import { useRouteMatch } from 'react-router-dom';
 
 import { createServingTimeArr } from '../../util/createServingTimeArr';
 import { createSizeObj } from '../../util/createSizesObj';
 
 import Input from '../common/Input';
-import ImgUpload from '../common/ImgUpload';
+import SwitchBtnGroup from './SwitchButtonGroup';
 
 import {
   DEFAULTITEMVALUES as defaultValues,
   ITEMINPUTS,
   ITEMSIZES,
-  SIZEMOREINFO,
   SERVINGTIMES,
 } from '../../global/tempData';
 console.log(defaultValues);
@@ -87,7 +85,7 @@ const Create = ({ title }) => {
           {ITEMINPUTS.map((item) => (
             <Input key={item} name={item} register={register} errors={errors} />
           ))}
-          <SwitchButtonGroup
+          <SwitchBtnGroup
             key={'serving'}
             title={'Serving'}
             data={SERVINGTIMES}
@@ -95,7 +93,7 @@ const Create = ({ title }) => {
             control={control}
           />
           {/* TODO: when user enable size, group price input**/}
-          <SwitchButtonGroup
+          <SwitchBtnGroup
             key={'sizesArr'}
             title={'Allowed Sizes'}
             data={ITEMSIZES}
@@ -109,104 +107,6 @@ const Create = ({ title }) => {
   );
 };
 
-const SwitchButtonGroup = ({ title, data, control, register, error }) => {
-  return (
-    <>
-      <label>{title}</label>
-      {data.map((item) => (
-        <HighlightBtn
-          key={item}
-          title={item}
-          register={register}
-          control={control}
-          error={error}
-        />
-      ))}
-    </>
-  );
-};
-
-//TODO: Double check the register
-const HighlightBtn = ({ title, control, register, error }) => {
-  const [showPriceAndCal, setShowPriceAndCal] = useState(false);
-  const [switchOn, setSwitchOn] = useState(false);
-
-  useEffect(() => {
-    const showInput = !!ITEMSIZES.includes(title) && !!switchOn;
-    showInput ? setShowPriceAndCal(true) : setShowPriceAndCal(false);
-  }, [switchOn]);
-
-  return (
-    <SwitchGroup>
-      <SwitchContainer>
-        <label>{title}</label>
-        <Controller
-          name={title}
-          control={control}
-          render={(props) => (
-            <Switch
-              onChange={(e) => {
-                setSwitchOn((prev) => !prev);
-                return props.onChange(e.target.checked);
-              }}
-              checked={props.value}
-            />
-          )}
-        />
-      </SwitchContainer>
-      {showPriceAndCal && (
-        <PriceAndCalories
-          title={title}
-          control={control}
-          register={register}
-          error={error}
-        />
-      )}
-    </SwitchGroup>
-  );
-};
-
-//Need to understand control and register
-const PriceAndCalories = ({ title, register, control }) => {
-  return (
-    <PriceAndCalContainer>
-      {SIZEMOREINFO.map((item) => (
-        <Controller
-          as={TextField}
-          key={title + item}
-          name={title + item}
-          label={item}
-          type={'number'}
-          InputLabelProps={{ shrink: true }}
-          control={control}
-        />
-      ))}
-      <ImgUpload title={title} register={register} />
-    </PriceAndCalContainer>
-  );
-};
-
-const PriceAndCalContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const SwitchGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const SwitchContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-
-  label {
-    display: flex;
-    align-items: center;
-  }
-`;
 const CreateContainer = styled.div`
   display: flex;
   flex-direction: column;

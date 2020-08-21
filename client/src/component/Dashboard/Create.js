@@ -5,7 +5,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
 import * as yup from 'yup';
 
-import { Switch, TextField } from '@material-ui/core';
+import { Switch, TextField, responsiveFontSizes } from '@material-ui/core';
 import { useRouteMatch } from 'react-router-dom';
 
 import { createServingTimeArr } from '../../util/createServingTimeArr';
@@ -21,7 +21,7 @@ import {
   SIZEMOREINFO,
   SERVINGTIMES,
 } from '../../global/tempData';
-
+console.log(defaultValues);
 const Create = ({ title }) => {
   //TODO: FUTURE: CMS where it creates the shape
   const { path, route, url } = useRouteMatch();
@@ -36,6 +36,8 @@ const Create = ({ title }) => {
     acc[curr] = yup.boolean().required();
     acc[curr + 'Price'] = yup.number().positive();
     acc[curr + 'Calories'] = yup.number().positive();
+    //https://www.youtube.com/watch?v=tYGTjxhzrqY
+    acc[curr + 'Img'] = yup.mixed();
     return acc;
   }, {});
 
@@ -46,7 +48,6 @@ const Create = ({ title }) => {
   });
 
   const onSubmit = async (formObjData) => {
-    //TODO: FP method? for CMS in the future?
     console.log('formObjData', formObjData);
     const { name, group, subGroup, couponGroup, ...sizeObjInfo } = formObjData;
 
@@ -154,13 +155,19 @@ const HighlightBtn = ({ title, control, register, error }) => {
         />
       </SwitchContainer>
       {showPriceAndCal && (
-        <PriceAndCalories title={title} control={control} error={error} />
+        <PriceAndCalories
+          title={title}
+          control={control}
+          register={register}
+          error={error}
+        />
       )}
     </SwitchGroup>
   );
 };
 
-const PriceAndCalories = ({ title, control }) => {
+//Need to understand control and register
+const PriceAndCalories = ({ title, register, control }) => {
   return (
     <PriceAndCalContainer>
       {SIZEMOREINFO.map((item) => (
@@ -174,7 +181,7 @@ const PriceAndCalories = ({ title, control }) => {
           control={control}
         />
       ))}
-      <ImgUpload title={title} />
+      <ImgUpload title={title} register={register} />
     </PriceAndCalContainer>
   );
 };

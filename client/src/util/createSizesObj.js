@@ -14,6 +14,7 @@ export function createSizeObj(_arr, _formObj, _destrucObj) {
         acc[curr] = {
           price: _destrucObj[curr + 'Price'],
           cal: _destrucObj[curr + 'Calories'],
+          img: _destrucObj[curr + 'Img'],
         };
       }
       return acc;

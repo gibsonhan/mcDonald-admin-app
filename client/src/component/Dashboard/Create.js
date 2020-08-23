@@ -6,7 +6,6 @@ import { yupResolver } from '@hookform/resolvers';
 import { useRouteMatch } from 'react-router-dom';
 import * as yup from 'yup';
 
-
 import { createServingTimeArr } from '../../util/createServingTimeArr';
 import { createSizeObj } from '../../util/createSizesObj';
 
@@ -45,6 +44,15 @@ const Create = ({ title }) => {
     resolver: yupResolver(schema),
   });
 
+  function createImgbj(_sizes, _formObj) {
+    return _sizes.reduce((acc, curr) => {
+      let test = _formObj[curr + 'Img'];
+      console.log(test.file[0].length > 0);
+      //acc[curr] = test
+      return acc;
+    }, {});
+  }
+
   const onSubmit = async (formObjData) => {
     console.log('formObjData', formObjData);
     const { name, group, subGroup, couponGroup, ...sizeObjInfo } = formObjData;
@@ -56,6 +64,7 @@ const Create = ({ title }) => {
       couponGroup,
       servingTime: createServingTimeArr(formObjData, SERVINGTIMES),
       size: createSizeObj(ITEMSIZES, formObjData, sizeObjInfo),
+      img: createImgObj(ITEMSIZES, sizeObjInfo),
       created: new Date(),
       lastEdit: {
         date: new Date(),

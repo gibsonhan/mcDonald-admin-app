@@ -13,10 +13,8 @@ const SizeMoreInfo = ({ title, register, control }) => {
   function updatePreview(e) {
     let file = e.target.files[0];
     let reader = new FileReader();
-
     if (!file || !reader) return;
     reader.onload = () => {
-      console.log('reading image');
       setPrevImg({
         display: true,
         url: reader.result,
@@ -24,11 +22,6 @@ const SizeMoreInfo = ({ title, register, control }) => {
     };
     reader.readAsDataURL(file);
   }
-
-  useEffect(() => {
-    if (!prevImg.url) return;
-    //console.log('prev', prevImg.url);
-  }, [prevImg]);
 
   //TODO: redthink the upload image
   return (

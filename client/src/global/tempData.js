@@ -4,10 +4,10 @@ const SERVINGTIMES = ['breakfast', 'lunch', 'dinner'];
 const SIZEMOREINFO = ['Price', 'Calories'];
 
 const DEFAULTITEMVALUES = {
-  name: '',
-  group: '',
-  subGroup: '',
-  couponGroup: '',
+  name: 'French Fries',
+  group: 'Snacks',
+  subGroup: 'NONE',
+  couponGroup: 'jewfiojj',
   //sizesArr
   //xs = extra small
   xSmall: false,

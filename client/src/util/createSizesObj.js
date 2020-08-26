@@ -2,7 +2,15 @@
  * @param {Array} _obj
  * @param {Object} _formObj
  * @param {Object} _destrucObj
- * @return {Array}
+ * @return {Obj}
+ * 
+  Create an object {
+    [list]: [string]
+    [size]: {
+      price: Number
+      cal: Number
+    }
+  }
  */
 
 //This needs to be refactored
@@ -14,7 +22,6 @@ export function createSizeObj(_arr, _formObj, _destrucObj) {
         acc[curr] = {
           price: _destrucObj[curr + 'Price'],
           cal: _destrucObj[curr + 'Calories'],
-          img: '',
         };
       }
       return acc;

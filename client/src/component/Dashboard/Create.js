@@ -8,6 +8,7 @@ import * as yup from 'yup';
 
 import { createServingTimeArr } from '../../util/createServingTimeArr';
 import { createSizeObj } from '../../util/createSizesObj';
+import { createImgObj } from '../../util/createImgObj';
 
 import Input from '../common/Input';
 import SwitchBtnGroup from './SwitchButtonGroup';
@@ -29,11 +30,11 @@ const Create = ({ title }) => {
     return acc;
   }, {});
 
+  //https://www.youtube.com/watch?v=tYGTjxhzrqY
   const sizesArrSchema = ITEMSIZES.reduce((acc, curr) => {
     acc[curr] = yup.boolean().required();
     acc[curr + 'Price'] = yup.number().positive();
     acc[curr + 'Calories'] = yup.number().positive();
-    //https://www.youtube.com/watch?v=tYGTjxhzrqY
     acc[curr + 'Img'] = yup.mixed();
     return acc;
   }, {});
@@ -43,28 +44,24 @@ const Create = ({ title }) => {
     defaultValues,
     resolver: yupResolver(schema),
   });
-
-  function createImgbj(_sizes, _formObj) {
-    return _sizes.reduce((acc, curr) => {
-      let test = _formObj[curr + 'Img'];
-      console.log(test.file[0].length > 0);
-      //acc[curr] = test
-      return acc;
-    }, {});
-  }
-
   const onSubmit = async (formObjData) => {
-    console.log('formObjData', formObjData);
     const { name, group, subGroup, couponGroup, ...sizeObjInfo } = formObjData;
+    const formData = new FormData();
+    const sizeImg = createImgObj(ITEMSIZES, sizeObjInfo);
+    console.log('check', sizeImg);
 
-    const item = {
+    Object.keys(sizeImg).forEach((key) => formData.append(key, sizeImg[key]));
+    formData.append('files', sizeImg);
+    console.log('name', name);
+    formData.append('name', name);
+
+    const data = {
       name,
       group,
       subGroup,
       couponGroup,
       servingTime: createServingTimeArr(formObjData, SERVINGTIMES),
       size: createSizeObj(ITEMSIZES, formObjData, sizeObjInfo),
-      img: createImgObj(ITEMSIZES, sizeObjInfo),
       created: new Date(),
       lastEdit: {
         date: new Date(),
@@ -72,19 +69,35 @@ const Create = ({ title }) => {
       },
     };
 
+    /*
+      Todo if key in object has no value, remove. Reduce the paylaod
+      
+     */
     const config = {
       headers: { Authorization: 'temp' },
     };
-    const baseUrl = 'http://localhost:3001/api/item/create';
+    const baseUrl = 'http://localhost:3001/api/item/';
+    const uploadUrl = 'http://localhost:3001/api/item/img-upload';
+    const requestConfig = {
+      method: 'POST',
+      config: { headers: { 'Content-Type': 'multipart/form-data' } },
+    };
     try {
-      const response = await axios.post(baseUrl, item);
+      const response = await axios.post(uploadUrl, formData, requestConfig);
+      //const response = await axios.post(baseUrl+'create', params);
       console.log('created and a new item', response);
     } catch (error) {
       console.log('Failed to create item', error);
     }
 
-    console.log('item check', item);
+    console.log('item check', data);
   };
+
+  /**
+   *  Todo fetches the coupon
+   *    - Combine Menu? and Coupon to save sace?
+   *    - Drawing the data and how they work with each other?
+   */
 
   return (
     <CreateContainer>

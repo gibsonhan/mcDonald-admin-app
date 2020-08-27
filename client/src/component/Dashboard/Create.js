@@ -7,8 +7,9 @@ import { useRouteMatch } from 'react-router-dom';
 import * as yup from 'yup';
 
 import { createServingTimeArr } from '../../util/createServingTimeArr';
-import { createSizeObj } from '../../util/createSizesObj';
 import { createImgObj } from '../../util/createImgObj';
+import { createSizeObj } from '../../util/createSizesObj';
+import { createItem } from '../../util/service';
 
 import Input from '../common/Input';
 import SwitchBtnGroup from './SwitchButtonGroup';
@@ -21,10 +22,6 @@ import {
 } from '../../global/tempData';
 console.log(defaultValues);
 const Create = ({ title }) => {
-  //TODO: FUTURE: CMS where it creates the shape
-  const { path, route, url } = useRouteMatch();
-  //TODO CMS schmea creator
-  //functional program would be usefull her composeThree(a, b, c)
   const inputSchema = ITEMINPUTS.reduce((acc, curr) => {
     acc[curr] = yup.string().required();
     return acc;
@@ -44,22 +41,9 @@ const Create = ({ title }) => {
     defaultValues,
     resolver: yupResolver(schema),
   });
+
   const onSubmit = async (formObjData) => {
     const { name, group, subGroup, couponGroup, ...sizeObjInfo } = formObjData;
-    const formData = new FormData();
-    const sizeImg = createImgObj(ITEMSIZES, sizeObjInfo);
-    //TODO: I do not understand why appending the key, allows the axios request to work
-    Object.keys(sizeImg).forEach((key) => formData.append(key, sizeImg[key]));
-    formData.append('files', sizeImg);
-    formData.append('name', name);
-
-    const requestConfig = {
-      method: 'POST',
-      config: { headers: { 'Content-Type': 'multipart/form-data' } },
-    };
-    const uploadUrl = 'http://localhost:3001/api/item/img-upload';
-    const response = await axios.post(uploadUrl, formData, requestConfig);
-    console.log('repsonse', response.data);
     const data = {
       name,
       group,
@@ -67,7 +51,7 @@ const Create = ({ title }) => {
       couponGroup,
       servingTime: createServingTimeArr(formObjData, SERVINGTIMES),
       size: createSizeObj(ITEMSIZES, formObjData, sizeObjInfo),
-      img: response.data,
+      img: await createImgObj(ITEMSIZES, name, sizeObjInfo),
       created: new Date(),
       lastEdit: {
         date: new Date(),
@@ -75,26 +59,13 @@ const Create = ({ title }) => {
       },
     };
 
-    const config = {
-      headers: { Authorization: 'temp' },
-    };
-    const baseUrl = 'http://localhost:3001/api/item/';
-
     try {
-      //const response = await axios.post(baseUrl+'create', params);
+      const response = await createItem({ ...data });
       console.log('created and a new item', response);
     } catch (error) {
-      console.log('Failed to create item', error);
+      console.log('Failed to create item');
     }
-
-    console.log('item check', data);
   };
-
-  /**
-   *  Todo fetches the coupon
-   *    - Combine Menu? and Coupon to save sace?
-   *    - Drawing the data and how they work with each other?
-   */
 
   return (
     <CreateContainer>

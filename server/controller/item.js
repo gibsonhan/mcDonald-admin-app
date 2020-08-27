@@ -26,8 +26,10 @@ const singleItem = async (req, res, next) => {
 };
 
 const createItem = async (req, res, next) => {
-  let content = req.body.data;
-  const item = await new Item({ ...content });
+  let data = req.body;
+  const item = await new Item({ ...data });
+  console.log('check,', data);
+  console.log('item check', item);
   try {
     item.save();
     res.status(201).json(item);
@@ -41,9 +43,7 @@ const createItem = async (req, res, next) => {
 const uploadImg = async (req, res) => {
   const itemName = req.body.name.replace(/\s+/g, ''); //remove all white space
   const imgData = req.files;
-  const [test] = req.files;
   const response = await createS3SizeImgUrlObj(itemName, imgData);
-  console.log('re', response);
   res.status(200).json(response);
 };
 

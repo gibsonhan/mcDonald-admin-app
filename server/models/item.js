@@ -18,8 +18,10 @@ const itemSchema = new mongoose.Schema({
   couponGroup: String,
   servingTime: Array,
   size: Object,
-  //customize: Object,
+  img: Object,
   /*
+  //TODO
+  customize: Object,
   info: {
     ingredients: Object,
     nutriention: Object,

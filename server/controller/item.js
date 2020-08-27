@@ -42,8 +42,8 @@ const uploadImg = async (req, res) => {
   const itemName = req.body.name.replace(/\s+/g, ''); //remove all white space
   const imgData = req.files;
   const [test] = req.files;
-  console.log('t', test);
   const response = await createS3SizeImgUrlObj(itemName, imgData);
+  console.log('re', response);
   res.status(200).json(response);
 };
 

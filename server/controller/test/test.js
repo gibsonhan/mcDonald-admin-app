@@ -7,7 +7,6 @@ export default async function createS3SizeImgObj(_arrayObj) {
    *
    */
   await _arrayObj.map((obj, indx) => {
-    console.log('indx', indx);
     const file = obj.buffer;
     const size = obj.fieldname;
     const item = req.body.name.replace(/\s+/g, ''); //remove all white space

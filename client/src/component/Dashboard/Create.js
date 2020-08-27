@@ -48,12 +48,18 @@ const Create = ({ title }) => {
     const { name, group, subGroup, couponGroup, ...sizeObjInfo } = formObjData;
     const formData = new FormData();
     const sizeImg = createImgObj(ITEMSIZES, sizeObjInfo);
-
     //TODO: I do not understand why appending the key, allows the axios request to work
     Object.keys(sizeImg).forEach((key) => formData.append(key, sizeImg[key]));
     formData.append('files', sizeImg);
     formData.append('name', name);
 
+    const requestConfig = {
+      method: 'POST',
+      config: { headers: { 'Content-Type': 'multipart/form-data' } },
+    };
+    const uploadUrl = 'http://localhost:3001/api/item/img-upload';
+    const response = await axios.post(uploadUrl, formData, requestConfig);
+    console.log('repsonse', response.data);
     const data = {
       name,
       group,
@@ -61,6 +67,7 @@ const Create = ({ title }) => {
       couponGroup,
       servingTime: createServingTimeArr(formObjData, SERVINGTIMES),
       size: createSizeObj(ITEMSIZES, formObjData, sizeObjInfo),
+      img: response.data,
       created: new Date(),
       lastEdit: {
         date: new Date(),
@@ -68,21 +75,12 @@ const Create = ({ title }) => {
       },
     };
 
-    /*
-      Todo if key in object has no value, remove. Reduce the paylaod
-      
-     */
     const config = {
       headers: { Authorization: 'temp' },
     };
     const baseUrl = 'http://localhost:3001/api/item/';
-    const uploadUrl = 'http://localhost:3001/api/item/img-upload';
-    const requestConfig = {
-      method: 'POST',
-      config: { headers: { 'Content-Type': 'multipart/form-data' } },
-    };
+
     try {
-      const response = await axios.post(uploadUrl, formData, requestConfig);
       //const response = await axios.post(baseUrl+'create', params);
       console.log('created and a new item', response);
     } catch (error) {

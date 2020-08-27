@@ -27,8 +27,8 @@ const Login = ({ history }) => {
   return (
     <FormContainer>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Input type="username" register={register} errors={errors} />
-        <Input type="password" register={register} errors={errors} />
+        <Input name="username" register={register} errors={errors} />
+        <Input name="password" register={register} errors={errors} />
         <input type="submit" />
       </form>
     </FormContainer>

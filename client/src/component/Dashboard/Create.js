@@ -1,106 +1,70 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React from 'react';
 import axios from 'axios';
-import { useForm, Controller } from 'react-hook-form';
+import styled from 'styled-components';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
+import { useRouteMatch } from 'react-router-dom';
 import * as yup from 'yup';
 
-import { Switch } from '@material-ui/core';
+import { createServingTimeArr } from '../../util/createServingTimeArr';
+import { createImgObj } from '../../util/createImgObj';
+import { createSizeObj } from '../../util/createSizesObj';
+import { createItem } from '../../util/service';
+
 import Input from '../common/Input';
-import { useRouteMatch } from 'react-router-dom';
+import SwitchBtnGroup from './SwitchButtonGroup';
 
+import {
+  DEFAULTITEMVALUES as defaultValues,
+  ITEMINPUTS,
+  ITEMSIZES,
+  SERVINGTIMES,
+} from '../../global/tempData';
+console.log(defaultValues);
 const Create = ({ title }) => {
-  //TODO: FUTURE: CMS where it creates the shape
-  const { path, route, url } = useRouteMatch();
-  const inputs = [
-    'name',
-    'group',
-    'subMenu',
-    'serving',
-    'couponGroup',
-    'price',
-  ];
-
-  const sizes = ['xSmall', 'small', 'regular', 'large', 'xLarge'];
-  const serving = ['breakfast', 'lunch', 'dinner'];
-
-  const defaultValues = {
-    name: '',
-    group: '',
-    subGroup: '',
-    couponGroup: '',
-    //sizes
-    xSmall: false,
-    small: false,
-    regular: false,
-    large: false,
-    xLarge: false,
-    //serving
-    breakfast: true,
-    lunch: false,
-    dinner: false,
-  };
-
-  //TODO CMS schmea creator
-  const itemSchema = inputs.reduce((acc, curr) => {
-    acc[curr] = yup.string();
+  const inputSchema = ITEMINPUTS.reduce((acc, curr) => {
+    acc[curr] = yup.string().required();
     return acc;
   }, {});
 
-  const schema = yup.object().shape(itemSchema);
+  //https://www.youtube.com/watch?v=tYGTjxhzrqY
+  const sizesArrSchema = ITEMSIZES.reduce((acc, curr) => {
+    acc[curr] = yup.boolean().required();
+    acc[curr + 'Price'] = yup.number().positive();
+    acc[curr + 'Calories'] = yup.number().positive();
+    acc[curr + 'Img'] = yup.mixed();
+    return acc;
+  }, {});
 
+  const schema = yup.object().shape({ ...inputSchema, ...sizesArrSchema });
   const { register, handleSubmit, errors, control } = useForm({
     defaultValues,
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data) => {
-    //TODO: FP method? for CMS in the future?
-    const { collection, name, group, subGroup, couponGroup } = data;
-
-    const sizeObj = sizes.reduce(
-      (acc, curr) => {
-        if (data[curr] === true) {
-          acc[curr] = { enable: true, price: 1.0 };
-        }
-        return acc;
-      },
-      { default: 'Regular' },
-    );
-
-    const servingArr = serving.reduce((acc, curr) => {
-      if (data[curr] === true) {
-        acc.push(curr);
-      }
-      return acc;
-    }, []);
-
-    console.log(sizeObj);
-
-    const item = {
-      collection,
+  const onSubmit = async (formObjData) => {
+    const { name, group, subGroup, couponGroup, ...sizeObjInfo } = formObjData;
+    const data = {
       name,
       group,
       subGroup,
       couponGroup,
-      sizes: sizeObj,
-      servingTime: servingArr,
+      servingTime: createServingTimeArr(formObjData, SERVINGTIMES),
+      size: createSizeObj(ITEMSIZES, formObjData, sizeObjInfo),
+      img: await createImgObj(ITEMSIZES, name, sizeObjInfo),
       created: new Date(),
       lastEdit: {
         date: new Date(),
         author: 'Admin',
       },
     };
-    const config = {
-      headers: { Authorization: 'temp' },
-    };
-    const baseUrl = 'http://localhost:3001/api/item/create';
+
     try {
-      //const response = await axios.post(baseUrl, item);
+      const response = await createItem({ ...data });
+      console.log('created and a new item', response);
     } catch (error) {
-      console.log(error);
+      console.log('Failed to create item');
     }
-    console.log('end');
   };
 
   return (
@@ -108,21 +72,21 @@ const Create = ({ title }) => {
       <DisplayContainer>Hello</DisplayContainer>
       <FormContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
-          {inputs.map((item) => (
-            <Input key={item} type={item} register={register} errors={errors} />
+          {ITEMINPUTS.map((item) => (
+            <Input key={item} name={item} register={register} errors={errors} />
           ))}
-          <SwitchButtonGroup
+          <SwitchBtnGroup
             key={'serving'}
             title={'Serving'}
-            data={serving}
+            data={SERVINGTIMES}
             register={register}
             control={control}
           />
           {/* TODO: when user enable size, group price input**/}
-          <SwitchButtonGroup
-            key={'sizes'}
+          <SwitchBtnGroup
+            key={'sizesArr'}
             title={'Allowed Sizes'}
-            data={sizes}
+            data={ITEMSIZES}
             register={register}
             control={control}
           />
@@ -133,52 +97,6 @@ const Create = ({ title }) => {
   );
 };
 
-const SwitchButtonGroup = ({ title, data, control, register }) => {
-  return (
-    <>
-      <label>{title}</label>
-      {data.map((item) => (
-        <HighlightBtn
-          key={item}
-          title={item}
-          register={register}
-          control={control}
-        />
-      ))}
-    </>
-  );
-};
-
-//TODO: Double check the register
-const HighlightBtn = ({ title, control, register }) => {
-  return (
-    <SwitchContainer>
-      <label>{title}</label>
-      <Controller
-        name={title}
-        control={control}
-        render={(props) => (
-          <Switch
-            onChange={(e) => props.onChange(e.target.checked)}
-            checked={props.value}
-          />
-        )}
-      />
-    </SwitchContainer>
-  );
-};
-
-const SwitchContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-
-  label {
-    display: flex;
-    align-items: center;
-  }
-`;
 const CreateContainer = styled.div`
   display: flex;
   flex-direction: column;

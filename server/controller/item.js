@@ -1,8 +1,6 @@
-require('dotenv').config();
 const aws = require('aws-sdk');
-const fs = require('fs');
 const Item = require('../models/item');
-
+const { createS3SizeImgUrlObj } = require('../util/createS3ImgObj');
 aws.config.apiVersions = {
   s3: '2006-03-01',
   // other service API versions
@@ -31,7 +29,7 @@ const createItem = async (req, res, next) => {
   let content = req.body.data;
   const item = await new Item({ ...content });
   try {
-    await item.save();
+    item.save();
     res.status(201).json(item);
   } catch (error) {
     console.log('failed to save', error);
@@ -40,48 +38,13 @@ const createItem = async (req, res, next) => {
 //https://ademcan.net/blog/2017/11/24/uploaddownload-images-tofrom-aws-s3-in-react-native-a-step-by-step-guide/
 ///https://stackoverflow.com/questions/11240127/uploading-image-to-amazon-s3-with-html-javascript-jquery-with-ajax-request-n
 
-function isEmpty(_obj) {
-  return Object.keys(_obj.length === 0) ? true : false;
-}
-
 const uploadImg = async (req, res) => {
-  const s3 = new aws.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  });
-
-  const S3_BUCKET = process.env.BUCKET;
-  const img = req.files;
-  const file = img[0].buffer;
-  const size = img[0].fieldname;
-  const item = req.body.name.replace(/\s+/g, ''); //remove all white space
-  const fileName = size + item;
-
-  const params = {
-    Bucket: S3_BUCKET,
-    Key: fileName,
-    Expires: 500,
-    Body: file,
-    ContentType: 'image/*',
-    ACL: 'public-read',
-  };
-
-  try {
-    s3.upload(params, (err, data) => {
-      if (err) {
-        throw err;
-      }
-      const returnData = {
-        signedRequest: data,
-        url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`,
-      };
-      console.log(returnData);
-      res.status(200).json(JSON.stringify(returnData));
-      res.end();
-    });
-  } catch (error) {
-    res.status(400).json('failed to upload img', error);
-  }
+  const itemName = req.body.name.replace(/\s+/g, ''); //remove all white space
+  const imgData = req.files;
+  const [test] = req.files;
+  console.log('t', test);
+  const response = await createS3SizeImgUrlObj(itemName, imgData);
+  res.status(200).json(response);
 };
 
 //need to check update

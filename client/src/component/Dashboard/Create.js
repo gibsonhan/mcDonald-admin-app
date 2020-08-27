@@ -48,11 +48,10 @@ const Create = ({ title }) => {
     const { name, group, subGroup, couponGroup, ...sizeObjInfo } = formObjData;
     const formData = new FormData();
     const sizeImg = createImgObj(ITEMSIZES, sizeObjInfo);
-    console.log('check', sizeImg);
 
+    //TODO: I do not understand why appending the key, allows the axios request to work
     Object.keys(sizeImg).forEach((key) => formData.append(key, sizeImg[key]));
     formData.append('files', sizeImg);
-    console.log('name', name);
     formData.append('name', name);
 
     const data = {

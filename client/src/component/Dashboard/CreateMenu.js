@@ -1,21 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const CreateMenu = () => {
-  function handleCreateMenu(e) {
-    console.log('create menu');
-  }
+import Form from '../common/Form';
+import { MENUINPUTS } from '../../global/tempData';
 
+const CreateMenu = ({ toggleMod }) => {
   function handleCloseModal(e) {
-    console.log('Me');
+    e.preventDefault();
+    toggleMod((prev) => !prev);
   }
 
-  const createMenu = handleCreateMenu();
-  const closeModal = handleCloseModal();
+  const closeModal = (e) => handleCloseModal(e);
+
   return (
     <CreateMenuContainer>
-      <button onClick={createMenu}> Create Menu</button>
-      <button onClick={closeModal}> Cancel </button>
+      <Form title={'menu'} inputs={MENUINPUTS} previewImg>
+        <button type="submit"> Create Menu</button>
+        <button onClick={closeModal}> Cancel </button>
+      </Form>
     </CreateMenuContainer>
   );
 };

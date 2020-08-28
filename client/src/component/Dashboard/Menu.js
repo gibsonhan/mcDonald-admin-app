@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import Modal from '../common/Modal';
@@ -19,7 +19,7 @@ const Menu = () => {
     <MenuContainer>
       <button onClick={toggleMenuMod}> Create Menu </button>
       <Modal isOpen={openMenuMod} setIsOpen={setMenuMod}>
-        <CreateMenu />
+        <CreateMenu toggleMod={toggleMenuMod} />
       </Modal>
       <button onClick={toggleItemMod}> Create Menu </button>
       <Modal isOpen={openItemMod} setIsOpen={setItemMod}>

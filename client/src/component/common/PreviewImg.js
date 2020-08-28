@@ -1,18 +1,31 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 
-const PreviewImg = ({ props, title, register, updatePreview }) => {
+const PreviewImg = ({ title, register }) => {
   const imgUploadRef = useRef();
-  const { display, url } = props;
+  const [prevImg, setPrevImg] = useState({ display: false, url: '' });
   const name = title + 'Img';
 
-  function handleImgUpload(e) {
+  const uploadImg = function handleImgUpload(e) {
     const uploadBtn = imgUploadRef.current.firstElementChild;
     uploadBtn.click();
+  };
+
+  function updatePreview(e) {
+    let file = e.target.files[0];
+    let reader = new FileReader();
+    if (!file || !reader) return;
+    reader.onload = () => {
+      setPrevImg({
+        display: true,
+        url: reader.result,
+      });
+    };
+    reader.readAsDataURL(file);
   }
 
   return (
-    <PrevImgContainer onClick={() => handleImgUpload()} ref={imgUploadRef}>
+    <PrevImgContainer onClick={uploadImg} ref={imgUploadRef}>
       <input
         ref={register}
         accept="image/.png"
@@ -22,10 +35,10 @@ const PreviewImg = ({ props, title, register, updatePreview }) => {
         onChange={(e) => updatePreview(e)}
         style={{ display: 'none' }}
       />
-      {!display && 'Upload Img'}
-      {display && (
+      {!prevImg.display && 'Upload Img'}
+      {prevImg.display && (
         <img
-          src={url}
+          src={prevImg.url}
           style={{ objectFit: 'contain', width: '100px', height: '100px' }}
         />
       )}

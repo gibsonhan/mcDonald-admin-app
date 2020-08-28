@@ -8,30 +8,9 @@ import PreviewImg from '../common/PreviewImg';
 
 //Need to understand control and register
 const SizeMoreInfo = ({ title, register, control }) => {
-  const [prevImg, setPrevImg] = useState({ display: false, url: '' });
-
-  function updatePreview(e) {
-    let file = e.target.files[0];
-    let reader = new FileReader();
-    if (!file || !reader) return;
-    reader.onload = () => {
-      setPrevImg({
-        display: true,
-        url: reader.result,
-      });
-    };
-    reader.readAsDataURL(file);
-  }
-
-  //TODO: redthink the upload image
   return (
     <SizeMoreInfoContainer>
-      <PreviewImg
-        props={prevImg}
-        register={register}
-        title={title}
-        updatePreview={updatePreview}
-      />
+      <PreviewImg register={register} title={title} />
       <PriceAndCalContainer>
         {SIZEMOREINFO.map((item) => (
           <Controller

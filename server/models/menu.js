@@ -17,17 +17,18 @@ const url = process.env.MONGODB_URI;
 
 const menuSchema = new mongoose.Schema({
   name: String,
-  subGroup: {
+  img: String,
+  group: {
     name: String,
-    items: Array,
+    //items: Array,
   },
-  items: Array,
-  couponGroup: Array,
-  created: Date,
-  lastEdit: {
-    date: Date,
-    author: String,
-  },
+  //items: Array,
+  //couponGroup: Array,
+  //created: Date,
+  //lastEdit: {
+  //date: Date,
+  //author: String,
+  //},
 });
 
 module.exports = mongoose.model('Menu', menuSchema);

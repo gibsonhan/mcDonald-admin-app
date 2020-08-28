@@ -2,7 +2,7 @@ const ITEMINPUTS = ['name', 'group', 'subGroup', 'couponGroup'];
 const ITEMSIZES = ['xSmall', 'small', 'regular', 'large', 'xLarge'];
 const SERVINGTIMES = ['breakfast', 'lunch', 'dinner'];
 const SIZEMOREINFO = ['Price', 'Calories'];
-
+const MENUINPUTS = ['name', 'groups'];
 const DEFAULTITEMVALUES = {
   name: 'French Fries',
   group: 'Snacks',
@@ -40,4 +40,11 @@ const DEFAULTITEMVALUES = {
   dinner: false,
 };
 
-export { ITEMINPUTS, ITEMSIZES, SERVINGTIMES, SIZEMOREINFO, DEFAULTITEMVALUES };
+export {
+  DEFAULTITEMVALUES,
+  ITEMINPUTS,
+  ITEMSIZES,
+  MENUINPUTS,
+  SERVINGTIMES,
+  SIZEMOREINFO,
+};

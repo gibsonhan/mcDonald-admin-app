@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
-import List from '../common/List';
+import List from './common/List';
 
 const Items = ({ props }) => {
   const [itemsList, setItemList] = useState([]);

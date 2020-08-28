@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Display from '../component/Dashboard/Display';
-import Navigator from '../component/Dashboard/Navigator';
+import Display from '../component/Display';
+import Navigator from '../component/Navigator';
 
 const Dashboard = ({ history }) => {
   //TODO:

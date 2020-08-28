@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Color from '../../global/color';
+import Color from '../global/color';
 
 import { NavLink, useRouteMatch } from 'react-router-dom';
 

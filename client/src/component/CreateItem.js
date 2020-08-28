@@ -4,12 +4,12 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
 import * as yup from 'yup';
 
-import { createServingTimeArr } from '../../util/createServingTimeArr';
-import { createImgObj } from '../../util/createImgObj';
-import { createSizeObj } from '../../util/createSizesObj';
-import { createItem } from '../../util/service';
+import { createServingTimeArr } from '../util/createServingTimeArr';
+import { createImgObj } from '../util/createImgObj';
+import { createSizeObj } from '../util/createSizesObj';
+import { createItem } from '../util/service';
 
-import Input from '../common/Input';
+import Input from './common/Input';
 import SwitchBtnGroup from './SwitchButtonGroup';
 
 import {
@@ -17,7 +17,7 @@ import {
   ITEMINPUTS,
   ITEMSIZES,
   SERVINGTIMES,
-} from '../../global/tempData';
+} from '../global/tempData';
 const CreateItem = ({ title }) => {
   const inputSchema = ITEMINPUTS.reduce((acc, curr) => {
     acc[curr] = yup.string().required();

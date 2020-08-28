@@ -1,22 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Form from '../common/Form';
-import { MENUINPUTS } from '../../global/tempData';
+import Form from './common/Form';
+import { MENUINPUTS } from '../global/tempData';
 
-const CreateMenu = ({ toggleMod }) => {
-  function handleCloseModal(e) {
-    e.preventDefault();
-    toggleMod((prev) => !prev);
-  }
-
-  const closeModal = (e) => handleCloseModal(e);
-
+const CreateMenu = () => {
   return (
     <CreateMenuContainer>
       <Form title={'menu'} inputs={MENUINPUTS}>
         <button type="submit"> Create Menu</button>
-        <button onClick={closeModal}> Cancel </button>
       </Form>
     </CreateMenuContainer>
   );

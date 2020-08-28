@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 import { Controller } from 'react-hook-form';
 import { TextField } from '@material-ui/core';
-import { SIZEMOREINFO } from '../../global/tempData';
-import PreviewImg from '../common/PreviewImg';
+import { SIZEMOREINFO } from '../global/tempData';
+import PreviewImg from './common/PreviewImg';
 
 //Need to understand control and register
 const SizeMoreInfo = ({ title, register, control }) => {

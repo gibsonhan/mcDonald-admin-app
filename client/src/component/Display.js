@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 
 //styles
-import Color from '../../global/color';
+import Color from '../global/color';
 import styled from 'styled-components';
 
 //components

@@ -3,6 +3,20 @@ const ITEMSIZES = ['xSmall', 'small', 'regular', 'large', 'xLarge'];
 const SERVINGTIMES = ['breakfast', 'lunch', 'dinner'];
 const SIZEMOREINFO = ['Price', 'Calories'];
 const MENUINPUTS = ['name', 'groups'];
+const HEROINPUTS = [
+  'title',
+  'title2',
+  'titleContent',
+  'titleContent2',
+  'btnText',
+  'btnColor',
+  'navLink',
+  'dateRestriction',
+  'legal',
+];
+
+const COUPONINPUTS = ['title', 'titleContent', 'expiration', 'legal'];
+
 const DEFAULTITEMVALUES = {
   name: 'French Fries',
   group: 'Snacks',
@@ -42,6 +56,8 @@ const DEFAULTITEMVALUES = {
 
 export {
   DEFAULTITEMVALUES,
+  COUPONINPUTS,
+  HEROINPUTS,
   ITEMINPUTS,
   ITEMSIZES,
   MENUINPUTS,

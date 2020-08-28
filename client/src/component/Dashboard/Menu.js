@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import Modal from '../common/Modal';
+import CreateItem from './CreateItem';
 import CreateMenu from './CreateMenu';
 import handleToggleState from '../../util/handleToggleState';
 
@@ -21,9 +22,9 @@ const Menu = () => {
       <Modal isOpen={openMenuMod} setIsOpen={setMenuMod}>
         <CreateMenu toggleMod={toggleMenuMod} />
       </Modal>
-      <button onClick={toggleItemMod}> Create Menu </button>
+      <button onClick={toggleItemMod}> Create Item </button>
       <Modal isOpen={openItemMod} setIsOpen={setItemMod}>
-        <p>Create Item Mod</p>
+        <CreateItem toggleMod={toggleItemMod} />
       </Modal>
       <button onClick={toggleCouponMod}> Create Menu </button>
       <Modal isOpen={openCouponMod} setIsOpen={setCouponMod}>

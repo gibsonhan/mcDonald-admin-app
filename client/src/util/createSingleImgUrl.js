@@ -4,7 +4,6 @@ async function createSingleImgUrl(obj, name) {
   const formData = new FormData();
   formData.append('img', obj);
   formData.append('name', name);
-
   //TODO double check this
   Object.keys(obj).forEach((key) => formData.append(key, obj[key]));
 

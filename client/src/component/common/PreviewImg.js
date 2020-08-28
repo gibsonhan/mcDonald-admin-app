@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 
-const PreviewImg = ({ title, register }) => {
+const PreviewImg = ({ title, register, display }) => {
   const imgUploadRef = useRef();
   const [prevImg, setPrevImg] = useState({ display: false, url: '' });
   const name = title + 'Img';

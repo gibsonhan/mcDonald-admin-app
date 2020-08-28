@@ -9,14 +9,11 @@ const Navigator = ({ history }) => {
   let { path, url } = useRouteMatch();
   const nav = [
     { title: 'Summary', route: 'summary' },
-    { title: 'Web Traffic', route: 'traffic' },
-    { title: 'Store', route: 'store' },
     { title: 'Hero', route: 'hero' },
+    { title: 'Coupon', route: 'coupon' },
     { title: 'Menu', route: 'menu' },
     { title: 'Items', route: 'items' },
-    { title: 'Coupon', route: 'coupton' },
     { title: 'Settings', route: 'setting' },
-    { title: 'Create', route: 'create' },
   ];
   return (
     <NavigatorContainer>

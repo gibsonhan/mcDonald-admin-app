@@ -18,7 +18,7 @@ import {
   ITEMSIZES,
   SERVINGTIMES,
 } from '../../global/tempData';
-const Create = ({ title }) => {
+const CreateItem = ({ title }) => {
   const inputSchema = ITEMINPUTS.reduce((acc, curr) => {
     acc[curr] = yup.string().required();
     return acc;
@@ -65,7 +65,7 @@ const Create = ({ title }) => {
   };
 
   return (
-    <CreateContainer>
+    <CreateItemContainer>
       <DisplayContainer>Hello</DisplayContainer>
       <FormContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -90,11 +90,11 @@ const Create = ({ title }) => {
           <button type="submit">Add New Item</button>
         </form>
       </FormContainer>
-    </CreateContainer>
+    </CreateItemContainer>
   );
 };
 
-const CreateContainer = styled.div`
+const CreateItemContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -111,4 +111,4 @@ const FormContainer = styled.div`
   align-items: center;
   background-color: #fbab7e;
 `;
-export default Create;
+export default CreateItem;

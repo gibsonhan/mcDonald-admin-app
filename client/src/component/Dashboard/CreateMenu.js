@@ -14,7 +14,7 @@ const CreateMenu = ({ toggleMod }) => {
 
   return (
     <CreateMenuContainer>
-      <Form title={'menu'} inputs={MENUINPUTS} previewImg>
+      <Form title={'menu'} inputs={MENUINPUTS}>
         <button type="submit"> Create Menu</button>
         <button onClick={closeModal}> Cancel </button>
       </Form>

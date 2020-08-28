@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import HomeScreen from './screens/Home';
 import LoginScreen from './screens/Login';
 import DashboardScreen from './screens/Dashboard';
 

@@ -6,20 +6,18 @@ import Color from '../../global/color';
 import styled from 'styled-components';
 
 //components
-import Create from './Create';
+import Coupon from './Coupon';
 import Hero from './Hero';
 import Items from './Items';
 import Menu from './Menu';
 import Summary from './Summary';
-import Traffic from './Traffic';
 
 const switchNav = [
-  { title: 'Create', route: 'create', component: Create },
   { title: 'Hero', route: 'hero', component: Hero },
+  { title: 'Coupon', route: 'coupon', component: Coupon },
   { title: 'Menu', route: 'menu', component: Menu },
   { title: 'Items', route: 'items', component: Items },
   { title: 'Summary', route: 'summary', component: Summary },
-  { title: 'Traffic', route: 'traffic', component: Traffic },
 ];
 
 const Display = () => {

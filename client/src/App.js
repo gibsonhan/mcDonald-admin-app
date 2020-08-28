@@ -14,7 +14,7 @@ function App() {
         <Route path={['/admin', '/login']} component={LoginScreen} />
         <Route path="/dashboard" component={DashboardScreen} />
         <Route path="/" component={DashboardScreen}>
-          <Redirect to="/dashboard" />
+          <Redirect to="/dashboard/menu" />
         </Route>
       </Switch>
     </AppContainer>

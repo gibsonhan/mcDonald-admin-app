@@ -40,6 +40,7 @@ const NavButton = ({ props, url, history }) => {
   const { title, route } = props;
   const path = `${url}/${route}`;
   const redirect = () => history.push(path);
+
   return (
     <NavButtonContainer onClick={redirect}>
       <SvgContainer>Icon</SvgContainer>

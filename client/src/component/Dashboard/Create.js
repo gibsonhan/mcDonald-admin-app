@@ -20,7 +20,6 @@ import {
   ITEMSIZES,
   SERVINGTIMES,
 } from '../../global/tempData';
-console.log(defaultValues);
 const Create = ({ title }) => {
   const inputSchema = ITEMINPUTS.reduce((acc, curr) => {
     acc[curr] = yup.string().required();

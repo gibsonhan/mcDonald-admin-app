@@ -2,7 +2,6 @@ import axios from 'axios';
 //TODO: Refactor and move the post upload request into this function
 
 export async function createImgObj(_sizes, _name, _formObj) {
-  console.log('request');
   const sizeImgObj = filterSizeImgObj(_sizes, _formObj);
   const formData = new FormData();
   formData.append('files', sizeImgObj);

@@ -1,5 +1,5 @@
-const aws = require('aws-sdk');
 const Item = require('../models/item');
+const aws = require('aws-sdk');
 const { createS3SizeImgUrlObj } = require('../util/createS3ImgObj');
 aws.config.apiVersions = {
   s3: '2006-03-01',
@@ -28,8 +28,6 @@ const singleItem = async (req, res, next) => {
 const createItem = async (req, res, next) => {
   let data = req.body;
   const item = await new Item({ ...data });
-  console.log('check,', data);
-  console.log('item check', item);
   try {
     item.save();
     res.status(201).json(item);
@@ -37,6 +35,7 @@ const createItem = async (req, res, next) => {
     console.log('failed to save', error);
   }
 };
+
 //https://ademcan.net/blog/2017/11/24/uploaddownload-images-tofrom-aws-s3-in-react-native-a-step-by-step-guide/
 ///https://stackoverflow.com/questions/11240127/uploading-image-to-amazon-s3-with-html-javascript-jquery-with-ajax-request-n
 
@@ -53,7 +52,6 @@ const updateItem = async (req, res) => {
   const newObject = req.params.body;
   const updateItem = newItem({ ...newObject });
   const message = `${updatedItem.name} was succesfully update`;
-  console.log('hello darkeness');
   try {
     await Item.findByIdAndUpdate(id, updateItem, { new: true });
     res.status(200).json(message, updateItem);

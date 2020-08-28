@@ -9,12 +9,14 @@ import styled from 'styled-components';
 import Create from './Create';
 import Hero from './Hero';
 import Items from './Items';
+import Menu from './Menu';
 import Summary from './Summary';
 import Traffic from './Traffic';
 
 const switchNav = [
   { title: 'Create', route: 'create', component: Create },
   { title: 'Hero', route: 'hero', component: Hero },
+  { title: 'Menu', route: 'menu', component: Menu },
   { title: 'Items', route: 'items', component: Items },
   { title: 'Summary', route: 'summary', component: Summary },
   { title: 'Traffic', route: 'traffic', component: Traffic },

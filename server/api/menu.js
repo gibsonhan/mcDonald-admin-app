@@ -1,15 +1,16 @@
-const express = require("express");
-const menuRoutes = express.Router();
+const express = require('express');
+const Menu = express.Router();
 
 //require controller modules
 const controller = require('../controller/menu');
 
+// CRUD for company profile
+Menu.route('/').get(controller.list);
+Menu.route('/:id').get(controller.id);
+Menu.route('/create').post(controller.create);
+//TODO would be to refacor upload img to sw3 into one single route
+Menu.route('/img-upload').post(upload.any(), controller.uploadImg);
+Menu.route('/update/:id').put(controller.update);
+Menu.route('/delete/:id').get(controller.delete);
 
-// CRUD for company profile 
-menuRoutes.route('/').get(menu.list);
-menuRoutes.route('/:id').get(menu.id);
-menuRoutes.route('/create').post(menu.create);
-menuRoutes.route('/update/:id').put(menu.update);
-menuRoutes.route('/delete/:id').get(menu.delete);
-
-module.exports = menuRoutes; 
+module.exports = Menu;

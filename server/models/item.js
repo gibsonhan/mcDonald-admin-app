@@ -17,11 +17,9 @@ const itemSchema = new mongoose.Schema({
   subGroup: String,
   couponGroup: String,
   servingTime: Array,
-  size: Object,
-  img: Object,
+  sizes: Object,
+  //customize: Object,
   /*
-  //TODO
-  customize: Object,
   info: {
     ingredients: Object,
     nutriention: Object,

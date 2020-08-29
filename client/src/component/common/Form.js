@@ -14,13 +14,20 @@ const Form = ({ title, inputs, children }) => {
   const { register, handleSubmit, errors } = useForm({});
 
   const onSubmit = async (_formData) => {
-    const { name, groups, ...imgObj } = _formData;
+    const { name, group, ...imgObj } = _formData;
     const data = {
       name,
-      groups,
-      img: await createSingleImgUrl(name, imgObj),
+      group: {
+        name: 'test',
+      },
+      //img: await createSingleImgUrl(name, imgObj),
+      img: 'hello',
+      created: new Date(),
+      lastEdit: {
+        date: new Date(),
+        author: 'Admin',
+      },
     };
-
     try {
       const response = await createMenu(data);
       console.log('Menu Created', response);

@@ -12,7 +12,7 @@ const Navigator = ({ history }) => {
     { title: 'Hero', route: 'hero' },
     { title: 'Coupon', route: 'coupon' },
     { title: 'Menu', route: 'menu' },
-    { title: 'Items', route: 'items' },
+    { title: 'Items', route: 'item' },
     { title: 'Settings', route: 'setting' },
   ];
   return (

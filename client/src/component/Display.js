@@ -8,7 +8,7 @@ import styled from 'styled-components';
 //components
 import Coupon from './Coupon';
 import Hero from './Hero';
-import Items from './Items';
+import Item from './Item';
 import Menu from './Menu';
 import Summary from './Summary';
 
@@ -16,7 +16,7 @@ const switchNav = [
   { title: 'Hero', route: 'hero', component: Hero },
   { title: 'Coupon', route: 'coupon', component: Coupon },
   { title: 'Menu', route: 'menu', component: Menu },
-  { title: 'Items', route: 'items', component: Items },
+  { title: 'Items', route: 'item', component: Item },
   { title: 'Summary', route: 'summary', component: Summary },
 ];
 

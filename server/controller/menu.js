@@ -1,4 +1,4 @@
-const Menu = require('../models/Menu');
+const Menu = require('../models/menu');
 const aws = require('aws-sdk');
 const { createS3SizeImgUrlObj } = require('../util/createS3ImgObj');
 aws.config.apiVersions = {
@@ -6,28 +6,30 @@ aws.config.apiVersions = {
   // other service API versions
 };
 
-
-const createMenu = (req, res) => {
-  const data = req.body.data;
-  const menu = await new Menu(...data);
+const createMenu = async (req, res) => {
+  const data = req.body;
+  console.log('req', req);
+  console.log('data check', data);
+  const menu = await new Menu({ ...data });
   try {
-      menu.save()
-      res.status(201).json(menu)
+    menu.save();
+    res.status(201).json(menu);
   } catch (error) {
-    console.log('faied to create menu', error)
+    console.log('faied to create menu', error);
   }
 };
 
-const menuList = (req, res) => {
-   try {
-    const items = await Item.find({});
-    res.status(200).json(items.map((item) => item.toJSON()));
+const menuList = async (req, res) => {
+  console.log('get list attempt');
+  try {
+    const menu = await Menu.find({});
+    res.status(200).json(menu);
   } catch (error) {
-    res.status(500).json('failed to fetch item list', error);
+    res.status(500).json('failed to fetch menu list', error);
   }
 };
 
-const singleMenu = (req, res) => {
+const singleMenu = async (req, res) => {
   const id = req.params.id;
   try {
     const item = await Item.findById(id);
@@ -45,34 +47,34 @@ const uploadImg = async (req, res) => {
 };
 
 const updateMenu = async (req, res) => {
-    const id = req.params.id;
-    const newObject = req.params.body;
-    const updateItem = newItem({ ...newObject });
-    const message = `${updatedItem.name} was succesfully update`;
-    try {
-      await Item.findByIdAndUpdate(id, updateItem, { new: true });
-      res.status(200).json(message, updateItem);
-    } catch (error) {
-      res.status(500).json('Failed to update item');
-    }
+  const id = req.params.id;
+  const newObject = req.params.body;
+  const updateItem = newItem({ ...newObject });
+  const message = `${updatedItem.name} was succesfully update`;
+  try {
+    await Item.findByIdAndUpdate(id, updateItem, { new: true });
+    res.status(200).json(message, updateItem);
+  } catch (error) {
+    res.status(500).json('Failed to update item');
+  }
 };
 
 const deleteMenu = async (req, res) => {
-    const id = req.params.id
-    try {
-        const repsone = await Menu.findByIdAndRemove(id)
-        console.log('check', response)
-        res.status(200)
-    }
-    catch(error) {
-        res.status(500).json('fail to Delete', error)
-    }
+  const id = req.params.id;
+  try {
+    const repsone = await Menu.findByIdAndRemove(id);
+    console.log('check', response);
+    res.status(200);
+  } catch (error) {
+    res.status(500).json('fail to Delete', error);
+  }
 };
 
 module.exports = {
-    menuList,
-    singleMenu,
-    createMenu,
-    updateMenu,
-    deleteMenu,
-}
+  menuList,
+  singleMenu,
+  createMenu,
+  uploadImg,
+  updateMenu,
+  deleteMenu,
+};

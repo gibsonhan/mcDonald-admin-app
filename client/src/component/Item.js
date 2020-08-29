@@ -3,24 +3,25 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 import List from './common/List';
+import ItemListRow from './ItemListRow';
 
-const Items = ({ props }) => {
+const Item = ({ props }) => {
   const [itemsList, setItemList] = useState([]);
 
   useEffect(() => {
-    async function fetchItemsList() {
+    async function fetchItemList() {
       const baseUrl = 'http://localhost:3001/api/item';
       const response = await axios.get(baseUrl);
       setItemList(response.data);
     }
 
-    fetchItemsList();
+    fetchItemList();
   }, []);
 
   return (
-    <ItemsContainer>
+    <ItemContainer>
       <ItemSummaryContainer>
-        <header>Items</header>
+        <header>Item</header>
         <button>Add new item</button>
         <section>
           <input></input>
@@ -29,13 +30,13 @@ const Items = ({ props }) => {
         Number of items: {itemsList.length}
       </ItemSummaryContainer>
       <ItemListContainer>
-        <List title={'Items'} data={itemsList} />
+        <List title={'Item'} data={itemsList} row={ItemListRow} />
       </ItemListContainer>
-    </ItemsContainer>
+    </ItemContainer>
   );
 };
 
-const ItemsContainer = styled.div`
+const ItemContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -48,7 +49,7 @@ const ItemListContainer = styled.div`
   flex: 6;
 `;
 
-export default Items;
+export default Item;
 
 //** Building custom platoform for day trading*/
 // Asking good quesionts

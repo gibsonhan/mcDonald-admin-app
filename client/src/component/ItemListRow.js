@@ -1,13 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FixedSizeList as List } from 'react-window';
-import AutoSizer from 'react-virtualized-auto-sizer';
-
 import axios from 'axios';
 
-//TODO Set up modal
-//https://github.com/reactjs/react-modal
-const Row = ({ index, data }) => {
+const ItemRow = ({ index, data }) => {
   const hasCoupon = !!data[index].couponGroupID === false ? false : true;
   async function removeItem(id) {
     //TODO: pop up modul Confirm do you want to delete
@@ -21,50 +16,41 @@ const Row = ({ index, data }) => {
     }
   }
 
-  const { name, group, subGroup, id } = data[index];
+  const { name, group, id } = data[index];
   return (
-    <RowContainer>
-      <div>N: {name}</div>
-      <div>G: {group}</div>
-      <div>S: {subGroup}</div>
-      <div>
-        Active Coupon: <ActiveBox active={hasCoupon} />
-      </div>
+    <ItemRowContainer>
+      <div>Name: {name}</div>
+      <div>Menu: {group}</div>
+      <ActiveBoxContainer>
+        <div>Active Coupon:</div>
+        <ActiveBox active={hasCoupon} />
+      </ActiveBoxContainer>
       <button>Edit</button>
       <button onClick={() => removeItem(id)}>Delete</button>
-    </RowContainer>
+    </ItemRowContainer>
   );
 };
 
-const RowContainer = styled.div`
+const ItemRowContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 10px;
 `;
+const ActiveBoxContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
+  div {
+    margin-right: 10px;
+  }
+`;
 const ActiveBox = styled.div`
   background: ${(props) => (!!props.active ? 'light-green' : 'red')};
   height: 25px;
   width: 25px;
 `;
 
-const ListComp = ({ data, row }) => {
-  return (
-    <AutoSizer>
-      {({ height, width }) => (
-        <List
-          itemData={data}
-          height={height}
-          width={width}
-          itemCount={data.length}
-          itemSize={30}
-        >
-          {row}
-        </List>
-      )}
-    </AutoSizer>
-  );
-};
-
-export default ListComp;
+export default ItemRow;

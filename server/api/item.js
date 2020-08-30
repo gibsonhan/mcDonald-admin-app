@@ -7,8 +7,6 @@ const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-console.log(controller.uploadImg);
-
 //CRUD for company profile :
 Item.route('/').get(controller.itemList);
 Item.route('/:id').get(controller.singleItem);

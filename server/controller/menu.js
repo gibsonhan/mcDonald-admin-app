@@ -1,6 +1,6 @@
 const Menu = require('../models/menu');
 const aws = require('aws-sdk');
-const { createS3SizeImgUrlObj } = require('../util/createS3ImgObj');
+const S3 = require('../util/createS3SingleImgObj');
 aws.config.apiVersions = {
   s3: '2006-03-01',
   // other service API versions
@@ -8,8 +8,6 @@ aws.config.apiVersions = {
 
 const createMenu = async (req, res) => {
   const data = req.body;
-  console.log('req', req);
-  console.log('data check', data);
   const menu = await new Menu({ ...data });
   try {
     menu.save();
@@ -20,7 +18,6 @@ const createMenu = async (req, res) => {
 };
 
 const menuList = async (req, res) => {
-  console.log('get list attempt');
   try {
     const menu = await Menu.find({});
     res.status(200).json(menu);
@@ -39,10 +36,11 @@ const singleMenu = async (req, res) => {
   }
 };
 
-const uploadImg = async (req, res) => {
+const uploadSingleImg = async (req, res) => {
+  //TODO something with field name nees to change
   const menuName = req.body.name.replace(/\s+/g, ''); //remove all white space
-  const imgData = req.files;
-  const response = await createS3SizeImgUrlObj(menuName, imgData);
+  const imgData = req.files[0].buffer;
+  const response = await S3.createS3SingleImgObj(imgData, menuName);
   res.status(200).json(response);
 };
 
@@ -74,7 +72,7 @@ module.exports = {
   menuList,
   singleMenu,
   createMenu,
-  uploadImg,
+  uploadSingleImg,
   updateMenu,
   deleteMenu,
 };

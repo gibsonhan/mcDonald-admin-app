@@ -5,23 +5,21 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
 import * as yup from 'yup';
 
-import Input from './Input';
-import PreviewImg from './PreviewImg';
-import { createMenu } from '../../util/service';
-import { createSingleImgUrl } from '../../util/createSingleImgUrl';
+import Input from './common/Input';
+import PreviewImg from './common/PreviewImg';
+import { createMenu } from '../util/service';
+import { createSingleImgUrl } from '../util/createSingleImgUrl';
 
-const Form = ({ title, inputs, children }) => {
+const CreateMenuForm = ({ title, inputs, children }) => {
   const { register, handleSubmit, errors } = useForm({});
 
   const onSubmit = async (_formData) => {
-    const { name, group, ...imgObj } = _formData;
+    const { name, group, menuImg } = _formData;
+    const img = await createSingleImgUrl(menuImg, name);
     const data = {
       name,
-      group: {
-        name: 'test',
-      },
-      //img: await createSingleImgUrl(name, imgObj),
-      img: 'hello',
+      img,
+      group: [{ name: 'Snacsk', items: ['A', 'B', 'C'] }],
       created: new Date(),
       lastEdit: {
         date: new Date(),
@@ -30,7 +28,7 @@ const Form = ({ title, inputs, children }) => {
     };
     try {
       const response = await createMenu(data);
-      console.log('Menu Created', response);
+      console.log('check', response);
     } catch (error) {
       console.log(error);
     }
@@ -63,4 +61,4 @@ const ChildrenContainer = styled.div`
   justify-content: center;
 `;
 
-export default Form;
+export default CreateMenuForm;

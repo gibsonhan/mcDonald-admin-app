@@ -9,7 +9,7 @@ async function createS3SizeImgUrlObj(itemName, _arrayObj) {
    * Iterate through formData object
    *  - create a promise to handle image upload
    */
-  await _arrayObj.map((obj, indx) => {
+  await _arrayObj.map((obj) => {
     const file = obj.buffer;
     const size = obj.fieldname;
     const fileName = size + itemName;

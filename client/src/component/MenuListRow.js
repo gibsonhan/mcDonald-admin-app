@@ -16,10 +16,9 @@ const MenuListRow = ({ index, data }) => {
   }
 
   const { name, group, subGroup, id } = data[index];
-  console.log(data);
   return (
     <RowContainer>
-      <div>Name</div>
+      <div>{name}</div>
       <div>Sub Menu</div>
       <div>Items</div>
       <button>Edit</button>

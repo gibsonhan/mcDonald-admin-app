@@ -28,7 +28,7 @@ async function createCoupon(data) {
 }
 
 async function uploadSingleImg(data) {
-  const url = 'https//localhost:3001/api/menu/upload-img';
+  const url = 'http://localhost:3001/api/menu/upload-single-img';
 
   const requestConfig = {
     method: 'POST',
@@ -38,7 +38,7 @@ async function uploadSingleImg(data) {
   };
 
   const response = await axios.post(url, data, requestConfig);
-  return response.data;
+  return response;
 }
 
 export { createCoupon, createItem, createMenu, uploadSingleImg };

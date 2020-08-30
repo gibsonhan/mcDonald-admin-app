@@ -1,15 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Form from './common/Form';
+//import Form from './common/Form';
 import { HEROINPUTS } from '../global/tempData';
 
 const CreateHero = () => {
   return (
     <CreateHeroContainer>
-      <Form title={'hero'} inputs={HEROINPUTS}>
-        <button type="submit"> Create Menu</button>
-      </Form>
+      <button type="submit"> Create Menu</button>
     </CreateHeroContainer>
   );
 };

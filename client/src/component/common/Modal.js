@@ -21,10 +21,16 @@ const Modal = ({ isOpen, setIsOpen, children }) => {
 const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: absolute;
+
+  left: 50%;
+  top: 50%;
   height: 500px;
   width: 500px;
   background: green;
+  z-index: 10;
 `;
 
 const CloseContainer = styled.div`

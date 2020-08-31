@@ -7,8 +7,10 @@ aws.config.apiVersions = {
 };
 
 const createHero = async (req, res) => {
-  const data = req.body;
+  let data = req.body;
+  console.log('server check', data);
   const hero = await new Hero({ ...data });
+  console.log('hero', hero);
   try {
     hero.save();
     res.status(201).json(hero);
@@ -34,14 +36,6 @@ const singleHero = async (req, res) => {
   } catch (error) {
     res.status(400).json('Failed to find Item', error);
   }
-};
-
-const uploadSingleImg = async (req, res) => {
-  //TODO something with field name nees to change
-  const heroName = req.body.name.replace(/\s+/g, ''); //remove all white space
-  const imgData = req.files[0].buffer;
-  const response = await S3.createS3SingleImgObj(imgData, heroName);
-  res.status(200).json(response);
 };
 
 const updateHero = async (req, res) => {

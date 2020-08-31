@@ -7,27 +7,22 @@ import * as yup from 'yup';
 
 import Input from './common/Input';
 import PreviewImg from './common/PreviewImg';
-import { createMenu } from '../util/service';
-import { createSingleImgUrl } from '../util/createSingleImgUrl';
 
-const CreateMenuForm = ({ title, inputs, children }) => {
+import { createSingleImgUrl } from '../util/createSingleImgUrl';
+import { createHero } from '../util/service';
+
+const CreateHeroForm = ({ title, inputs, children }) => {
   const { register, handleSubmit, errors } = useForm({});
 
   const onSubmit = async (_formData) => {
-    const { name, group, menuImg } = _formData;
-    const img = await createSingleImgUrl(menuImg, name);
+    const { heroImg, ...formObj } = _formData;
     const data = {
-      name,
-      img,
-      group: [{ name: 'Snacsk', items: ['A', 'B', 'C'] }],
-      created: new Date(),
-      lastEdit: {
-        date: new Date(),
-        author: 'Admin',
-      },
+      ...formObj,
+      img: await createSingleImgUrl(heroImg, formObj.title),
     };
+
     try {
-      const response = await createMenu(data);
+      const response = await createHero(data);
       console.log('check', response);
     } catch (error) {
       console.log(error);
@@ -36,7 +31,7 @@ const CreateMenuForm = ({ title, inputs, children }) => {
 
   return (
     <FormContainer>
-      <PreviewImg register={register} title={title} />
+      <PreviewImg register={register} title={'hero'} />
       <form onSubmit={handleSubmit(onSubmit)}>
         {!!inputs &&
           inputs.map((item) => (
@@ -61,4 +56,4 @@ const ChildrenContainer = styled.div`
   justify-content: center;
 `;
 
-export default CreateMenuForm;
+export default CreateHeroForm;

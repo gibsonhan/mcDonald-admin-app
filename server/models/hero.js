@@ -31,4 +31,4 @@ heroSchema.set('toJSON', {
   },
 });
 
-module.exports = mongoose.Model('Hero', heroSchema);
+module.exports = mongoose.model('Hero', heroSchema);

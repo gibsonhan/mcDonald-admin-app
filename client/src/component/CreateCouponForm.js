@@ -14,12 +14,10 @@ const CreateCouponForm = ({ title, inputs, children }) => {
   const { register, handleSubmit, errors } = useForm({});
 
   const onSubmit = async (_formData) => {
-    const { title, couponImg, ...formObj } = _formData;
-
+    const { couponImg, ...formObj } = _formData;
     const data = {
-      title,
-      formObj,
-      img: await createSingleImgUrl(couponImg, title),
+      ...formObj,
+      img: await createSingleImgUrl(couponImg, formObj.title),
     };
     try {
       const response = await createCoupon(data);

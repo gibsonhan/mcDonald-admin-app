@@ -5,22 +5,22 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const Entry = require('./models/item');
-
 app.use(cors());
 app.use(bodyParser.json());
 
 //Routes
+const s3Routes = require('./api/amazonS3');
+const couponRoutes = require('./api/coupon');
+//const heroRoutes = require('./api/hero');
 const itemRoutes = require('./api/item');
 const menuRoutes = require('./api/menu');
-//const couponRoutes = require('./api/coupon');
-//const heroRoutes = require('./api/hero');
 //const trendRoutes = require('./api/trend');
 
+app.use('/api/amazonS3', s3Routes);
+app.use('/api/coupon', couponRoutes);
+//app.use('/api/hero', heroRoutes);
 app.use('/api/item', itemRoutes);
 app.use('/api/menu', menuRoutes);
-//app.use('/api/coupon', couponRoutes);
-//app.use('/api/hero', couponRoutes);
 //app.use('/api/trend', trendRoutes);
 
 app.get('/', (req, res) => {

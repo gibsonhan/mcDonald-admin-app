@@ -5,10 +5,10 @@ const couponRoutes = express.Router();
 const controller = require('../controller/coupon');
 
 // CRUD for company profile
-couponRoutes.route('/').get(item.list);
-couponRoutes.route('/:id').get(item.id);
-couponRoutes.route('/create').post(item.create);
-couponRoutes.route('/update/:id').put(item.update);
-couponRoutes.route('/delete/:id').delete(item.delete);
+couponRoutes.route('/').get(controller.couponList);
+couponRoutes.route('/:id').get(controller.singleCoupon);
+couponRoutes.route('/create').post(controller.createCoupon);
+couponRoutes.route('/update/:id').put(controller.updateCoupon);
+couponRoutes.route('/delete/:id').delete(controller.deleteCoupon);
 
 module.exports = couponRoutes;

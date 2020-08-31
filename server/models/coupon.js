@@ -13,12 +13,21 @@ mongoose
 
 const couponSchema = new mongoose.Schema({
   title: String,
-  reoccurance: String,
-  couponItems: Array,
+  titleContent: String,
+  img: String,
+  //reoccurance: String,
+  expiration: Date,
+  /*
+  couponGroup: {
+    Menu: Array,
+    MenuSubGroup: Array,
+    Items: Array,
+  },
   qrCode: String,
+  */
   legal: String,
-  scanIndoor: Boolean,
-  pickUp: Boolean,
+  //scanIndoor: Boolean,
+  //pickUp: Boolean,
 });
 
 couponSchema.set('toJSON', {
@@ -29,4 +38,4 @@ couponSchema.set('toJSON', {
   },
 });
 
-module.exports = mongoose.model('Entry', couponSchema);
+module.exports = mongoose.model('Coupon', couponSchema);

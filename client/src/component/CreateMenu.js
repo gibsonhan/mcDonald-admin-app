@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import CreateMenuForm from './CreateMenuForm';
+import Form from './CreateMenuForm';
 import { MENUINPUTS } from '../global/tempData';
 
 const CreateMenu = () => {
   return (
     <CreateMenuContainer>
-      <CreateMenuForm title={'menu'} inputs={MENUINPUTS}>
+      <Form title={'menu'} inputs={MENUINPUTS}>
         <button type="submit"> Create Menu</button>
-      </CreateMenuForm>
+      </Form>
     </CreateMenuContainer>
   );
 };

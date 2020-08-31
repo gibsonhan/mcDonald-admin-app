@@ -1,8 +1,7 @@
-const ITEMINPUTS = ['name', 'group', 'subGroup', 'couponGroup'];
 const ITEMSIZES = ['xSmall', 'small', 'regular', 'large', 'xLarge'];
 const SERVINGTIMES = ['breakfast', 'lunch', 'dinner'];
-const SIZEMOREINFO = ['Price', 'Calories'];
-const MENUINPUTS = ['name', 'groups'];
+const SIZEMOREINFO = ['price', 'calories'];
+const COUPONINPUTS = ['title', 'titleContent', 'expiration', 'legal'];
 const HEROINPUTS = [
   'title',
   'title2',
@@ -14,8 +13,8 @@ const HEROINPUTS = [
   'dateRestriction',
   'legal',
 ];
-
-const COUPONINPUTS = ['title', 'titleContent', 'expiration', 'legal'];
+const ITEMINPUTS = ['name', 'group', 'subGroup', 'couponGroup'];
+const MENUINPUTS = ['name', 'groups'];
 
 const DEFAULTITEMVALUES = {
   name: 'French Fries',

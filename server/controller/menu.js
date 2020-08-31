@@ -38,8 +38,9 @@ const singleMenu = async (req, res) => {
 
 const uploadSingleImg = async (req, res) => {
   //TODO something with field name nees to change
+  console.log('breaking everyting', req.body);
   const menuName = req.body.name.replace(/\s+/g, ''); //remove all white space
-  const imgData = req.files[0].buffer;
+  const imgData = req.file[0].buffer;
   const response = await S3.createS3SingleImgObj(imgData, menuName);
   res.status(200).json(response);
 };

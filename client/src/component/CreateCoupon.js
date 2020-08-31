@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-
-//import Form from './common/Form';
+import Form from './CreateCouponForm';
 import { COUPONINPUTS } from '../global/tempData';
 
 const CreateCoupon = () => {
   return (
     <CreateCouponContainer>
-      <button type="submit"> Create Menu</button>
+      <Form title="coupon" inputs={COUPONINPUTS}>
+        <button type="submit"> Create Coupon</button>
+      </Form>
     </CreateCouponContainer>
   );
 };

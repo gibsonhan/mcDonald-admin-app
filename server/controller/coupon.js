@@ -1,4 +1,4 @@
-const Coupon = require('../models/Coupon');
+const Coupon = require('../models/coupon');
 const aws = require('aws-sdk');
 const S3 = require('../util/createS3SingleImgObj');
 aws.config.apiVersions = {
@@ -8,10 +8,10 @@ aws.config.apiVersions = {
 
 const createCoupon = async (req, res) => {
   const data = req.body;
-  const Coupon = await new Coupon({ ...data });
+  const coupon = await new Coupon({ ...data });
   try {
-    Coupon.save();
-    res.status(201).json(Coupon);
+    coupon.save();
+    res.status(201).json(coupon);
   } catch (error) {
     console.log('faied to create Coupon', error);
   }

@@ -9,6 +9,7 @@ const uploadSingleImg = async (req, res) => {
   res.status(200).json(response);
 };
 
+//TDO need to fix the item upload
 const uploadMultiImg = async (req, res) => {
   const itemName = req.body.name.replace(/\s+/g, ''); //remove all white space
   const imgData = req.files;

@@ -7,8 +7,9 @@ import * as yup from 'yup';
 
 import Input from './common/Input';
 import PreviewImg from './common/PreviewImg';
-import { createCoupon } from '../util/service';
+import { create } from '../util/service';
 import { createSingleImgUrl } from '../util/createSingleImgUrl';
+import { COUPON } from '../global/reserveWord';
 
 const CreateCouponForm = ({ title, inputs, children }) => {
   const { register, handleSubmit, errors } = useForm({});
@@ -20,8 +21,8 @@ const CreateCouponForm = ({ title, inputs, children }) => {
       img: await createSingleImgUrl(couponImg, formObj.title),
     };
     try {
-      const response = await createCoupon(data);
-      console.log('check', response);
+      const response = await create(COUPON, data);
+      console.log('coupon check', response);
     } catch (error) {
       console.log(error);
     }
@@ -29,7 +30,7 @@ const CreateCouponForm = ({ title, inputs, children }) => {
 
   return (
     <FormContainer>
-      <PreviewImg register={register} title={'coupon'} />
+      <PreviewImg register={register} title={COUPON} />
       <form onSubmit={handleSubmit(onSubmit)}>
         {!!inputs &&
           inputs.map((item) => (

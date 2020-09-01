@@ -7,8 +7,9 @@ import * as yup from 'yup';
 
 import Input from './common/Input';
 import PreviewImg from './common/PreviewImg';
-import { createMenu } from '../util/service';
+import { create } from '../util/service';
 import { createSingleImgUrl } from '../util/createSingleImgUrl';
+import { MENU } from '../global/reserveWord';
 
 const CreateMenuForm = ({ title, inputs, children }) => {
   const { register, handleSubmit, errors } = useForm({});
@@ -26,8 +27,9 @@ const CreateMenuForm = ({ title, inputs, children }) => {
         author: 'Admin',
       },
     };
+
     try {
-      const response = await createMenu(data);
+      const response = await create(MENU, data);
       console.log('check', response);
     } catch (error) {
       console.log(error);

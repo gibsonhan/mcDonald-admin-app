@@ -1,51 +1,20 @@
 import axios from 'axios';
-const baseUrl = 'http://localhost:3001/api';
+import { COUPON, HERO, ITEM, MENU } from '../global/reserveWord';
 
-async function createCoupon(data) {
-  const url = baseUrl + '/create';
+const baseUrl = 'http://localhost:3001/api/';
+
+async function create(type, payload) {
+  const url = baseUrl + type;
   const requestConfig = {
     //TODO implement auth restrictions
     headers: { Authorization: 'temp' },
   };
-  const response = await axios.post(url, { ...data });
-  return response.data;
-}
-async function createHero(data) {
-  const url = baseUrl + 'api/hero/create';
-  const requestConfig = {
-    //TODO implement auth restrictions
-    headers: { Authorization: 'temp' },
-  };
-  const response = await axios.post(url, { ...data });
-  return response.data;
-}
-
-async function createItem(data) {
-  const url = baseUrl + '/item/create';
-  const requestConfig = {
-    //TODO implement auth restrictions
-    headers: { Authorization: 'temp' },
-  };
-  return await axios.post(url, { ...data });
-}
-
-async function createMenu(data) {
-  const url = baseUrl + '/menu/create';
-  const requestConfig = {
-    //TODO implement auth restrictions
-    headers: { Authorization: 'temp' },
-  };
-  return await axios.post(url, { ...data });
-}
-
-async function getItemList() {
-  const url = baseUrl + '/item';
-  const response = await axios.get(url);
+  const response = await axios.post(url, payload);
   return response.data;
 }
 
 async function getList(type) {
-  const url = baseUrl + `/${type}`;
+  const url = baseUrl + type;
   const response = await axios.get(url);
   return response.data;
 }
@@ -72,7 +41,7 @@ async function uploadSingleImg(data) {
 }
 
 async function uploadMultiImg(data) {
-  const url = 'http://localhost:3001/api/amazonS3/multi-img';
+  const url = baseUrl + 'amazonS3/multi-img';
 
   const requestConfig = {
     method: 'POST',
@@ -84,12 +53,4 @@ async function uploadMultiImg(data) {
   return response.data;
 }
 
-export {
-  createCoupon,
-  createHero,
-  createItem,
-  createMenu,
-  getList,
-  uploadSingleImg,
-  uploadMultiImg,
-};
+export { create, getList, uploadSingleImg, uploadMultiImg };

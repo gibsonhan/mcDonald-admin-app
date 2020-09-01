@@ -9,7 +9,8 @@ import Input from './common/Input';
 import PreviewImg from './common/PreviewImg';
 
 import { createSingleImgUrl } from '../util/createSingleImgUrl';
-import { createHero } from '../util/service';
+import { create } from '../util/service';
+import { HERO } from '../global/reserveWord';
 
 const CreateHeroForm = ({ title, inputs, children }) => {
   const { register, handleSubmit, errors } = useForm({});
@@ -22,7 +23,7 @@ const CreateHeroForm = ({ title, inputs, children }) => {
     };
 
     try {
-      const response = await createHero(data);
+      const response = await create(HERO, data);
       console.log('check', response);
     } catch (error) {
       console.log(error);

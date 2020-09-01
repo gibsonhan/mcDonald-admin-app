@@ -7,7 +7,8 @@ import * as yup from 'yup';
 import { createServingTimeArr } from '../util/createServingTimeArr';
 import { createImgObj } from '../util/createImgObj';
 import { createSizeObj } from '../util/createSizesObj';
-import { createItem } from '../util/service';
+import { create } from '../util/service';
+import { ITEM } from '../global/reserveWord';
 
 import Input from './common/Input';
 import SwitchBtnGroup from './SwitchButtonGroup';
@@ -57,7 +58,7 @@ const CreateItem = ({ title }) => {
     };
 
     try {
-      const response = await createItem({ ...data });
+      const response = await create(ITEM, data);
       console.log('created and a new item', response);
     } catch (error) {
       console.log('Failed to create item');

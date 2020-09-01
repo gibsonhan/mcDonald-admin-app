@@ -7,8 +7,8 @@ const controller = require('../controller/hero');
 // CRUD for company profile
 heroRoutes.route('/').get(controller.heroList);
 heroRoutes.route('/:id').get(controller.singleHero);
-heroRoutes.route('/create').post(controller.createHero);
-heroRoutes.route('/update/:id').put(controller.updateHero);
-heroRoutes.route('/delete/:id').get(controller.deleteHero);
+heroRoutes.route('/').post(controller.createHero);
+heroRoutes.route('/:id').put(controller.updateHero);
+heroRoutes.route('/:id').get(controller.deleteHero);
 
 module.exports = heroRoutes;

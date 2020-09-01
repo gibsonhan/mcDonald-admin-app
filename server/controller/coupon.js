@@ -19,8 +19,8 @@ const createCoupon = async (req, res) => {
 
 const couponList = async (req, res) => {
   try {
-    const Coupon = await Coupon.find({});
-    res.status(200).json(Coupon);
+    const coupon = await Coupon.find({});
+    res.status(200).json(coupon);
   } catch (error) {
     res.status(500).json('failed to fetch Coupon list', error);
   }
@@ -29,8 +29,8 @@ const couponList = async (req, res) => {
 const singleCoupon = async (req, res) => {
   const id = req.params.id;
   try {
-    const item = await Item.findById(id);
-    await res.status(200).json(item.toJSON());
+    const coupon = await Coupon.findById(id);
+    await res.status(200).json(coupon);
   } catch (error) {
     res.status(400).json('Failed to find Item', error);
   }

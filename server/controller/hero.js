@@ -1,16 +1,8 @@
 const Hero = require('../models/hero');
-const aws = require('aws-sdk');
-const S3 = require('../util/createS3SingleImgObj');
-aws.config.apiVersions = {
-  s3: '2006-03-01',
-  // other service API versions
-};
 
 const createHero = async (req, res) => {
   let data = req.body;
-  console.log('server check', data);
   const hero = await new Hero({ ...data });
-  console.log('hero', hero);
   try {
     hero.save();
     res.status(201).json(hero);

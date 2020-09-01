@@ -2,7 +2,8 @@ const { createS3SizeImgUrlObj } = require('../util/createS3ImgObj');
 const S3 = require('../util/createS3SingleImgObj');
 
 const uploadSingleImg = async (req, res) => {
-  const imgName = req.body.name.replace(/\s+/g, ''); //remove all white space
+  let imgName = req.body.name.replace(/\s+/g, ''); //remove all white space
+  imgName = imgName.toLowerCase();
   const imgData = req.files[0].buffer;
   const response = await S3.createS3SingleImgObj(imgData, imgName);
   res.status(200).json(response);

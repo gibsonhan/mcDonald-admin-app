@@ -33,11 +33,13 @@ app.get('/api/coupons', (req, res) => {
 });
 
 //hero item
+/*
 app.get('/api/items', (req, res) => {
   Entry.find({}).then((entries) => {
     res.json(entries.map((entry) => entry.toJSON()));
   });
 });
+*/
 //const requestLogger = require('./middleware/requestLogger')
 //app.use(requestLogger)
 //app.use(unknownEndpoint)

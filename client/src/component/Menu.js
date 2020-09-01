@@ -1,26 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 
 import { HERO, MENU, ITEM, COUPON } from '../global/reserveWord';
+//import fetchAndSet from '../util/handleFetchAndSet';
+import handleFetchList from '../hooks/handleFetchList';
 import CreateModal from './CreateModal';
 import List from './common/List';
 import MenuListRow from './MenuListRow';
 
 const Menu = () => {
-  const [menuList, setMenuList] = useState([]);
-
-  useEffect(() => {
-    console.log('hello world');
-    async function fetchItemList() {
-      const baseUrl = 'http://localhost:3001/api/menu';
-      const response = await axios.get(baseUrl);
-      console.log('check menu response', response);
-      setMenuList(response.data);
-    }
-    fetchItemList();
-  }, []);
-
+  const menuList = handleFetchList(MENU);
   const buttonTitle = [HERO, MENU, ITEM, COUPON];
   return (
     <MenuContainer>

@@ -19,7 +19,7 @@ const singleItem = async (req, res, next) => {
   const id = req.params.id;
   try {
     const item = await Item.findById(id);
-    await res.status(200).json(item.toJSON());
+    res.status(200).json(item);
   } catch (error) {
     res.status(400).json('Failed to find Item', error);
   }
@@ -27,6 +27,7 @@ const singleItem = async (req, res, next) => {
 
 const createItem = async (req, res, next) => {
   let data = req.body;
+  console.log('chekcing data stream', data);
   const item = await new Item({ ...data });
   try {
     item.save();
@@ -36,17 +37,6 @@ const createItem = async (req, res, next) => {
   }
 };
 
-//https://ademcan.net/blog/2017/11/24/uploaddownload-images-tofrom-aws-s3-in-react-native-a-step-by-step-guide/
-///https://stackoverflow.com/questions/11240127/uploading-image-to-amazon-s3-with-html-javascript-jquery-with-ajax-request-n
-
-const uploadImg = async (req, res) => {
-  const itemName = req.body.name.replace(/\s+/g, ''); //remove all white space
-  const imgData = req.files;
-  const response = await createS3SizeImgUrlObj(itemName, imgData);
-  res.status(200).json(response);
-};
-
-//need to check update
 const updateItem = async (req, res) => {
   const id = req.params.id;
   const newObject = req.params.body;
@@ -80,6 +70,5 @@ module.exports = {
   singleItem,
   createItem,
   updateItem,
-  uploadImg,
   deleteItem,
 };

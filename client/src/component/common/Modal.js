@@ -25,8 +25,9 @@ const ModalContainer = styled.div`
   align-items: center;
   position: absolute;
 
-  left: 50%;
-  top: 50%;
+  top: 200px;
+  left: 100px;
+
   height: 500px;
   width: 500px;
   background: green;

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { COUPON, HERO, ITEM, MENU } from '../global/reserveWord';
 
 const baseUrl = 'http://localhost:3001/api/';
 
@@ -19,16 +18,21 @@ async function getList(type) {
   return response.data;
 }
 
-async function getItem(data) {}
+async function getSingle(type, id) {
+  const url = baseUrl + type + `${id}`;
+  const response = await axios.get(url);
+  return response.data;
+}
 
-async function getCoupon(data) {}
+async function remove(id, type) {
+  const url = baseUrl + type + `/${id}`;
+  const response = await axios.delete(url);
+  return response.data;
+}
 
-async function getMenu(data) {}
-
-async function getHero(data) {}
 //TODO: need to refactor: remove the api from menu to a general s3/api/route
 async function uploadSingleImg(data) {
-  const url = 'http://localhost:3001/api/amazonS3/single-img';
+  const url = baseUrl + 'amazonS3/single-img';
 
   const requestConfig = {
     method: 'POST',
@@ -53,4 +57,4 @@ async function uploadMultiImg(data) {
   return response.data;
 }
 
-export { create, getList, uploadSingleImg, uploadMultiImg };
+export { create, getList, remove, uploadSingleImg, uploadMultiImg };

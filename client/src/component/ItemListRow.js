@@ -1,21 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+
+import { ITEM } from '../global/reserveWord';
+import { remove } from '../util/service';
 
 const ItemRow = ({ index, data }) => {
   const hasCoupon = !!data[index].couponGroupID === false ? false : true;
-  async function removeItem(id) {
-    //TODO: pop up modul Confirm do you want to delete
-    //TODO: move the data stuff to app Context
-    try {
-      const baseUrl = `http://localhost:3001/api/item/delete/${id}`;
-      const response = await axios.delete(baseUrl);
-      console.log('resposne', response);
-    } catch (error) {
-      console.log('this is a weird error', error);
-    }
-  }
-
   const { name, group, id } = data[index];
   return (
     <ItemRowContainer>
@@ -26,7 +16,7 @@ const ItemRow = ({ index, data }) => {
         <ActiveBox active={hasCoupon} />
       </ActiveBoxContainer>
       <button>Edit</button>
-      <button onClick={() => removeItem(id)}>Delete</button>
+      <button onClick={() => remove(id, ITEM)}>Delete</button>
     </ItemRowContainer>
   );
 };

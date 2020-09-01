@@ -9,6 +9,6 @@ Menu.route('/').get(controller.menuList);
 Menu.route('/:id').get(controller.singleMenu);
 Menu.route('/').post(controller.createMenu);
 Menu.route('/:id').put(controller.updateMenu);
-Menu.route('/:id').get(controller.deleteMenu);
+Menu.route('/:id').delete(controller.deleteMenu);
 
 module.exports = Menu;

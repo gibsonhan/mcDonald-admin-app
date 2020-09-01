@@ -9,6 +9,6 @@ trendRoutes.route('/').get(trend.list);
 trendRoutes.route('/:id').get(trend.id);
 trendRoutes.route('/').post(trend.create);
 trendRoutes.route('/:id').put(trend.update);
-trendRoutes.route('/:id').get(trend.delete);
+trendRoutes.route('/:id').delete(trend.delete);
 
 module.exports = trendRoutes;

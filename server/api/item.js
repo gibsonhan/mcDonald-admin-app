@@ -13,6 +13,6 @@ Item.route('/:id').get(controller.singleItem);
 Item.route('/').post(controller.createItem);
 //TODO would be to refacor upload img to sw3 into one single route
 Item.route('/:id').put(controller.updateItem);
-Item.route('/:id').get(controller.deleteItem);
+Item.route('/:id').delete(controller.deleteItem);
 
 module.exports = Item;

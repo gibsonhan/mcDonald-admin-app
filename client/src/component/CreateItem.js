@@ -19,6 +19,8 @@ import {
   ITEMSIZES,
   SERVINGTIMES,
 } from '../global/tempData';
+import { SERVINGTIME } from '../global/reserveWord';
+
 const CreateItem = ({ title }) => {
   const inputSchema = ITEMINPUTS.reduce((acc, curr) => {
     acc[curr] = yup.string().required();
@@ -40,15 +42,16 @@ const CreateItem = ({ title }) => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (formObjData) => {
-    const { name, group, subGroup, couponGroup, ...sizeObjInfo } = formObjData;
+  const onSubmit = async (formData) => {
+    const { name, group, subGroup, couponGroup, ...sizeObjInfo } = formData;
+
     const data = {
       name,
       group,
       subGroup,
       couponGroup,
-      servingTime: createServingTimeArr(formObjData, SERVINGTIMES),
-      size: createSizeObj(ITEMSIZES, formObjData, sizeObjInfo),
+      servingTime: createServingTimeArr(formData, SERVINGTIMES),
+      size: createSizeObj(ITEMSIZES, formData, sizeObjInfo),
       img: await createImgObj(ITEMSIZES, name, sizeObjInfo),
       created: new Date(),
       lastEdit: {
@@ -56,7 +59,6 @@ const CreateItem = ({ title }) => {
         author: 'Admin',
       },
     };
-
     try {
       const response = await create(ITEM, data);
       console.log('created and a new item', response);
@@ -75,7 +77,7 @@ const CreateItem = ({ title }) => {
           ))}
           <SwitchBtnGroup
             key={'serving'}
-            title={'Serving'}
+            title={SERVINGTIME}
             data={SERVINGTIMES}
             register={register}
             control={control}
@@ -83,7 +85,7 @@ const CreateItem = ({ title }) => {
           {/* TODO: when user enable size, group price input**/}
           <SwitchBtnGroup
             key={'sizesArr'}
-            title={'Allowed Sizes'}
+            title={'Size Customization'}
             data={ITEMSIZES}
             register={register}
             control={control}

@@ -15,7 +15,7 @@ const Hero = () => {
       <CreateModal type={HERO} />
       <ListContainer>
         {!heroList.length && 'No List'}
-        {!!heroList && <List title={HERO} data={heroList} row={MenuListRow} />}
+        {heroList && <List title={HERO} data={heroList} row={MenuListRow} />}
       </ListContainer>
     </HeroContainer>
   );

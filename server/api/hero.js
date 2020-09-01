@@ -9,6 +9,6 @@ heroRoutes.route('/').get(controller.heroList);
 heroRoutes.route('/:id').get(controller.singleHero);
 heroRoutes.route('/').post(controller.createHero);
 heroRoutes.route('/:id').put(controller.updateHero);
-heroRoutes.route('/:id').get(controller.deleteHero);
+heroRoutes.route('/:id').delete(controller.deleteHero);
 
 module.exports = heroRoutes;

@@ -12,5 +12,6 @@ export default (type) => {
   useEffect(() => {
     fetchAndSet(type, setList);
   }, []);
+
   return list;
 };

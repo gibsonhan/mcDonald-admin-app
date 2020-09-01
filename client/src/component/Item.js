@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import CreateModal from './CreateModal';
 import List from './common/List';
 import ItemListRow from './ItemListRow';
 
@@ -9,16 +10,13 @@ import { ITEM } from '../global/reserveWord';
 
 const Item = ({ props }) => {
   const itemList = handleFetchList(ITEM);
+  console.log('itemList check', itemList);
   return (
     <ItemContainer>
       <ItemSummaryContainer>
         <header>Item</header>
-        <button>Add new item</button>
-        <section>
-          <input></input>
-          <button>Jump To</button>
-        </section>
         Number of items: {itemList.length}
+        <CreateModal type={ITEM} />
       </ItemSummaryContainer>
       <ItemListContainer>
         <List title={'Item'} data={itemList} row={ItemListRow} />

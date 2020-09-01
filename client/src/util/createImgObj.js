@@ -12,6 +12,7 @@ export async function createImgObj(_sizes, _name, _formObj) {
   );
 
   const s3_sizeImgObj = await ImgUploadRequest(formData);
+  console.log('check', s3_sizeImgObj);
   return s3_sizeImgObj.data;
 }
 
@@ -24,10 +25,11 @@ function filterSizeImgObj(_sizes, _formObj) {
 }
 
 async function ImgUploadRequest(data) {
-  const uploadUrl = 'http://localhost:3001/api/item/img-upload';
+  const uploadUrl = 'http://localhost:3001/api/amazons3/multi-img';
   const requestConfig = {
     method: 'POST',
     config: { headers: { 'Content-Type': 'multipart/form-data' } },
   };
+
   return await axios.post(uploadUrl, data, requestConfig);
 }

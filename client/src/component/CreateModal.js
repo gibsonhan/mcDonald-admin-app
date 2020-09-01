@@ -23,7 +23,7 @@ const CreateModal = ({ type }) => {
   };
   return (
     <CreateModalContainer>
-      <button onClick={toggleModal}> Create + {buttonTitle} </button>
+      <button onClick={toggleModal}> Create {buttonTitle} </button>
       <Modal isOpen={openModal} setIsOpen={setOpenModal}>
         {OBJ[type]}
       </Modal>
@@ -31,10 +31,6 @@ const CreateModal = ({ type }) => {
   );
 };
 
-const CreateModalContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+const CreateModalContainer = styled.div``;
 
 export default CreateModal;

@@ -33,7 +33,6 @@ async function remove(id, type) {
 //TODO: need to refactor: remove the api from menu to a general s3/api/route
 async function uploadSingleImg(data) {
   const url = baseUrl + 'amazonS3/single-img';
-
   const requestConfig = {
     method: 'POST',
     config: {
@@ -46,7 +45,6 @@ async function uploadSingleImg(data) {
 
 async function uploadMultiImg(data) {
   const url = baseUrl + 'amazonS3/multi-img';
-
   const requestConfig = {
     method: 'POST',
     config: {
@@ -57,4 +55,24 @@ async function uploadMultiImg(data) {
   return response.data;
 }
 
-export { create, getList, remove, uploadSingleImg, uploadMultiImg };
+async function uploadImg(type, data) {
+  const url = baseUrl + `amazons3/${type}-img`;
+  const requestConfig = {
+    method: 'POST',
+    config: {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    },
+  };
+  const response = await axios.post(url, data, requestConfig);
+  return response.data;
+}
+
+export {
+  create,
+  getList,
+  getSingle,
+  remove,
+  uploadSingleImg,
+  uploadMultiImg,
+  uploadImg,
+};

@@ -17,4 +17,7 @@ const uploadMultiImg = async (req, res) => {
   res.status(200).json(response);
 };
 
-module.exports = { uploadSingleImg, uploadMultiImg };
+//TODO
+const removeImg = async (req, res) => {};
+
+module.exports = { removeImg, uploadSingleImg, uploadMultiImg };

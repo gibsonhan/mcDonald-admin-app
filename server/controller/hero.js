@@ -7,7 +7,7 @@ const createHero = async (req, res) => {
     hero.save();
     res.status(201).json(hero);
   } catch (error) {
-    console.log('faied to create hero', error);
+    res.status(500).json('Failed to Create a Coupon', error);
   }
 };
 
@@ -45,12 +45,12 @@ const updateHero = async (req, res) => {
 
 const deleteHero = async (req, res) => {
   const id = req.params.id;
+  const message = `${id} was successfully deleted`;
   try {
-    const repsone = await Hero.findByIdAndRemove(id);
-    console.log('check', response);
-    res.status(200);
+    await Hero.findByIdAndRemove(id);
+    res.status(200).json(message);
   } catch (error) {
-    res.status(500).json('fail to Delete', error);
+    res.status(500).json('fail to delete hero', error);
   }
 };
 

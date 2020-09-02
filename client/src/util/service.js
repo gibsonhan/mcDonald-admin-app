@@ -55,6 +55,7 @@ async function uploadMultiImg(data) {
   return response.data;
 }
 
+//TODO replace the single and multi upload fucntions
 async function uploadImg(type, data) {
   const url = baseUrl + `amazons3/${type}-img`;
   const requestConfig = {

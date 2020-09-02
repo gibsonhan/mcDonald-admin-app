@@ -1,16 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
-import { FixedSizeList as List } from 'react-window';
+import { FixedSizeList as ListInput } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 
-import axios from 'axios';
-//TODO Set up modal
-
-const ListComp = ({ data, row }) => {
+const List = ({ data, row }) => {
   return (
     <AutoSizer>
       {({ height, width }) => (
-        <List
+        <ListInput
           itemData={data}
           height={height}
           width={width}
@@ -18,10 +14,10 @@ const ListComp = ({ data, row }) => {
           itemSize={30}
         >
           {row}
-        </List>
+        </ListInput>
       )}
     </AutoSizer>
   );
 };
 
-export default ListComp;
+export default List;

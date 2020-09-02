@@ -16,7 +16,7 @@ const couponSchema = new mongoose.Schema({
   titleContent: String,
   img: String,
   //reoccurance: String,
-  expiration: Date,
+  expiration: String,
   /*
   couponGroup: {
     Menu: Array,

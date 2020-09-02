@@ -7,7 +7,7 @@ const createMenu = async (req, res) => {
     menu.save();
     res.status(201).json(menu);
   } catch (error) {
-    console.log('faied to create menu', error);
+    res.status(500).json('Failed to Menu a Coupon', error);
   }
 };
 
@@ -45,10 +45,10 @@ const updateMenu = async (req, res) => {
 
 const deleteMenu = async (req, res) => {
   const id = req.params.id;
+  const message = `${id} was successfully deleted`;
   try {
-    const repsone = await Menu.findByIdAndRemove(id);
-    console.log('check', response);
-    res.status(200);
+    await Menu.findByIdAndRemove(id);
+    res.status(200).json(message);
   } catch (error) {
     res.status(500).json('fail to Delete', error);
   }

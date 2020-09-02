@@ -1,10 +1,4 @@
 const Item = require('../models/item');
-const aws = require('aws-sdk');
-const { createS3SizeImgUrlObj } = require('../util/createS3ImgObj');
-aws.config.apiVersions = {
-  s3: '2006-03-01',
-  // other service API versions
-};
 
 const itemList = async (req, res, next) => {
   try {
@@ -27,13 +21,12 @@ const singleItem = async (req, res, next) => {
 
 const createItem = async (req, res, next) => {
   let data = req.body;
-  console.log('chekcing data stream', data);
   const item = await new Item({ ...data });
   try {
     item.save();
     res.status(201).json(item);
   } catch (error) {
-    console.log('failed to save', error);
+    res.status(501).json('failed to create an item');
   }
 };
 
@@ -55,10 +48,7 @@ const deleteItem = async (req, res) => {
   const id = req.params.id;
   const message = `${id} was successfully deleted`;
   try {
-    await Item.findByIdAndRemove(id, {
-      useFindAndModify: false,
-    });
-    console.log('We deleted it');
+    await Item.findByIdAndRemove(id);
     res.status(200).json(message);
   } catch (error) {
     res.status(500).json('fail to delete item', error);

@@ -6,19 +6,19 @@ import { COUPON } from '../global/reserveWord';
 
 import CreateModal from './CreateModal';
 import List from './common/List';
-import MenuListRow from './MenuListRow';
+import CouponListRow from './CouponListRow';
 
 const Coupon = () => {
   const couponList = handleFetchList(COUPON);
   return (
     <CouponContainer>
-      coupon container
-      <CreateModal type={COUPON} />
+      <ContentContainer>
+        <div>Coupon</div>
+        <div>Number of Coupons: {couponList.length}</div>
+        <CreateModal type={COUPON} />
+      </ContentContainer>
       <ListContainer>
-        {!couponList.length && 'No List'}
-        {!!couponList && (
-          <List title={COUPON} data={couponList} row={MenuListRow} />
-        )}
+        <List title={COUPON} data={couponList} row={CouponListRow} />
       </ListContainer>
     </CouponContainer>
   );
@@ -27,10 +27,23 @@ const Coupon = () => {
 const CouponContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  height: 100%;
+  width: 100%;
+  background: yellow;
 `;
 
-const ListContainer = styled.div``;
+const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+`;
+
+const ListContainer = styled.div`
+  display: flex;
+  flex: 2;
+`;
 
 export default Coupon;

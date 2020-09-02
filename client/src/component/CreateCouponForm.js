@@ -13,13 +13,13 @@ import { COUPON } from '../global/reserveWord';
 
 const CreateCouponForm = ({ title, inputs, children }) => {
   const { register, handleSubmit, errors } = useForm({});
-
   const onSubmit = async (_formData) => {
     const { couponImg, ...formObj } = _formData;
     const data = {
       ...formObj,
       img: await createSingleImgUrl(couponImg, formObj.title),
     };
+
     try {
       const response = await create(COUPON, data);
       console.log('coupon check', response);

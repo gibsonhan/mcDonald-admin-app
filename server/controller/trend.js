@@ -1,10 +1,4 @@
 const Trend = require('../models/Trend');
-const aws = require('aws-sdk');
-const S3 = require('../util/createS3SingleImgObj');
-aws.config.apiVersions = {
-  s3: '2006-03-01',
-  // other service API versions
-};
 
 const createTrend = async (req, res) => {
   const data = req.body;
@@ -52,8 +46,7 @@ const updateTrend = async (req, res) => {
 const deleteTrend = async (req, res) => {
   const id = req.params.id;
   try {
-    const repsone = await Trend.findByIdAndRemove(id);
-    console.log('check', response);
+    await Trend.findByIdAndRemove(id);
     res.status(200);
   } catch (error) {
     res.status(500).json('fail to Delete', error);

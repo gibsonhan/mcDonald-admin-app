@@ -10,7 +10,6 @@ import { ITEM } from '../global/reserveWord';
 
 const Item = ({ props }) => {
   const itemList = handleFetchList(ITEM);
-  console.log('itemList check', itemList);
   return (
     <ItemContainer>
       <ItemSummaryContainer>

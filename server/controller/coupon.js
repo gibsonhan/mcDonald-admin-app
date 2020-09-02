@@ -1,10 +1,4 @@
 const Coupon = require('../models/coupon');
-const aws = require('aws-sdk');
-const S3 = require('../util/createS3SingleImgObj');
-aws.config.apiVersions = {
-  s3: '2006-03-01',
-  // other service API versions
-};
 
 const createCoupon = async (req, res) => {
   const data = req.body;
@@ -13,7 +7,7 @@ const createCoupon = async (req, res) => {
     coupon.save();
     res.status(201).json(coupon);
   } catch (error) {
-    console.log('faied to create Coupon', error);
+    res.status(500).json('Failed to Create a Coupon', error);
   }
 };
 
@@ -52,9 +46,8 @@ const updateCoupon = async (req, res) => {
 const deleteCoupon = async (req, res) => {
   const id = req.params.id;
   try {
-    const repsone = await Coupon.findByIdAndRemove(id);
-    console.log('check', response);
-    res.status(200);
+    await Coupon.findByIdAndRemove(id);
+    res.status(200).json(id, 'was deleted');
   } catch (error) {
     res.status(500).json('fail to Delete', error);
   }

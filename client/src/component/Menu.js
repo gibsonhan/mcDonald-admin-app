@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { HERO, MENU, ITEM, COUPON } from '../global/reserveWord';
-//import fetchAndSet from '../util/handleFetchAndSet';
 import handleFetchList from '../hooks/handleFetchList';
+
 import CreateModal from './CreateModal';
 import List from './common/List';
 import MenuListRow from './MenuListRow';
@@ -13,15 +13,15 @@ const Menu = () => {
   const buttonTitle = [HERO, MENU, ITEM, COUPON];
   return (
     <MenuContainer>
+      <div>Menu</div>
+      <div>Number of menu {menuList.length}</div>
       <ButtonContainer>
         {buttonTitle.map((type) => (
           <CreateModal key={type} type={type} />
         ))}
       </ButtonContainer>
       <ListContainer>
-        {!!menuList && (
-          <List title={'Menu'} data={menuList} row={MenuListRow} />
-        )}
+        {!!menuList && <List title={MENU} data={menuList} row={MenuListRow} />}
       </ListContainer>
     </MenuContainer>
   );

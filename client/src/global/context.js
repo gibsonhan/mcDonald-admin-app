@@ -1,4 +1,10 @@
-import React, { useReducer, useContext, useEffect, useMemo } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from 'react';
 import { ADD, REMOVE, SET, UPDATE } from './reserveWord';
 
 const initalState = { hero: [], item: [], menu: [], coupon: [] };
@@ -12,11 +18,10 @@ function reducer(state, action) {
   const { type, data } = payload;
   switch (action.type) {
     case ADD:
-      const newState = {
+      return {
         ...state,
         [type]: [...state[type], data],
       };
-      return newState;
     case SET:
       return {
         ...state,
@@ -35,6 +40,7 @@ function reducer(state, action) {
 const AppContext = React.createContext(null);
 
 const AppProvider = ({ children }) => {
+  const [oneModalOpen, setOneModalOpen] = useState(false);
   const [state, dispatch] = useReducer(reducer, initalState);
 
   const dispatchAdd = (type, data) => {
@@ -79,6 +85,8 @@ const AppProvider = ({ children }) => {
 
   const values = useMemo(
     () => ({
+      oneModalOpen,
+      setOneModalOpen,
       dispatchAdd,
       dispatchRemove,
       dispatchSetList,

@@ -54,25 +54,4 @@ async function uploadMultiImg(data) {
   return response.data;
 }
 
-//TODO replace the single and multi upload fucntions
-async function uploadImg(type, data) {
-  const url = BASEURL + `amazons3/${type}-img`;
-  const requestConfig = {
-    method: 'POST',
-    config: {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    },
-  };
-  const response = await axios.post(url, data, requestConfig);
-  return response.data;
-}
-
-export {
-  create,
-  getList,
-  getSingle,
-  remove,
-  uploadSingleImg,
-  uploadMultiImg,
-  uploadImg,
-};
+export { create, getList, getSingle, remove, uploadSingleImg, uploadMultiImg };

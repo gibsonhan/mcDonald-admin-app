@@ -15,11 +15,11 @@ const Menu = () => {
   const { state } = useAppContext(); //For some reason this renders 4 times
   return (
     <MenuContainer>
-      <div>Menu</div>
-      <div>Number of menu {state.menu.length}</div>
-      <ButtonContainer>
+      <Content>
+        <div>Menu</div>
+        <div>Number of menu {state.menu.length}</div>
         <CreateModal type={MENU} />
-      </ButtonContainer>
+      </Content>
       <ListContainer>
         {!!state.menu && (
           <List title={MENU} data={state.menu} row={MenuListRow} />
@@ -37,15 +37,15 @@ const MenuContainer = styled.div`
   width: 100%;
 `;
 
-const ButtonContainer = styled.div`
-  flex: 4;
+const Content = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 `;
 
 const ListContainer = styled.div`
-  flex: 4;
+  flex: 3;
 `;
 
 export default Menu;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Modal from './common/Modal';
@@ -9,11 +9,21 @@ import CreateMenu from './CreateMenu';
 
 import { ITEM, MENU, HERO, COUPON } from '../global/reserveWord';
 import handleToggleState from '../util/handleToggleState';
+import { useAppContext } from '../global/context';
 
 const CreateModal = ({ type }) => {
+  const { oneModalOpen, setOneModalOpen } = useAppContext();
   const [openModal, setOpenModal] = useState(false);
   const buttonTitle = type[0].toUpperCase() + type.slice(1, type.length);
-  const toggleModal = () => handleToggleState(setOpenModal);
+
+  const toggleModal = () => {
+    if (!oneModalOpen) {
+      handleToggleState(setOpenModal);
+      setOneModalOpen(true);
+    } else {
+      console.log('one modal is already open');
+    }
+  };
 
   const OBJ = {
     [HERO]: <CreateHero />,

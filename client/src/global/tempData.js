@@ -13,7 +13,7 @@ const HEROINPUTS = [
   'dateRestriction',
   'legal',
 ];
-const ITEMINPUTS = ['name', 'group', 'subGroup', 'couponGroup'];
+const ITEMINPUTS = ['name'];
 const MENUINPUTS = ['name', 'groups'];
 
 const DEFAULTITEMVALUES = {

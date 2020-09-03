@@ -17,8 +17,8 @@ mongoose
 const itemSchema = new mongoose.Schema({
   name: String,
   group: String,
-  subGroup: String,
-  couponGroup: String,
+  //subGroup: String,
+  //couponGroup: String,
   servingTime: Array,
   sizes: Object,
   img: Object,

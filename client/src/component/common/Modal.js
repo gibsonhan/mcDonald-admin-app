@@ -1,15 +1,43 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
+import { useAppContext } from '../../global/context';
+
 const Modal = ({ isOpen, setIsOpen, children }) => {
+  const modalRef = useRef();
+  const { setOneModalOpen } = useAppContext();
+
   const closeModal = function hanleCloseModal(e) {
     e.preventDefault();
-    setIsOpen((prev) => !prev);
+    setIsOpen(false);
+    setOneModalOpen(false);
   };
+
+  function EL_closeModal(e) {
+    function clickOutsideModal() {
+      if (!modalRef.current) return;
+      return modalRef.current.contains(e.target) ? false : true;
+    }
+    if (e.key === 'Escape' || clickOutsideModal()) {
+      setIsOpen(false);
+      setOneModalOpen(false);
+    }
+  }
+
+  useEffect(() => {
+    if (!!isOpen) {
+      window.addEventListener('click', EL_closeModal);
+      window.addEventListener('keydown', EL_closeModal);
+    }
+    return () => {
+      window.removeEventListener('click', EL_closeModal);
+      window.removeEventListener('keydown', EL_closeModal);
+    };
+  }, [isOpen]);
 
   if (!isOpen) return <></>;
   return (
-    <ModalContainer>
+    <ModalContainer ref={modalRef}>
       <CloseContainer>
         <CloseButton onClick={closeModal}>X</CloseButton>
       </CloseContainer>

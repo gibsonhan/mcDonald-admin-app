@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { getList } from './service';
 import { useAppContext } from '../global/context';
 
@@ -11,8 +11,10 @@ export default (type) => {
   }
 
   useEffect(() => {
-    console.log('attempting to fetch', type);
-    if (state[type].length > 0) return;
+    if (state[type].length > 0) {
+      console.log('aborting fetch');
+      return;
+    }
     fetchAndSet(type);
   }, []);
 };

@@ -2,27 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Form from './CreateMenuForm';
-import { MENU, SUBMIT, ADD } from '../global/reserveWord';
+import { MENU, SUBMIT } from '../global/reserveWord';
 import { MENUINPUTS } from '../global/tempData';
 
-import { useAppContext } from '../global/context';
-
 const CreateMenu = () => {
-  const { dispatch } = useAppContext();
-
-  const handleDispatch = (data) => {
-    dispatch({
-      type: ADD,
-      payload: {
-        data: data,
-        type: MENU,
-      },
-    });
-  };
-
   return (
     <CreateMenuContainer>
-      <Form title={MENU} inputs={MENUINPUTS} updateLocalState={handleDispatch}>
+      <Form title={MENU} inputs={MENUINPUTS}>
         <button type={SUBMIT}> Create Menu</button>
       </Form>
     </CreateMenuContainer>

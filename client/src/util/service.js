@@ -8,7 +8,7 @@ async function create(type, payload) {
     headers: { Authorization: 'temp' },
   };
   const response = await axios.post(url, payload);
-  return response.data;
+  return response.data.id;
 }
 
 async function getList(type) {
@@ -23,7 +23,7 @@ async function getSingle(type, id) {
   return response.data;
 }
 
-async function remove(id, type) {
+async function remove(type, id) {
   const url = BASEURL + type + `/${id}`;
   const response = await axios.delete(url);
   return response.data;

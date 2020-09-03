@@ -11,8 +11,10 @@ import PreviewImg from './common/PreviewImg';
 import { createSingleImgUrl } from '../util/createSingleImgUrl';
 import { create } from '../util/service';
 import { HERO } from '../global/reserveWord';
+import { useAppContext } from '../global/context';
 
 const CreateHeroForm = ({ title, inputs, children }) => {
+  const { dispatchAdd } = useAppContext();
   const { register, handleSubmit, errors } = useForm({});
 
   const onSubmit = async (_formData) => {
@@ -24,7 +26,8 @@ const CreateHeroForm = ({ title, inputs, children }) => {
 
     try {
       const response = await create(HERO, data);
-      console.log('check', response);
+      console.log('check response', response);
+      dispatchAdd(HERO, { ...data, id: response });
     } catch (error) {
       console.log(error);
     }
@@ -32,7 +35,7 @@ const CreateHeroForm = ({ title, inputs, children }) => {
 
   return (
     <FormContainer>
-      <PreviewImg register={register} title={'hero'} />
+      <PreviewImg register={register} title={HERO} />
       <form onSubmit={handleSubmit(onSubmit)}>
         {!!inputs &&
           inputs.map((item) => (

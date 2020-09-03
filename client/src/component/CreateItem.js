@@ -20,8 +20,10 @@ import {
   SERVINGTIMES,
 } from '../global/tempData';
 import { SERVINGTIME } from '../global/reserveWord';
+import { useAppContext } from '../global/context';
 
 const CreateItem = ({ title }) => {
+  const { dispatchAdd } = useAppContext();
   const inputSchema = ITEMINPUTS.reduce((acc, curr) => {
     acc[curr] = yup.string().required();
     return acc;
@@ -61,7 +63,8 @@ const CreateItem = ({ title }) => {
     };
     try {
       const response = await create(ITEM, data);
-      console.log('created and a new item', response);
+      const newData = { ...data, id: response };
+      dispatchAdd(ITEM, newData);
     } catch (error) {
       console.log('Failed to create item');
     }

@@ -1,27 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
-import { MENU, REMOVE } from '../global/reserveWord';
+import { MENU } from '../global/reserveWord';
 import { remove } from '../util/service';
 
 import { useAppContext } from '../global/context';
 
 const MenuListRow = ({ index, data }) => {
   const { name, group, subGroup, id } = data[index];
-  const { dispatch } = useAppContext();
+  const { dispatchRemove } = useAppContext();
+
   const removeMenu = async () => {
     try {
-      await remove(id, MENU);
-      dispatch({
-        type: REMOVE,
-        payload: {
-          type: MENU,
-          data: id,
-        },
-      });
+      await remove(MENU, id);
+      dispatchRemove(MENU, id);
     } catch (err) {
       console.log('failed to delete');
     }
   };
+
   return (
     <RowContainer>
       <div>{name}</div>

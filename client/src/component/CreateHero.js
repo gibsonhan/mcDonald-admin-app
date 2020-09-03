@@ -1,13 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import Form from './CreateHeroForm';
+
+import { HERO, SUBMIT } from '../global/reserveWord';
 import { HEROINPUTS } from '../global/tempData';
+
+import Form from './CreateHeroForm';
 
 const CreateHero = () => {
   return (
     <CreateHeroContainer>
-      <Form type="Hero" inputs={HEROINPUTS}>
-        <button type="submit"> Create Hero</button>
+      <Form type={HERO} inputs={HEROINPUTS}>
+        <button type={SUBMIT}> Create Hero</button>
       </Form>
     </CreateHeroContainer>
   );

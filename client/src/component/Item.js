@@ -5,20 +5,22 @@ import CreateModal from './CreateModal';
 import List from './common/List';
 import ItemListRow from './ItemListRow';
 
-import handleFetchList from '../hooks/handleFetchList';
+import onloadFetchList from '../util/handleFetchList';
 import { ITEM } from '../global/reserveWord';
+import { useAppContext } from '../global/context';
 
 const Item = ({ props }) => {
-  const itemList = handleFetchList(ITEM);
+  onloadFetchList(ITEM);
+  const { state } = useAppContext();
   return (
     <ItemContainer>
       <ItemSummaryContainer>
         <header>Item</header>
-        Number of items: {itemList.length}
+        Number of items: {state[ITEM].length}
         <CreateModal type={ITEM} />
       </ItemSummaryContainer>
       <ItemListContainer>
-        <List title={'Item'} data={itemList} row={ItemListRow} />
+        <List title={'Item'} data={state[ITEM]} row={ItemListRow} />
       </ItemListContainer>
     </ItemContainer>
   );

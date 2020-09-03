@@ -45,9 +45,10 @@ const updateCoupon = async (req, res) => {
 
 const deleteCoupon = async (req, res) => {
   const id = req.params.id;
+  const message = `${id} was successfully deleted`;
   try {
     await Coupon.findByIdAndRemove(id);
-    res.status(200).json(id, 'was deleted');
+    res.status(200).json(message);
   } catch (error) {
     res.status(500).json('fail to Delete', error);
   }

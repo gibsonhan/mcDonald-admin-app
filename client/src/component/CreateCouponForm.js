@@ -10,9 +10,12 @@ import PreviewImg from './common/PreviewImg';
 import { create } from '../util/service';
 import { createSingleImgUrl } from '../util/createSingleImgUrl';
 import { COUPON } from '../global/reserveWord';
+import { useAppContext } from '../global/context';
 
 const CreateCouponForm = ({ title, inputs, children }) => {
+  const { dispatchAdd } = useAppContext();
   const { register, handleSubmit, errors } = useForm({});
+
   const onSubmit = async (_formData) => {
     const { couponImg, ...formObj } = _formData;
     const data = {
@@ -22,9 +25,10 @@ const CreateCouponForm = ({ title, inputs, children }) => {
 
     try {
       const response = await create(COUPON, data);
-      console.log('coupon check', response);
+      const newData = { ...data, id: response };
+      dispatchAdd(COUPON, newData);
     } catch (error) {
-      console.log(error);
+      console.log('fail to add', error);
     }
   };
 

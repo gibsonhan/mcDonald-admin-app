@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { MENU } from '../global/reserveWord';
-import onloadFetchList from '../hooks/handleFetchList';
+import onloadFetchList from '../util/handleFetchList';
 
 import CreateModal from './CreateModal';
 import List from './common/List';

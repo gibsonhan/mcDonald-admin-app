@@ -8,7 +8,7 @@ function reducer(state, action) {
     case ADD:
       return {
         ...state,
-        [type]: [...state[type], data],
+        [type]: [state[type], data],
       };
     case SET:
       return {
@@ -24,5 +24,3 @@ function reducer(state, action) {
       throw new Error();
   }
 }
-
-export [reducer];

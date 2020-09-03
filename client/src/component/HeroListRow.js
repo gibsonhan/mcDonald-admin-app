@@ -3,11 +3,17 @@ import styled from 'styled-components';
 
 import { HERO } from '../global/reserveWord';
 import { remove } from '../util/service';
+import { useAppContext } from '../global/context';
 
-//TODO recreate the coupon here?
 const HeroListRow = ({ index, data }) => {
   const { title, id, ...rowObj } = data[index];
-  const removeHero = () => remove(id, HERO);
+  const { dispatchRemove } = useAppContext();
+  const removeHero = async () => {
+    try {
+      await remove(HERO, id);
+      dispatchRemove(HERO, id);
+    } catch (error) {}
+  };
   return (
     <RowContainer>
       <div>{title}</div>

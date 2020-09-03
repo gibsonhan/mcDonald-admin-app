@@ -1,24 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import handleFetchList from '../hooks/handleFetchList';
 import { COUPON } from '../global/reserveWord';
+import onloadFetchList from '../util/handleFetchList';
+import { useAppContext } from '../global/context';
 
 import CreateModal from './CreateModal';
-import List from './common/List';
 import CouponListRow from './CouponListRow';
+import List from './common/List';
 
 const Coupon = () => {
-  const couponList = handleFetchList(COUPON);
+  onloadFetchList(COUPON);
+  const { state } = useAppContext();
+
   return (
     <CouponContainer>
       <ContentContainer>
         <div>Coupon</div>
-        <div>Number of Coupons: {couponList.length}</div>
+        <div>Number of Coupons: {state[COUPON].length}</div>
         <CreateModal type={COUPON} />
       </ContentContainer>
       <ListContainer>
-        <List title={COUPON} data={couponList} row={CouponListRow} />
+        <List title={COUPON} data={state[COUPON]} row={CouponListRow} />
       </ListContainer>
     </CouponContainer>
   );

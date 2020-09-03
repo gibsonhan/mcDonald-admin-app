@@ -3,10 +3,22 @@ import styled from 'styled-components';
 
 import { ITEM } from '../global/reserveWord';
 import { remove } from '../util/service';
+import { useAppContext } from '../global/context';
 
 const ItemRow = ({ index, data }) => {
   const hasCoupon = !!data[index].couponGroupID === false ? false : true;
   const { name, group, id } = data[index];
+  const { dispatchRemove } = useAppContext();
+
+  const removeItem = async () => {
+    try {
+      await remove(ITEM, id);
+      dispatchRemove(ITEM, id);
+    } catch (error) {
+      console.log('failed to delete item', error);
+    }
+  };
+
   return (
     <ItemRowContainer>
       <div>Name: {name}</div>
@@ -16,7 +28,7 @@ const ItemRow = ({ index, data }) => {
         <ActiveBox active={hasCoupon} />
       </ActiveBoxContainer>
       <button>Edit</button>
-      <button onClick={() => remove(id, ITEM)}>Delete</button>
+      <button onClick={removeItem}>Delete</button>
     </ItemRowContainer>
   );
 };

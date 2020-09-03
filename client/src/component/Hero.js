@@ -1,24 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
-import handleFetchList from '../hooks/handleFetchList';
+
 import { HERO } from '../global/reserveWord';
+import onloadFetchList from '../util/handleFetchList';
+import { useAppContext } from '../global/context';
 
 import CreateModal from './CreateModal';
 import List from './common/List';
 import HeroListRow from './HeroListRow';
 
 const Hero = () => {
-  const heroList = handleFetchList(HERO);
+  onloadFetchList(HERO);
+  const { state } = useAppContext();
   return (
     <HeroContainer>
-      <div>Hero</div>
-      <div>number of hero {heroList.length}</div>
       <ContentContainer>
+        <div>Hero</div>
+        <div>number of hero {state[HERO].length}</div>
         <CreateModal type={HERO} />
       </ContentContainer>
       <ListContainer>
-        {!heroList.length && 'No List'}
-        {heroList && <List title={HERO} data={heroList} row={HeroListRow} />}
+        {!state[HERO].length && 'No List'}
+        {state[HERO] && (
+          <List title={HERO} data={state[HERO]} row={HeroListRow} />
+        )}
       </ListContainer>
     </HeroContainer>
   );

@@ -10,16 +10,17 @@ import PreviewImg from './common/PreviewImg';
 import { create } from '../util/service';
 import { createSingleImgUrl } from '../util/createSingleImgUrl';
 import { MENU } from '../global/reserveWord';
+import { useAppContext } from '../global/context';
 
-const CreateMenuForm = ({ title, inputs, updateLocalState, children }) => {
+const CreateMenuForm = ({ title, inputs, children }) => {
+  const { dispatchAdd } = useAppContext();
   const { register, handleSubmit, errors } = useForm({});
 
   const onSubmit = async (_formData) => {
     const { name, group, menuImg } = _formData;
-    const img = await createSingleImgUrl(menuImg, name);
     const data = {
       name,
-      img,
+      img: await createSingleImgUrl(menuImg, name),
       //group: [{ name: 'Snacsk', items: ['A', 'B', 'C'] }],
       created: new Date(),
       lastEdit: {
@@ -28,8 +29,8 @@ const CreateMenuForm = ({ title, inputs, updateLocalState, children }) => {
       },
     };
     try {
-      await create(MENU, data);
-      updateLocalState(data);
+      const response = await create(MENU, data);
+      dispatchAdd(MENU, { ...data, id: response });
     } catch (error) {
       console.log(error);
     }

@@ -3,12 +3,17 @@ import styled from 'styled-components';
 
 import LoginScreen from './screens/Login';
 import DashboardScreen from './screens/Dashboard';
+import Header from './util/debug/Header';
 
 import { Switch, Route, Redirect } from 'react-router-dom';
 
+var renderCount = 0;
+
 function App() {
+  renderCount++;
   return (
     <AppContainer>
+      <Header renderCount={renderCount} />
       <Switch>
         <Route path={['/admin', '/login']} component={LoginScreen} />
         <Route path="/dashboard" component={DashboardScreen} />

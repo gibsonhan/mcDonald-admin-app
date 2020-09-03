@@ -11,7 +11,7 @@ import { create } from '../util/service';
 import { createSingleImgUrl } from '../util/createSingleImgUrl';
 import { MENU } from '../global/reserveWord';
 
-const CreateMenuForm = ({ title, inputs, children }) => {
+const CreateMenuForm = ({ title, inputs, updateLocalState, children }) => {
   const { register, handleSubmit, errors } = useForm({});
 
   const onSubmit = async (_formData) => {
@@ -20,17 +20,16 @@ const CreateMenuForm = ({ title, inputs, children }) => {
     const data = {
       name,
       img,
-      group: [{ name: 'Snacsk', items: ['A', 'B', 'C'] }],
+      //group: [{ name: 'Snacsk', items: ['A', 'B', 'C'] }],
       created: new Date(),
       lastEdit: {
         date: new Date(),
         author: 'Admin',
       },
     };
-
     try {
-      const response = await create(MENU, data);
-      console.log('check', response);
+      await create(MENU, data);
+      updateLocalState(data);
     } catch (error) {
       console.log(error);
     }

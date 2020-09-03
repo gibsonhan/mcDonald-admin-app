@@ -1,9 +1,8 @@
 import axios from 'axios';
-
-const baseUrl = 'http://localhost:3001/api/';
+import { BASEURL } from '../global/reserveWord';
 
 async function create(type, payload) {
-  const url = baseUrl + type;
+  const url = BASEURL + type;
   const requestConfig = {
     //TODO implement auth restrictions
     headers: { Authorization: 'temp' },
@@ -13,26 +12,26 @@ async function create(type, payload) {
 }
 
 async function getList(type) {
-  const url = baseUrl + type;
+  const url = BASEURL + type;
   const response = await axios.get(url);
   return response.data;
 }
 
 async function getSingle(type, id) {
-  const url = baseUrl + type + `${id}`;
+  const url = BASEURL + type + `${id}`;
   const response = await axios.get(url);
   return response.data;
 }
 
 async function remove(id, type) {
-  const url = baseUrl + type + `/${id}`;
+  const url = BASEURL + type + `/${id}`;
   const response = await axios.delete(url);
   return response.data;
 }
 
 //TODO: need to refactor: remove the api from menu to a general s3/api/route
 async function uploadSingleImg(data) {
-  const url = baseUrl + 'amazonS3/single-img';
+  const url = BASEURL + 'amazonS3/single-img';
   const requestConfig = {
     method: 'POST',
     config: {
@@ -44,7 +43,7 @@ async function uploadSingleImg(data) {
 }
 
 async function uploadMultiImg(data) {
-  const url = baseUrl + 'amazonS3/multi-img';
+  const url = BASEURL + 'amazonS3/multi-img';
   const requestConfig = {
     method: 'POST',
     config: {
@@ -57,7 +56,7 @@ async function uploadMultiImg(data) {
 
 //TODO replace the single and multi upload fucntions
 async function uploadImg(type, data) {
-  const url = baseUrl + `amazons3/${type}-img`;
+  const url = BASEURL + `amazons3/${type}-img`;
   const requestConfig = {
     method: 'POST',
     config: {

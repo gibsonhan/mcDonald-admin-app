@@ -4,10 +4,14 @@ import styled from 'styled-components';
 import { HERO } from '../global/reserveWord';
 import { remove } from '../util/service';
 import { useAppContext } from '../global/context';
+import EditModal from './Edit';
 
 const HeroListRow = ({ index, data }) => {
   const { title, id, ...rowObj } = data[index];
   const { dispatchRemove } = useAppContext();
+
+  const editHero = () => {};
+
   const removeHero = async () => {
     try {
       await remove(HERO, id);
@@ -17,7 +21,7 @@ const HeroListRow = ({ index, data }) => {
   return (
     <RowContainer>
       <div>{title}</div>
-      <button>Edit</button>
+      <button onClick={editHero}>Edit</button>
       <button onClick={removeHero}>Delete</button>
     </RowContainer>
   );

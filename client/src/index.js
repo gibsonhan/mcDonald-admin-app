@@ -7,6 +7,7 @@ import { createBrowserHistory } from 'history';
 
 import AppProvider from './global/context';
 
+//TODO refactor history in APPContext
 const history = createBrowserHistory();
 ReactDOM.render(
   <React.StrictMode>

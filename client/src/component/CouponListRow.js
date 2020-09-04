@@ -8,7 +8,7 @@ import { useAppContext } from '../global/context';
 //TODO recreate the coupon here?
 const CouponListRow = ({ index, data }) => {
   const { title, id, ...rowObj } = data[index];
-  const { dispatchRemove } = useAppContext();
+  const { dispatchRemove, history } = useAppContext();
 
   const removeCoupon = async () => {
     try {
@@ -18,10 +18,14 @@ const CouponListRow = ({ index, data }) => {
       console.log('faield to catch error', error);
     }
   };
+  const navEditPage = () => {
+    let location = history.location.pathname;
+    history.push(`edit/${id}?type=${COUPON}`);
+  };
   return (
     <RowContainer>
       <div>{title}</div>
-      <button>Edit</button>
+      <button onClick={navEditPage}>Edit</button>
       <button onClick={removeCoupon}>Delete</button>
     </RowContainer>
   );

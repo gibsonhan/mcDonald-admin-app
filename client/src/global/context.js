@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 import { ADD, REMOVE, SET, UPDATE } from './reserveWord';
-
+import { createBrowserHistory } from 'history';
 const initalState = { hero: [], item: [], menu: [], coupon: [] };
 
 function init(initalState) {
@@ -42,6 +42,7 @@ const AppContext = React.createContext(null);
 const AppProvider = ({ children }) => {
   const [oneModalOpen, setOneModalOpen] = useState(false);
   const [state, dispatch] = useReducer(reducer, initalState);
+  const history = createBrowserHistory();
 
   const dispatchAdd = (type, data) => {
     dispatch({
@@ -85,12 +86,13 @@ const AppProvider = ({ children }) => {
 
   const values = useMemo(
     () => ({
-      oneModalOpen,
-      setOneModalOpen,
       dispatchAdd,
       dispatchRemove,
       dispatchSetList,
       dispatchUpdate,
+      history,
+      oneModalOpen,
+      setOneModalOpen,
       state,
     }),
     [dispatchAdd, dispatchRemove, dispatchSetList, dispatchUpdate, state],

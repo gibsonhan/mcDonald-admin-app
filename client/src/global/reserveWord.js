@@ -26,10 +26,11 @@ const REMOVEITEM = 'remove-item';
 const REMOVEHERO = 'remove-hero';
 const REMOVEMENU = 'remove-menu';
 
-const UPDATE = 'update';
-
+const CREATE = 'create';
+const EDIT = 'edit';
 const RESET = 'reset';
 const SUBMIT = 'submit';
+const UPDATE = 'update';
 
 const BASEURL = 'http://localhost:3001/api/';
 

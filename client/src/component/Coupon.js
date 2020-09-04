@@ -5,20 +5,20 @@ import { COUPON } from '../global/reserveWord';
 import onloadFetchList from '../util/handleFetchList';
 import { useAppContext } from '../global/context';
 
-import CreateModal from './CreateModal';
 import CouponListRow from './CouponListRow';
 import List from './common/List';
 
 //TODO debug the app and see what the app is firing so many times
 const Coupon = () => {
   onloadFetchList(COUPON);
-  const { state, history } = useAppContext();
+  const { state, handleNavToCreate } = useAppContext();
+  const navToCreate = () => handleNavToCreate(COUPON);
   return (
     <CouponContainer>
       <ContentContainer>
         <div>Coupon</div>
         <div>Number of Coupons: {state[COUPON].length}</div>
-        <CreateModal type={COUPON} />
+        <button onClick={navToCreate}>Create {COUPON}</button>
       </ContentContainer>
       <ListContainer>
         <List title={COUPON} data={state[COUPON]} row={CouponListRow} />

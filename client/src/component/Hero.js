@@ -11,13 +11,13 @@ import HeroListRow from './HeroListRow';
 
 const Hero = () => {
   onloadFetchList(HERO);
-  const { state } = useAppContext();
+  const { state, handleNavToCreate } = useAppContext();
+  const navToCreate = () => handleNavToCreate(HERO);
   return (
     <HeroContainer>
       <ContentContainer>
-        <div>Hero</div>
-        <div>number of hero {state[HERO].length}</div>
-        <CreateModal type={HERO} />
+        <div>Hero</div> <div>number of hero {state[HERO].length}</div>
+        <button onClick={navToCreate}> Create {HERO}</button>
       </ContentContainer>
       <ListContainer>
         {!state[HERO].length && 'No List'}

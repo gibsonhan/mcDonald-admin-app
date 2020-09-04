@@ -93,6 +93,11 @@ const AppProvider = ({ children }) => {
     history.go();
   }
 
+  function handleNavToCreate(type) {
+    history.push(`/create?type=${type}`, { type });
+    history.go();
+  }
+
   const values = useMemo(
     () => ({
       dispatchAdd,
@@ -103,6 +108,7 @@ const AppProvider = ({ children }) => {
       oneModalOpen,
       setOneModalOpen,
       handleNavEditPage,
+      handleNavToCreate,
       state,
     }),
     [
@@ -114,6 +120,7 @@ const AppProvider = ({ children }) => {
       oneModalOpen,
       setOneModalOpen,
       handleNavEditPage,
+      handleNavToCreate,
       state,
     ],
   );

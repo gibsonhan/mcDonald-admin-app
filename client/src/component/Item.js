@@ -11,13 +11,14 @@ import { useAppContext } from '../global/context';
 
 const Item = ({ props }) => {
   onloadFetchList(ITEM);
-  const { state } = useAppContext();
+  const { state, handleNavToCreate } = useAppContext();
+  const navToCreate = () => handleNavToCreate(ITEM);
   return (
     <ItemContainer>
       <ItemSummaryContainer>
         <header>Item</header>
         Number of items: {state[ITEM].length}
-        <CreateModal type={ITEM} />
+        <button onClick={navToCreate}> Create {ITEM}</button>
       </ItemSummaryContainer>
       <ItemListContainer>
         <List title={'Item'} data={state[ITEM]} row={ItemListRow} />

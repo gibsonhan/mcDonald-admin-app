@@ -3,23 +3,23 @@ import styled from 'styled-components';
 
 import { MENU } from '../global/reserveWord';
 import onloadFetchList from '../util/handleFetchList';
+import { useAppContext } from '../global/context';
 
-import CreateModal from './CreateModal';
 import List from './common/List';
 import MenuListRow from './MenuListRow';
 
-import { useAppContext } from '../global/context';
-
 const Menu = () => {
   onloadFetchList(MENU);
-  const { state } = useAppContext(); //For some reason this renders 4 times
+  const { state, handleNavToCreate } = useAppContext(); //For some reason this renders 4 times
+  const navToCreate = () => handleNavToCreate(MENU);
   return (
     <MenuContainer>
       <Content>
         <div>Menu</div>
         <div>Number of menu {state.menu.length}</div>
-        <CreateModal type={MENU} />
+        <button onClick={navToCreate}> Create {MENU} </button>
       </Content>
+
       <ListContainer>
         {!!state.menu && (
           <List title={MENU} data={state.menu} row={MenuListRow} />
@@ -38,10 +38,11 @@ const MenuContainer = styled.div`
 `;
 
 const Content = styled.div`
-  flex: 1;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
 `;
 
 const ListContainer = styled.div`

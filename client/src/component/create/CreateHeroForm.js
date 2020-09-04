@@ -5,36 +5,37 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
 import * as yup from 'yup';
 
-import Input from './common/Input';
-import PreviewImg from './common/PreviewImg';
-import { create } from '../util/service';
-import { createSingleImgUrl } from '../util/createSingleImgUrl';
-import { COUPON } from '../global/reserveWord';
-import { useAppContext } from '../global/context';
+import Input from '../common/Input';
+import PreviewImg from '../common/PreviewImg';
 
-const CreateCouponForm = ({ title, inputs, children }) => {
+import { createSingleImgUrl } from '../../util/createSingleImgUrl';
+import { create } from '../../util/service';
+import { HERO } from '../../global/reserveWord';
+import { useAppContext } from '../../global/context';
+
+const CreateHeroForm = ({ title, inputs, children }) => {
   const { dispatchAdd } = useAppContext();
   const { register, handleSubmit, errors } = useForm({});
 
   const onSubmit = async (_formData) => {
-    const { couponImg, ...formObj } = _formData;
+    const { heroImg, ...formObj } = _formData;
     const data = {
       ...formObj,
-      img: await createSingleImgUrl(couponImg, formObj.title),
+      img: await createSingleImgUrl(heroImg, formObj.title),
     };
 
     try {
-      const response = await create(COUPON, data);
-      const newData = { ...data, id: response };
-      dispatchAdd(COUPON, newData);
+      const response = await create(HERO, data);
+      console.log('check response', response);
+      dispatchAdd(HERO, { ...data, id: response });
     } catch (error) {
-      console.log('fail to add', error);
+      console.log(error);
     }
   };
 
   return (
     <FormContainer>
-      <PreviewImg register={register} title={COUPON} />
+      <PreviewImg register={register} title={HERO} />
       <form onSubmit={handleSubmit(onSubmit)}>
         {!!inputs &&
           inputs.map((item) => (
@@ -59,4 +60,4 @@ const ChildrenContainer = styled.div`
   justify-content: center;
 `;
 
-export default CreateCouponForm;
+export default CreateHeroForm;

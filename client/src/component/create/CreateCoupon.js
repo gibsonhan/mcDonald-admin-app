@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { COUPON, SUBMIT } from '../global/reserveWord';
-import { COUPONINPUTS } from '../global/tempData';
+import { COUPON, SUBMIT } from '../../global/reserveWord';
+import { COUPONINPUTS } from '../../global/tempData';
 
 import Form from './CreateCouponForm';
 

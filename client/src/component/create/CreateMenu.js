@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Form from './CreateMenuForm';
-import { MENU, SUBMIT } from '../global/reserveWord';
-import { MENUINPUTS } from '../global/tempData';
+import { MENU, SUBMIT } from '../../global/reserveWord';
+import { MENUINPUTS } from '../../global/tempData';
 
 const CreateMenu = () => {
   return (

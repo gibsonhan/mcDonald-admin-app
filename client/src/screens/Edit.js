@@ -1,22 +1,12 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useAppContext } from '../global/context';
+import escapeKey from '../hooks/handleEscapekey';
 
 const Edit = () => {
   const { history } = useAppContext();
   const goBack = () => history.goBack();
-
-  function escapeGoBack(e) {
-    if (e.key === 'Escape') {
-      goBack();
-    }
-  }
-
-  useEffect(() => {
-    console.log(history);
-    window.addEventListener('keydown', escapeGoBack);
-    return () => window.removeEventListener('keydown', escapeGoBack);
-  }, []);
+  escapeKey(goBack);
 
   return (
     <EditContainer>

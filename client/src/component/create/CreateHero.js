@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { HERO, SUBMIT } from '../global/reserveWord';
-import { HEROINPUTS } from '../global/tempData';
+import { HERO, SUBMIT } from '../../global/reserveWord';
+import { HEROINPUTS } from '../../global/tempData';
 
 import Form from './CreateHeroForm';
 

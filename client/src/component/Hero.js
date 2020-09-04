@@ -5,7 +5,6 @@ import { HERO } from '../global/reserveWord';
 import onloadFetchList from '../util/handleFetchList';
 import { useAppContext } from '../global/context';
 
-import CreateModal from './CreateModal';
 import List from './common/List';
 import HeroListRow from './HeroListRow';
 

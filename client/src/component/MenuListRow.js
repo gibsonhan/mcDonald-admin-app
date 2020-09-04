@@ -7,7 +7,9 @@ import { useAppContext } from '../global/context';
 
 const MenuListRow = ({ index, data }) => {
   const { name, group, subGroup, id } = data[index];
-  const { dispatchRemove } = useAppContext();
+  const { dispatchRemove, handleNavEditPage } = useAppContext();
+
+  const navTo = () => handleNavEditPage(MENU, id);
 
   const removeMenu = async () => {
     try {
@@ -23,7 +25,7 @@ const MenuListRow = ({ index, data }) => {
       <div>{name}</div>
       <div>{group}</div>
       <div>Items</div>
-      <button>Edit</button>
+      <button onClick={navTo}>Edit</button>
       <button onClick={removeMenu}>Delete</button>
     </RowContainer>
   );

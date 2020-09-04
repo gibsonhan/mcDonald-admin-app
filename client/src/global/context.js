@@ -7,13 +7,16 @@ import React, {
 } from 'react';
 import { ADD, REMOVE, SET, UPDATE } from './reserveWord';
 import { createBrowserHistory } from 'history';
+
 const initalState = { hero: [], item: [], menu: [], coupon: [] };
+var reducerCount = 0;
 
 function init(initalState) {
   return { initalState };
 }
 
 function reducer(state, action) {
+  console.log('reducer firing');
   const { payload } = action;
   const { type, data } = payload;
   switch (action.type) {
@@ -40,6 +43,7 @@ function reducer(state, action) {
 const AppContext = React.createContext(null);
 
 const AppProvider = ({ children }) => {
+  reducerCount++;
   const [oneModalOpen, setOneModalOpen] = useState(false);
   const [state, dispatch] = useReducer(reducer, initalState);
   const history = createBrowserHistory();
@@ -84,6 +88,11 @@ const AppProvider = ({ children }) => {
     });
   };
 
+  function handleNavEditPage(type, id) {
+    history.push(`/edit?type=${type}`, { type, id });
+    history.go();
+  }
+
   const values = useMemo(
     () => ({
       dispatchAdd,
@@ -93,13 +102,26 @@ const AppProvider = ({ children }) => {
       history,
       oneModalOpen,
       setOneModalOpen,
+      handleNavEditPage,
       state,
     }),
-    [dispatchAdd, dispatchRemove, dispatchSetList, dispatchUpdate, state],
+    [
+      dispatchAdd,
+      dispatchRemove,
+      dispatchSetList,
+      dispatchUpdate,
+      history,
+      oneModalOpen,
+      setOneModalOpen,
+      handleNavEditPage,
+      state,
+    ],
   );
+  /*
   useEffect(() => {
     console.log('stateCheck', state);
   }, [state]);
+  */
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 };
 

@@ -7,7 +7,7 @@ import styled from 'styled-components';
 
 //components
 import Coupon from './Coupon';
-import Edit from './Edit';
+import Edit from '../screens/Edit';
 import Hero from './Hero';
 import Item from './Item';
 import Menu from './Menu';
@@ -21,7 +21,6 @@ const switchNav = [
   { title: 'Hero', route: 'hero', component: Hero, exact: true },
   { title: 'Coupon', route: 'coupon', component: Coupon, exact: true },
   { title: 'Menu', route: 'menu', component: Menu, exact: true },
-  { title: 'Edit', route: 'edit/:id', component: Edit, exact: false },
   { title: 'Items', route: 'item', component: Item, exact: true },
   { title: 'Summary', route: 'summary', component: Summary, exact: true },
 ];

@@ -4,13 +4,12 @@ import styled from 'styled-components';
 import { HERO } from '../global/reserveWord';
 import { remove } from '../util/service';
 import { useAppContext } from '../global/context';
-import EditModal from './Edit';
 
 const HeroListRow = ({ index, data }) => {
   const { title, id, ...rowObj } = data[index];
-  const { dispatchRemove } = useAppContext();
+  const { dispatchRemove, handleNavEditPage } = useAppContext();
 
-  const editHero = () => {};
+  const navTo = () => handleNavEditPage(HERO, id);
 
   const removeHero = async () => {
     try {
@@ -18,10 +17,11 @@ const HeroListRow = ({ index, data }) => {
       dispatchRemove(HERO, id);
     } catch (error) {}
   };
+
   return (
     <RowContainer>
       <div>{title}</div>
-      <button onClick={editHero}>Edit</button>
+      <button onClick={navTo}>Edit</button>
       <button onClick={removeHero}>Delete</button>
     </RowContainer>
   );

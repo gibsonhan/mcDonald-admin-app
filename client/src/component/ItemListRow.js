@@ -6,9 +6,11 @@ import { remove } from '../util/service';
 import { useAppContext } from '../global/context';
 
 const ItemRow = ({ index, data }) => {
-  const hasCoupon = !!data[index].couponGroupID === false ? false : true;
   const { name, group, id } = data[index];
-  const { dispatchRemove } = useAppContext();
+  const { dispatchRemove, handleNavEditPage } = useAppContext();
+  const hasCoupon = !!data[index].couponGroupID === false ? false : true;
+
+  const navTo = () => handleNavEditPage(ITEM, id);
 
   const removeItem = async () => {
     try {
@@ -27,7 +29,7 @@ const ItemRow = ({ index, data }) => {
         <div>Active Coupon:</div>
         <ActiveBox active={hasCoupon} />
       </ActiveBoxContainer>
-      <button>Edit</button>
+      <button onClick={navTo}>Edit</button>
       <button onClick={removeItem}>Delete</button>
     </ItemRowContainer>
   );

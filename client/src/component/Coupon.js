@@ -9,10 +9,10 @@ import CreateModal from './CreateModal';
 import CouponListRow from './CouponListRow';
 import List from './common/List';
 
+//TODO debug the app and see what the app is firing so many times
 const Coupon = () => {
   onloadFetchList(COUPON);
-  const { state } = useAppContext();
-
+  const { state, history } = useAppContext();
   return (
     <CouponContainer>
       <ContentContainer>

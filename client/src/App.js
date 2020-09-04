@@ -1,26 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import LoginScreen from './screens/Login';
-import DashboardScreen from './screens/Dashboard';
-import Header from './util/debug/Header';
+import Login from './screens/Login';
+import Dashboard from './screens/Dashboard';
+import Edit from './screens/Edit';
 
-import { Switch, Route, Redirect } from 'react-router-dom';
-
-var renderCount = 0;
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
+import { useAppContext } from './global/context';
 
 function App() {
-  renderCount++;
+  const { history } = useAppContext();
   return (
     <AppContainer>
-      <Header renderCount={renderCount} />
-      <Switch>
-        <Route path={['/admin', '/login']} component={LoginScreen} />
-        <Route path="/dashboard" component={DashboardScreen} />
-        <Route path="/" component={DashboardScreen}>
-          <Redirect to="/dashboard/menu" />
-        </Route>
-      </Switch>
+      <Router history={history}>
+        <Switch>
+          <Route path={['/admin', '/login']} component={Login} />
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/edit" component={Edit} />
+          <Route path="/create" component={Create} />
+          <Route path="/" component={Dashboard}>
+            <Redirect to="/dashboard/menu" />
+          </Route>
+        </Switch>
+      </Router>
     </AppContainer>
   );
 }

@@ -11,7 +11,7 @@ import { create } from '../../util/service';
 import { ITEM } from '../../global/reserveWord';
 
 import Input from '../common/Input';
-import SwitchBtnGroup from '../SwitchButtonGroup';
+import SwitchBtnGroup from './SwitchButtonGroup';
 
 import {
   DEFAULTITEMVALUES as defaultValues,

@@ -23,16 +23,18 @@ const createObj = {
 
 const Create = () => {
   const { history } = useAppContext();
+  const key = history.location.state;
   const goBack = () => history.goBack();
+
   escapeKey(goBack);
 
   return (
     <CreateContainer>
       <Header>
-        <Text size={50}>Title</Text>
+        <Text size={50}>{key.toUpperCase()}</Text>
         <EscapeBtn />
       </Header>
-      <Body>{createObj['coupon']}</Body>
+      <Body>{createObj[key]}</Body>
     </CreateContainer>
   );
 };
@@ -45,20 +47,19 @@ const CreateContainer = styled.div`
   width: 100%;
 `;
 const Header = styled.div`
-  display: flex;
   flex: 1;
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
 `;
 
 const Body = styled.div`
-  display: flex;
   flex: 4;
+  display: flex;
   background: yellow;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 500px;
 `;
 
 export default Create;

@@ -94,7 +94,8 @@ const AppProvider = ({ children }) => {
   }
 
   function handleNavToCreate(type) {
-    history.push(`/create?type=${type}`, { type });
+    console.log('checking', type);
+    history.push(`/create?type=${type}`, type);
     history.go();
   }
 

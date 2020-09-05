@@ -17,8 +17,8 @@ const EscapeContaner = styled.div`
   justify-content: center;
   align-items: center;
 
-  height: 60px;
-  width: 60px;
+  height: ${rem(60)};
+  width: ${rem(60)};
 
   background: #f90;
   color: #fff;
@@ -26,6 +26,8 @@ const EscapeContaner = styled.div`
   font-size: ${rem(30)};
   font-weight: bold;
   text-align: center;
-  border-radius: 5px;
+  border-radius: ${rem(5)};
+
+  margin: ${rem(16)};
 `;
 export default EscapeBtn;

@@ -25,7 +25,7 @@ function App() {
           <Route path="/edit" component={Edit} />
           <Route path="/create" component={Create} />
           <Route path="/" component={Dashboard}>
-            <Redirect to="/dashboard/menu" />
+            <Redirect to="/dashboard/summary" />
           </Route>
         </Switch>
       </Router>

@@ -7,7 +7,7 @@ import { useAppContext } from '../global/context';
 
 import Text from '../component/common/Text';
 import EscapeBtn from '../component/common/EscapeBtn';
-import escapeKey from '../hooks/handleEscapekey';
+import initEscapekey from '../hooks/handleEscapekey';
 
 import CreateCoupon from '../component/create/CreateCoupon';
 import CreateHero from '../component/create/CreateHero';
@@ -26,7 +26,7 @@ const Create = () => {
   const key = history.location.state;
   const goBack = () => history.goBack();
 
-  escapeKey(goBack);
+  initEscapekey(goBack);
 
   return (
     <CreateContainer>

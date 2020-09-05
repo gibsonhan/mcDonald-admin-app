@@ -40,7 +40,7 @@ const ContentContainer = styled.div`
 `;
 
 const ListContainer = styled.div`
-  flex: 1;
+  flex: 4;
 `;
 
 export default Hero;

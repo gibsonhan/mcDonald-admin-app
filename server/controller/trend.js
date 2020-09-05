@@ -13,8 +13,8 @@ const createTrend = async (req, res) => {
 
 const TrendList = async (req, res) => {
   try {
-    const Trend = await Trend.find({});
-    res.status(200).json(Trend);
+    const trend = await Trend.find({});
+    res.status(200).json(trend);
   } catch (error) {
     res.status(500).json('failed to fetch Trend list', error);
   }

@@ -13,7 +13,7 @@ const Login = ({ history }) => {
     password: yup.string().required(),
   });
 
-  const { register, handleSubmit, errors } = useForm({
+  const { control, register, handleSubmit, errors } = useForm({
     resolver: yupResolver(schema),
   });
 
@@ -27,9 +27,19 @@ const Login = ({ history }) => {
   return (
     <FormContainer>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Input name="username" register={register} errors={errors} />
-        <Input name="password" register={register} errors={errors} />
-        <input type="submit" />
+        <Input
+          name="username"
+          register={register}
+          control={control}
+          errors={errors}
+        />
+        <Input
+          name="password"
+          register={register}
+          control={control}
+          errors={errors}
+        />
+        <button type="submit" />
       </form>
     </FormContainer>
   );

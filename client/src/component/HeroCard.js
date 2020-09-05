@@ -1,13 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { rem } from 'polished';
-import Text from '../common/Text';
 
-import PreviewImg from '../common/PreviewImg';
-import Btn from '../common/Btn';
-import { HERO } from '../../global/reserveWord';
+import Text from './common/Text';
+import Btn from './common/Btn';
 
-const CreateHeroPreview = ({ props }) => {
+const HeroCard = ({ props }) => {
   const { title, titleContent, titleContent2, btnText, legal, img } = props;
   const ImgStyle = {
     height: '100%',
@@ -30,7 +28,10 @@ const CreateHeroPreview = ({ props }) => {
             {btnText}
           </Btn>
         </TextContainer>
-        <PictureContainer></PictureContainer>
+        <PictureContainer>
+          {img === 'none' && <div>No Image</div>}
+          {img != 'none' && <img src={img} style={ImgStyle} />}
+        </PictureContainer>
       </MainContent>
       <LegalContainer>
         <Text size={10} padding={12}>
@@ -66,9 +67,12 @@ const TextContainer = styled.div`
 
 const PictureContainer = styled.div`
   flex: 1;
+  flex-direction: center;
   background: grey;
+  justify-content: center;
+  align-items: center;
 `;
 
 const LegalContainer = styled.div``;
 
-export default CreateHeroPreview;
+export default HeroCard;

@@ -6,26 +6,15 @@ const MULTI = 'multi';
 const NUMBER = 'number';
 const SERVINGTIME = 'serving time';
 const SINGLE = 'single';
+const INITIALSTATE = 'inital';
 
 //Reducer & App Context
 const ADD = 'add';
-const ADDCOUPON = 'add-coupon';
-const ADDITEM = 'add-item';
-const ADDHERO = 'add-hero';
-const ADDMENU = 'add-menu';
-
+const SETINITIAL = 'set-initial';
 const SET = 'set';
-const SETCOUPON = 'set-coupon';
-const SETITEM = 'set-item';
-const SETHERO = 'set-hero';
-const SETMENU = 'set-menu';
-
 const REMOVE = 'remove';
-const REMOVECOUPON = 'remove-coupon';
-const REMOVEITEM = 'remove-item';
-const REMOVEHERO = 'remove-hero';
-const REMOVEMENU = 'remove-menu';
 
+const NONE = 'none';
 const CREATE = 'create';
 const EDIT = 'edit';
 const RESET = 'reset';
@@ -36,26 +25,19 @@ const BASEURL = 'http://localhost:3001/api/';
 
 export {
   ADD,
-  ADDCOUPON,
-  ADDHERO,
-  ADDITEM,
-  ADDMENU,
+  CREATE,
+  EDIT,
   REMOVE,
-  REMOVECOUPON,
-  REMOVEHERO,
-  REMOVEITEM,
-  REMOVEMENU,
+  SETINITIAL,
   SET,
-  SETCOUPON,
-  SETITEM,
-  SETHERO,
-  SETMENU,
   UPDATE,
   COUPON,
   HERO,
   ITEM,
+  INITIALSTATE,
   MENU,
   MULTI,
+  NONE,
   NUMBER,
   RESET,
   SERVINGTIME,

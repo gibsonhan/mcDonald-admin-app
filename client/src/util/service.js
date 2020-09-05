@@ -11,6 +11,23 @@ async function create(type, payload) {
   return response.data.id;
 }
 
+async function getAll(types) {
+  //Create an array of promise
+  const promises = types.map((type) => {
+    const url = BASEURL + type;
+    return axios.get(url);
+  });
+
+  //THE RXJS how to we combine the stuff
+  //TODO functional program to combine to list
+  const response = await Promise.all(promises);
+
+  return response.reduce((acc, curr, indx) => {
+    acc[types[indx]] = curr.data;
+    return acc;
+  }, {});
+}
+
 async function getList(type) {
   const url = BASEURL + type;
   const response = await axios.get(url);
@@ -54,4 +71,12 @@ async function uploadMultiImg(data) {
   return response.data;
 }
 
-export { create, getList, getSingle, remove, uploadSingleImg, uploadMultiImg };
+export {
+  create,
+  getAll,
+  getList,
+  getSingle,
+  remove,
+  uploadSingleImg,
+  uploadMultiImg,
+};

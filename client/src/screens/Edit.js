@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useAppContext } from '../global/context';
-import escapeKey from '../hooks/handleEscapekey';
+import initEscapekey from '../hooks/handleEscapekey';
 
 const Edit = () => {
   const { history } = useAppContext();
   const goBack = () => history.goBack();
-  escapeKey(goBack);
+  initEscapekey(goBack);
 
   return (
     <EditContainer>

@@ -4,9 +4,10 @@ import styled from 'styled-components';
 import { HERO } from '../global/reserveWord';
 import { remove } from '../util/service';
 import { useAppContext } from '../global/context';
+import HeroCard from './HeroCard';
 
 const HeroListRow = ({ index, data }) => {
-  const { title, id, ...rowObj } = data[index];
+  const { id, ...props } = data[index];
   const { dispatchRemove, handleNavEditPage } = useAppContext();
 
   const navTo = () => handleNavEditPage(HERO, id);
@@ -20,7 +21,7 @@ const HeroListRow = ({ index, data }) => {
 
   return (
     <RowContainer>
-      <div>{title}</div>
+      <HeroCard props={props} />
       <button onClick={navTo}>Edit</button>
       <button onClick={removeHero}>Delete</button>
     </RowContainer>
@@ -35,13 +36,3 @@ const RowContainer = styled.div`
 `;
 
 export default HeroListRow;
-
-const Hero = () => {
-  return <HeroContainer>Hello World</HeroContainer>;
-};
-
-const HeroContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 300px;
-`;

@@ -5,21 +5,28 @@ import React, {
   useReducer,
   useState,
 } from 'react';
-import { ADD, REMOVE, SET, UPDATE } from './reserveWord';
+
+import { COUPON, HERO, ITEM, MENU, INITIALSTATE } from '../global/reserveWord';
+import { ADD, NONE, REMOVE, SET, SETINITIAL, UPDATE } from './reserveWord';
 import { createBrowserHistory } from 'history';
+import { getAll } from '../util/service';
+import {
+  setLocalStorage,
+  getLocalStorage,
+} from '../util/handleSetLocalStorage';
 
 const initalState = { hero: [], item: [], menu: [], coupon: [] };
-var reducerCount = 0;
 
 function init(initalState) {
-  return { initalState };
+  return { ...initalState };
 }
 
 function reducer(state, action) {
-  console.log('reducer firing');
   const { payload } = action;
   const { type, data } = payload;
   switch (action.type) {
+    case SETINITIAL:
+      return init(data);
     case ADD:
       return {
         ...state,
@@ -43,7 +50,6 @@ function reducer(state, action) {
 const AppContext = React.createContext(null);
 
 const AppProvider = ({ children }) => {
-  reducerCount++;
   const [oneModalOpen, setOneModalOpen] = useState(false);
   const [state, dispatch] = useReducer(reducer, initalState);
   const history = createBrowserHistory();
@@ -72,7 +78,17 @@ const AppProvider = ({ children }) => {
     dispatch({
       type: SET,
       payload: {
-        type: type,
+        type: NONE,
+        data: data,
+      },
+    });
+  };
+
+  const dispatchSetInitial = (data) => {
+    dispatch({
+      type: SETINITIAL,
+      payload: {
+        type: NONE,
         data: data,
       },
     });
@@ -94,15 +110,16 @@ const AppProvider = ({ children }) => {
   }
 
   function handleNavToCreate(type) {
-    console.log('checking', type);
     history.push(`/create?type=${type}`, type);
     history.go();
   }
 
   const values = useMemo(
     () => ({
+      dispatch,
       dispatchAdd,
       dispatchRemove,
+      dispatchSetInitial,
       dispatchSetList,
       dispatchUpdate,
       history,
@@ -113,8 +130,10 @@ const AppProvider = ({ children }) => {
       state,
     }),
     [
+      dispatch,
       dispatchAdd,
       dispatchRemove,
+      dispatchSetInitial,
       dispatchSetList,
       dispatchUpdate,
       history,
@@ -125,11 +144,28 @@ const AppProvider = ({ children }) => {
       state,
     ],
   );
-  /*
+
+  //Handle check inital state
+  useEffect(() => {
+    const hasInitalState = getLocalStorage(INITIALSTATE);
+    async function getListsAndSetLocalStorage() {
+      const types = [COUPON, HERO, ITEM, MENU];
+      const response = await getAll(types);
+      dispatchSetInitial(response);
+      setLocalStorage(INITIALSTATE, response);
+    }
+
+    !hasInitalState
+      ? getListsAndSetLocalStorage()
+      : dispatchSetInitial(hasInitalState);
+
+    return () => getListsAndSetLocalStorage();
+  }, []);
+
   useEffect(() => {
     console.log('stateCheck', state);
   }, [state]);
-  */
+
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 };
 

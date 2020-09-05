@@ -9,7 +9,7 @@ import Input from './Input';
 import PreviewImg from './PreviewImg';
 
 const Form = ({ title, inputs, children }) => {
-  const { register, handleSubmit, errors } = useForm({});
+  const { register, handleSubmit, errors, control } = useForm({});
 
   const onSubmit = async (_formData) => {
     console.log(_formData);
@@ -28,7 +28,13 @@ const Form = ({ title, inputs, children }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         {!!inputs &&
           inputs.map((item) => (
-            <Input key={item} name={item} register={register} errors={errors} />
+            <Input
+              key={item}
+              name={item}
+              register={register}
+              control={control}
+              errors={errors}
+            />
           ))}
         <ChildrenContainer>{children}</ChildrenContainer>
       </form>

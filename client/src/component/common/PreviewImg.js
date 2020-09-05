@@ -39,7 +39,7 @@ const PreviewImg = ({ title, register, display }) => {
       {prevImg.display && (
         <img
           src={prevImg.url}
-          style={{ objectFit: 'contain', width: '100px', height: '100px' }}
+          style={{ objectFit: 'fill', width: '100px', height: '100px' }}
         />
       )}
     </PrevImgContainer>

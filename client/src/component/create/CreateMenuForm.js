@@ -14,7 +14,7 @@ import { useAppContext } from '../../global/context';
 
 const CreateMenuForm = ({ title, inputs, children }) => {
   const { dispatchAdd } = useAppContext();
-  const { register, handleSubmit, errors } = useForm({});
+  const { control, errors, handleSubmit, register } = useForm({});
 
   const onSubmit = async (_formData) => {
     const { name, group, menuImg } = _formData;
@@ -42,7 +42,13 @@ const CreateMenuForm = ({ title, inputs, children }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         {!!inputs &&
           inputs.map((item) => (
-            <Input key={item} name={item} register={register} errors={errors} />
+            <Input
+              key={item}
+              name={item}
+              register={register}
+              errors={errors}
+              control={control}
+            />
           ))}
         <ChildrenContainer>{children}</ChildrenContainer>
       </form>

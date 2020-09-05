@@ -12,11 +12,24 @@ import Form from './CreateHeroForm';
 //Implementing cropping feature. Drawg and drop the image popsition
 //Cropping feature, then it flattens it to jpg
 //Implementing that AR tool I saw online
+
+let data = {
+  img: '',
+  title: 'Free Fries Day',
+  titleContent: 'Enjoy free Medium Fries with a minium',
+  titleContent2: '$1 Mobile Order & Pay purchase',
+  btnText: 'View Deals',
+  btnColor: 'yellow',
+  navLink: 'Deals',
+  dateRestriction: 'Friday',
+  legal:
+    "Get free Medium Fries with a minium $1 Mobile Order & Pay purchase, tax excl. Valid 1x/ Friday thru 9/27 at participating McD. Mobile Order & Pay at participating McD. McD app registration required. © 2020 McDonald's ",
+};
 const CreateHero = () => {
   console.log('inside create hero');
   return (
     <CreateHeroContainer>
-      <PreviewHeroCard />
+      <PreviewHeroCard props={data} />
       <Form type={HERO} inputs={HEROINPUTS}>
         <button type={SUBMIT}> Create {HERO}</button>
       </Form>

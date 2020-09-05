@@ -14,7 +14,7 @@ import { useAppContext } from '../../global/context';
 
 const CreateCouponForm = ({ title, inputs, children }) => {
   const { dispatchAdd } = useAppContext();
-  const { register, handleSubmit, errors } = useForm({});
+  const { control, errors, handleSubmit, register } = useForm({});
 
   const onSubmit = async (_formData) => {
     const { couponImg, ...formObj } = _formData;
@@ -38,7 +38,13 @@ const CreateCouponForm = ({ title, inputs, children }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         {!!inputs &&
           inputs.map((item) => (
-            <Input key={item} name={item} register={register} errors={errors} />
+            <Input
+              key={item}
+              name={item}
+              register={register}
+              control={control}
+              errors={errors}
+            />
           ))}
         <ChildrenContainer>{children}</ChildrenContainer>
       </form>

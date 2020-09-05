@@ -76,7 +76,13 @@ const CreateItem = ({ title }) => {
       <FormContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
           {ITEMINPUTS.map((item) => (
-            <Input key={item} name={item} register={register} errors={errors} />
+            <Input
+              key={item}
+              name={item}
+              register={register}
+              control={control}
+              errors={errors}
+            />
           ))}
           <SwitchBtnGroup
             key={'serving'}

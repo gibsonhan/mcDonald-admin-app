@@ -21,7 +21,12 @@ const Hero = () => {
       <ListContainer>
         {!state[HERO].length && 'No List'}
         {state[HERO] && (
-          <List title={HERO} data={state[HERO]} row={HeroListRow} />
+          <List
+            title={HERO}
+            data={state[HERO]}
+            row={HeroListRow}
+            itemSize={250}
+          />
         )}
       </ListContainer>
     </HeroContainer>

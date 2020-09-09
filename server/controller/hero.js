@@ -23,10 +23,10 @@ const heroList = async (req, res) => {
 const singleHero = async (req, res) => {
   const id = req.params.id;
   try {
-    const item = await Item.findById(id);
-    await res.status(200).json(item.toJSON());
+    const hero = await Hero.findById(id);
+    res.status(200).json(hero);
   } catch (error) {
-    res.status(400).json('Failed to find Item', error);
+    res.status(400).json('Failed to find hero', error);
   }
 };
 

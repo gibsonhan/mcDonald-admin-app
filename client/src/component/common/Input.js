@@ -5,23 +5,37 @@ import { rem } from 'polished';
 import { Controller } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
 
-const Input = ({ name, register, control, errors }) => {
+const Input = ({ name, register, control, errors, defaultValue }) => {
   const firstLetter = name[0].toUpperCase();
   const sliceWord = name.slice(1, name.length);
   const title = firstLetter + sliceWord;
   return (
     <InputContainer>
-      <Controller
-        as={TextField}
-        autoComplete="off"
-        error={errors[name]}
-        id={name}
-        label={title}
-        name={name}
-        variant="outlined"
-        control={control}
-        ref={register({ required: true })}
-      />
+      {!!defaultValue && (
+        <Controller
+          as={TextField}
+          autoComplete="off"
+          id={name}
+          label={title}
+          name={name}
+          defaultValue={defaultValue}
+          variant="outlined"
+          control={control}
+          error={errors[name]}
+        />
+      )}
+      {!defaultValue && (
+        <Controller
+          as={TextField}
+          autoComplete="off"
+          id={name}
+          label={title}
+          name={name}
+          variant="outlined"
+          control={control}
+          error={errors[name]}
+        />
+      )}
       {errors[name] && errors[name].message}
       {errors[name] && errors[name].name === 'required' && (
         <span>This is required</span>

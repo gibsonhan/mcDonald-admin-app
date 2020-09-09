@@ -4,6 +4,7 @@ import Text from '../common/Text';
 import { rem } from 'polished';
 
 const Btn = ({
+  display,
   color,
   height,
   width,
@@ -17,6 +18,7 @@ const Btn = ({
     e && e.preventDefault();
     return !!handleOnClick ? handleOnClick() : console.log('no click');
   };
+  if (!display) return <></>;
   return (
     <BtnContainer flex={flex} justify={justify}>
       <Button onClick={click} height={height} width={width} color={color}>

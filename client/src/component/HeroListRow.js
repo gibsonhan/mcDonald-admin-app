@@ -27,8 +27,9 @@ const HeroListRow = ({ index, data, style }) => {
     height: 80,
     width: 80,
   };
+
   return (
-    <RowContainer>
+    <RowContainer style={style}>
       <HeroCard props={props} />
       <BtnContainer>
         <Btn handleOnClick={navToEdit} {...btnSize} color="blue" txt="Edit" />
@@ -43,6 +44,8 @@ const RowContainer = styled.div`
   flex-direction: row;
   justify-content: space-around;
   margin-bottom: 10px;
+  margin: auto;
+  max-width: 1000px;
 `;
 
 const BtnContainer = styled.div`

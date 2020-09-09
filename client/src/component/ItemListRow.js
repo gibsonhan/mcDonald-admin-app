@@ -34,7 +34,6 @@ const ItemRow = ({ index, data }) => {
     <ItemRowContainer>
       <Name>{name}</Name>
       <Group>Group {group} </Group>
-
       <ActiveBox active={hasCoupon} />
       <Btn handleOnClick={navToEdit} {...btnProps} color="blue" txt="Edit" />
       <Btn handleOnClick={removeItem} {...btnProps} color="red" txt="Remove" />

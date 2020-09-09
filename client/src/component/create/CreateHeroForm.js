@@ -13,7 +13,7 @@ import { create } from '../../util/service';
 import { HERO } from '../../global/reserveWord';
 import { useAppContext } from '../../global/context';
 
-const CreateHeroForm = ({ title, inputs, children }) => {
+const CreateHeroForm = ({ inputs, children, defaultValues }) => {
   const { dispatchAdd } = useAppContext();
   const { control, errors, handleSubmit, register } = useForm({});
 
@@ -38,15 +38,19 @@ const CreateHeroForm = ({ title, inputs, children }) => {
       <PreviewImg register={register} title={HERO} />
       <form onSubmit={handleSubmit(onSubmit)}>
         {!!inputs &&
-          inputs.map((item) => (
-            <Input
-              key={item}
-              name={item}
-              register={register}
-              control={control}
-              errors={errors}
-            />
-          ))}
+          inputs.map((item) => {
+            const df = (!!defaultValues && defaultValues[item]) || '';
+            return (
+              <Input
+                key={item}
+                defaultValue={df}
+                name={item}
+                register={register}
+                control={control}
+                errors={errors}
+              />
+            );
+          })}
         <ChildrenContainer>{children}</ChildrenContainer>
       </form>
     </FormContainer>

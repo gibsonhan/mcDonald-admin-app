@@ -6,13 +6,18 @@ import { HERO, SUBMIT } from '../../global/reserveWord';
 import { HEROINPUTS } from '../../global/tempData';
 
 import Form from './CreateHeroForm';
+import Btn from '../common/Btn';
 
-const CreateHero = () => {
+const CreateHero = ({ defaultValues }) => {
   return (
     <CreateHeroContainer>
-      <Form type={HERO} inputs={HEROINPUTS}>
-        <button type={SUBMIT}> Create {HERO}</button>
-      </Form>
+      <Form
+        type={HERO}
+        inputs={HEROINPUTS}
+        defaultValues={defaultValues}
+      ></Form>
+      <Btn color="grey" justify="center" txt="Create Hero" />
+      <Btn color="grey" justify="center" txt="Update Hero" />
     </CreateHeroContainer>
   );
 };

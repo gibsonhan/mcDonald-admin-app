@@ -35,7 +35,7 @@ async function getList(type) {
 }
 
 async function getSingle(type, id) {
-  const url = BASEURL + type + `${id}`;
+  const url = BASEURL + type + `/${id}`;
   const response = await axios.get(url);
   return response.data;
 }

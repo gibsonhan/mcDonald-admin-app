@@ -2,7 +2,8 @@ import React from 'react';
 import { FixedSizeList as ListInput } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 
-const List = ({ data, row }) => {
+const List = ({ data, row, itemSize, maxWidth }) => {
+  const itmSize = !!itemSize ? itemSize : 30;
   return (
     <AutoSizer>
       {({ height, width }) => (
@@ -11,7 +12,7 @@ const List = ({ data, row }) => {
           height={height}
           width={width}
           itemCount={data.length}
-          itemSize={30}
+          itemSize={itmSize}
         >
           {row}
         </ListInput>

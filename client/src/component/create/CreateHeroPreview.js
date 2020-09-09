@@ -44,7 +44,7 @@ const CreateHeroPreview = ({ props }) => {
 const PreviewContainer = styled.div`
   width: 100%;
   height: auto;
-  margin: auto;
+  margin: 50px;
   max-width: 800px;
 `;
 

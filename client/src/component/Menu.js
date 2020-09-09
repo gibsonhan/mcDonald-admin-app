@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { MENU } from '../global/reserveWord';
+import { CREATE, MENU } from '../global/reserveWord';
 import onloadFetchList from '../util/handleFetchList';
 import { useAppContext } from '../global/context';
 
+import Btn from './common/Btn';
 import List from './common/List';
 import MenuListRow from './MenuListRow';
 
@@ -17,7 +18,11 @@ const Menu = () => {
       <Content>
         <div>Menu</div>
         <div>Number of menu {state.menu.length}</div>
-        <button onClick={navToCreate}> Create {MENU} </button>
+        <Btn
+          color="grey"
+          handleOnClick={navToCreate}
+          txt={CREATE + ' ' + MENU}
+        />
       </Content>
 
       <ListContainer>

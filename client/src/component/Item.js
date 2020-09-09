@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import onloadFetchList from '../util/handleFetchList';
+import { CREATE, ITEM } from '../global/reserveWord';
+import { useAppContext } from '../global/context';
+
 import List from './common/List';
 import ItemListRow from './ItemListRow';
-
-import onloadFetchList from '../util/handleFetchList';
-import { ITEM } from '../global/reserveWord';
-import { useAppContext } from '../global/context';
+import Btn from './common/Btn';
 
 const Item = ({ props }) => {
   onloadFetchList(ITEM);
@@ -17,7 +18,11 @@ const Item = ({ props }) => {
       <ItemSummaryContainer>
         <header>Item</header>
         Number of items: {state[ITEM].length}
-        <button onClick={navToCreate}> Create {ITEM}</button>
+        <Btn
+          color="#fffff0"
+          handleOnClick={navToCreate}
+          txt={CREATE + ' ' + ITEM}
+        />
       </ItemSummaryContainer>
       <ItemListContainer>
         <List
@@ -38,7 +43,11 @@ const ItemContainer = styled.div`
 `;
 
 const ItemSummaryContainer = styled.div`
-  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
 `;
 const ItemListContainer = styled.div`
   flex: 6;

@@ -7,7 +7,7 @@ import * as yup from 'yup';
 
 import { createSingleImgUrl } from '../../util/createSingleImgUrl';
 import { create, update } from '../../util/service';
-import { HERO, UPDATE, CREATE } from '../../global/reserveWord';
+import { HERO, UPDATE, CREATE, SUBMIT } from '../../global/reserveWord';
 import { HEROINPUTS } from '../../global/tempData';
 import { useAppContext } from '../../global/context';
 
@@ -78,7 +78,7 @@ const CreateHero = ({ defaultValues }) => {
               );
             })}
           <Btn
-            type="submit"
+            type={SUBMIT}
             clickRef={buttonRef}
             handleOnClick={clickInput}
             color="grey"

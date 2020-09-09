@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
@@ -7,9 +7,11 @@ import * as yup from 'yup';
 import { createServingTimeArr } from '../../util/createServingTimeArr';
 import { createImgObj } from '../../util/createImgObj';
 import { createSizeObj } from '../../util/createSizesObj';
+import handleClickRef from '../../util/handleClickRef';
 import { create } from '../../util/service';
-import { ITEM } from '../../global/reserveWord';
+import { CREATE, ITEM, UPDATE, SUBMIT } from '../../global/reserveWord';
 
+import Btn from '../common/Btn';
 import Input from '../common/Input';
 import SwitchBtnGroup from './SwitchButtonGroup';
 
@@ -22,8 +24,10 @@ import {
 import { SERVINGTIME } from '../../global/reserveWord';
 import { useAppContext } from '../../global/context';
 
-const CreateItem = ({ title }) => {
-  const { dispatchAdd } = useAppContext();
+const CreateItem = ({ defaultValues }) => {
+  const { dispatchAdd, dispatchUpdate } = useAppContext();
+  const buttonRef = useRef();
+  const buttonTxt = !!defaultValues ? UPDATE + ' ' + ITEM : CREATE + ' ' + ITEM;
   const inputSchema = ITEMINPUTS.reduce((acc, curr) => {
     acc[curr] = yup.string().required();
     return acc;
@@ -43,6 +47,10 @@ const CreateItem = ({ title }) => {
     defaultValues,
     resolver: yupResolver(schema),
   });
+
+  function clickInput() {
+    !!buttonRef && buttonRef.current.click();
+  }
 
   const onSubmit = async (formData) => {
     const { name, group, subGroup, couponGroup, ...sizeObjInfo } = formData;
@@ -99,7 +107,14 @@ const CreateItem = ({ title }) => {
             register={register}
             control={control}
           />
-          <button type="submit">Add New Item</button>
+          <Btn
+            type={SUBMIT}
+            clickRef={buttonRef}
+            handleOnClick={clickInput}
+            color="grey"
+            justify="center"
+            txt={buttonTxt}
+          />
         </form>
       </FormContainer>
     </CreateItemContainer>

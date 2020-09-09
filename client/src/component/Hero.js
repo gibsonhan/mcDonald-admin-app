@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { HERO } from '../global/reserveWord';
+import { HERO, CREATE } from '../global/reserveWord';
 import onloadFetchList from '../util/handleFetchList';
 import { useAppContext } from '../global/context';
 
 import List from './common/List';
 import HeroListRow from './HeroListRow';
+import Text from './common/Text';
+import Btn from './common/Btn';
 
 const Hero = () => {
   onloadFetchList(HERO);
@@ -15,8 +17,13 @@ const Hero = () => {
   return (
     <HeroContainer>
       <ContentContainer>
-        <div>Hero</div> <div>number of hero {state[HERO].length}</div>
-        <button onClick={navToCreate}> Create {HERO}</button>
+        <Text>Hero</Text>
+        <Text>number of hero {state[HERO].length}</Text>
+        <Btn
+          color="grey"
+          handleOnClick={navToCreate}
+          txt={CREATE + ' ' + HERO}
+        />
       </ContentContainer>
       <ListContainer>
         {!state[HERO].length && 'No List'}

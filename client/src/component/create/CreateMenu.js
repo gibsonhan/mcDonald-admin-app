@@ -1,15 +1,29 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 
 import Form from './CreateMenuForm';
-import { MENU, SUBMIT } from '../../global/reserveWord';
-import { MENUINPUTS } from '../../global/tempData';
+import { CREATE, MENU, SUBMIT, UPDATE } from '../../global/reserveWord';
 
-const CreateMenu = () => {
+//TODO refactor the menuInput inputs
+import Btn from '../common/Btn';
+const CreateMenu = ({ defaultValues }) => {
+  const buttonTxt = !!defaultValues ? UPDATE + ' ' + MENU : CREATE + ' ' + MENU;
+  const buttonRef = useRef();
+
+  function clickInput() {
+    !!buttonRef && buttonRef.current.click();
+  }
   return (
     <CreateMenuContainer>
-      <Form title={MENU} inputs={MENUINPUTS}>
-        <button type={SUBMIT}> Create Menu</button>
+      <Form>
+        <Btn
+          type={SUBMIT}
+          clickRef={buttonRef}
+          handleOnClick={clickInput}
+          color="grey"
+          justify="center"
+          txt={buttonTxt}
+        />
       </Form>
     </CreateMenuContainer>
   );

@@ -42,7 +42,6 @@ function reducer(state, action) {
         ...state,
         [type]: state[type].map((item) => (item.id === data.id ? data : item)),
       };
-
     case REMOVE:
       return {
         ...state,

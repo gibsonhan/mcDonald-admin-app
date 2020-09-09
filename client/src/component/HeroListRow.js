@@ -7,17 +7,15 @@ import { useAppContext } from '../global/context';
 import HeroCard from './HeroCard';
 import Btn from './common/Btn';
 
-const HeroListRow = ({ index, data }) => {
+const HeroListRow = ({ index, data, style }) => {
   const { id, ...props } = data[index];
   const { dispatchRemove, handleNavEditPage } = useAppContext();
 
   const navToEdit = (e) => {
-    e.preventDefault();
     handleNavEditPage(HERO, id);
   };
 
   const removeHero = async (e) => {
-    e.preventDefault();
     try {
       await remove(HERO, id);
       dispatchRemove(HERO, id);
@@ -33,12 +31,8 @@ const HeroListRow = ({ index, data }) => {
     <RowContainer>
       <HeroCard props={props} />
       <BtnContainer>
-        <Btn handleOnClick={navToEdit} {...btnSize} color="blue">
-          Edit
-        </Btn>
-        <Btn handleOnClick={removeHero} {...btnSize} color="red">
-          Remove
-        </Btn>
+        <Btn handleOnClick={navToEdit} {...btnSize} color="blue" txt="Edit" />
+        <Btn handleOnClick={removeHero} {...btnSize} color="red" txt="Remove" />
       </BtnContainer>
     </RowContainer>
   );

@@ -5,12 +5,15 @@ import { COUPON } from '../global/reserveWord';
 import { remove } from '../util/service';
 import { useAppContext } from '../global/context';
 
+import Btn from './common/Btn';
+import Text from './common/Text';
+
 //TODO recreate the coupon here?
 const CouponListRow = ({ index, data }) => {
   const { title, id, ...rowObj } = data[index];
   const { dispatchRemove, handleNavEditPage } = useAppContext();
 
-  const navTo = () => handleNavEditPage(COUPON, id);
+  const navToEdit = () => handleNavEditPage(COUPON, id);
 
   const removeCoupon = async () => {
     try {
@@ -21,11 +24,31 @@ const CouponListRow = ({ index, data }) => {
     }
   };
 
+  const btnProps = {
+    flex: 1,
+    height: 40,
+    width: 100,
+  };
+
   return (
     <RowContainer>
-      <div>{title}</div>
-      <button onClick={navTo}>Edit</button>
-      <button onClick={removeCoupon}>Delete</button>
+      <Text flex={1} justify="center">
+        {title}
+      </Text>
+      <Btn
+        handleOnClick={navToEdit}
+        {...btnProps}
+        color="blue"
+        txt="Edit"
+        justify="center"
+      />
+      <Btn
+        handleOnClick={removeCoupon}
+        {...btnProps}
+        color="red"
+        txt="Remove"
+        justify="center"
+      />
     </RowContainer>
   );
 };
@@ -35,16 +58,7 @@ const RowContainer = styled.div`
   flex-direction: row;
   justify-content: space-around;
   margin-bottom: 10px;
+  padding: 10px;
 `;
 
 export default CouponListRow;
-
-const Coupon = () => {
-  return <CouponContainer>Hello World</CouponContainer>;
-};
-
-const CouponContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 300px;
-`;

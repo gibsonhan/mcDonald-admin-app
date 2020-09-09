@@ -5,12 +5,15 @@ import { ITEM } from '../global/reserveWord';
 import { remove } from '../util/service';
 import { useAppContext } from '../global/context';
 
+import ActiveBox from './ItemActiveBox';
+import Btn from './common/Btn';
+
 const ItemRow = ({ index, data }) => {
   const { name, group, id } = data[index];
   const { dispatchRemove, handleNavEditPage } = useAppContext();
   const hasCoupon = !!data[index].couponGroupID === false ? false : true;
 
-  const navTo = () => handleNavEditPage(ITEM, id);
+  const navToEdit = () => handleNavEditPage(ITEM, id);
 
   const removeItem = async () => {
     try {
@@ -21,16 +24,20 @@ const ItemRow = ({ index, data }) => {
     }
   };
 
+  const btnProps = {
+    flex: 1,
+    height: 40,
+    width: 100,
+  };
+
   return (
     <ItemRowContainer>
-      <div>Name: {name}</div>
-      <div>Menu: {group}</div>
-      <ActiveBoxContainer>
-        <div>Active Coupon:</div>
-        <ActiveBox active={hasCoupon} />
-      </ActiveBoxContainer>
-      <button onClick={navTo}>Edit</button>
-      <button onClick={removeItem}>Delete</button>
+      <Name>{name}</Name>
+      <Group>Group {group} </Group>
+
+      <ActiveBox active={hasCoupon} />
+      <Btn handleOnClick={navToEdit} {...btnProps} color="blue" txt="Edit" />
+      <Btn handleOnClick={removeItem} {...btnProps} color="red" txt="Remove" />
     </ItemRowContainer>
   );
 };
@@ -42,19 +49,15 @@ const ItemRowContainer = styled.div`
   align-items: center;
   margin-bottom: 10px;
 `;
-const ActiveBoxContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
 
-  div {
-    margin-right: 10px;
-  }
+const Name = styled.div`
+  flex: 1;
 `;
-const ActiveBox = styled.div`
-  background: ${(props) => (!!props.active ? 'light-green' : 'red')};
-  height: 25px;
-  width: 25px;
+const Group = styled.div`
+  flex: 1;
+`;
+const Item = styled.div`
+  flex: 1;
 `;
 
 export default ItemRow;

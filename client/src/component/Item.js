@@ -20,7 +20,7 @@ const Item = ({ props }) => {
         <button onClick={navToCreate}> Create {ITEM}</button>
       </ItemSummaryContainer>
       <ItemListContainer>
-        <List title={'Item'} data={state[ITEM]} row={ItemListRow} />
+        <List title={ITEM} data={state[ITEM]} row={ItemListRow} />
       </ItemListContainer>
     </ItemContainer>
   );

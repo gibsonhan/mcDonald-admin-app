@@ -11,16 +11,18 @@ const Btn = ({
   flex,
   handleOnClick,
   justify,
+  txt,
 }) => {
   const click = (e) => {
-    e.preventDefault();
+    e && e.preventDefault();
     return !!handleOnClick ? handleOnClick() : console.log('no click');
   };
-  console.log(height, width);
   return (
     <BtnContainer flex={flex} justify={justify}>
       <Button onClick={click} height={height} width={width} color={color}>
-        <Text justify={'center'}>{children}</Text>
+        <Text justify={'center'}>
+          {children} {txt}
+        </Text>
       </Button>
     </BtnContainer>
   );

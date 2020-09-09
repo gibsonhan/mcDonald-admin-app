@@ -27,7 +27,7 @@ const CreateHeroForm = ({ title, inputs, children }) => {
     try {
       const response = await create(HERO, data);
       console.log('check response', response);
-      dispatchAdd(HERO, { ...data, id: response });
+      dispatchAdd(HERO, { data: data, id: response });
     } catch (error) {
       console.log(error);
     }

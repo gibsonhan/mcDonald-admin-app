@@ -30,7 +30,7 @@ const CreateHeroPreview = ({ props }) => {
             {btnText}
           </Btn>
         </TextContainer>
-        <PictureContainer></PictureContainer>
+        <PictureContainer>Hello1</PictureContainer>
       </MainContent>
       <LegalContainer>
         <Text size={10} padding={12}>

@@ -78,7 +78,7 @@ const AppProvider = ({ children }) => {
     dispatch({
       type: SET,
       payload: {
-        type: NONE,
+        type: type,
         data: data,
       },
     });
@@ -145,7 +145,11 @@ const AppProvider = ({ children }) => {
     ],
   );
 
-  //Handle check inital state
+  /**
+   *  On load get All list
+   *  Set it to local storage
+   *
+   */
   useEffect(() => {
     const hasInitalState = getLocalStorage(INITIALSTATE);
     async function getListsAndSetLocalStorage() {

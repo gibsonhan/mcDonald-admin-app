@@ -6,9 +6,18 @@ import Text from './common/Text';
 import Btn from './common/Btn';
 
 const HeroCard = ({ props }) => {
-  const { title, titleContent, titleContent2, btnText, legal, img } = props;
+  const {
+    title,
+    titleContent,
+    titleContent2,
+    btnText,
+    legal,
+    img,
+    btnColor,
+  } = props;
   const ImgStyle = {
-    height: '100%',
+    objectFit: 'cover',
+    height: '240px',
     width: '100%',
   };
   return (
@@ -24,7 +33,7 @@ const HeroCard = ({ props }) => {
           <Text flex={0.25} size={16}>
             {titleContent2}
           </Text>
-          <Btn flex={1} justify={'center'}>
+          <Btn flex={1} justify={'center'} color={btnColor}>
             {btnText}
           </Btn>
         </TextContainer>
@@ -44,8 +53,8 @@ const HeroCard = ({ props }) => {
 
 const PreviewContainer = styled.div`
   width: 100%;
-  height: auto;
   margin: auto;
+  max-height: 240px;
   max-width: 800px;
 `;
 
@@ -67,10 +76,7 @@ const TextContainer = styled.div`
 
 const PictureContainer = styled.div`
   flex: 1;
-  flex-direction: center;
-  background: grey;
-  justify-content: center;
-  align-items: center;
+  height: 100%;
 `;
 
 const LegalContainer = styled.div``;

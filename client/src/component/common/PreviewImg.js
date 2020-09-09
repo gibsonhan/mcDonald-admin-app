@@ -1,7 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { NONE } from '../../global/reserveWord';
 
-const PreviewImg = ({ title, register, display }) => {
+const PreviewImg = ({ title, register, defaultImg }) => {
   const imgUploadRef = useRef();
   const [prevImg, setPrevImg] = useState({ display: false, url: '' });
   const name = title + 'Img';
@@ -24,6 +25,18 @@ const PreviewImg = ({ title, register, display }) => {
     reader.readAsDataURL(file);
   }
 
+  //For Updating Form
+  //Set image Preview if default image is passed through
+  useEffect(() => {
+    function setImage() {
+      if (!!defaultImg) {
+        setPrevImg({ display: true, url: defaultImg });
+      }
+    }
+    setImage();
+    return () => setImage();
+  }, [defaultImg]);
+
   return (
     <PrevImgContainer onClick={uploadImg} ref={imgUploadRef}>
       <input
@@ -35,7 +48,7 @@ const PreviewImg = ({ title, register, display }) => {
         onChange={(e) => updatePreview(e)}
         style={{ display: 'none' }}
       />
-      {!prevImg.display && 'Upload Img'}
+      {!prevImg.display === NONE && 'Upload Img'}
       {prevImg.display && (
         <img
           src={prevImg.url}

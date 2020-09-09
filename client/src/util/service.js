@@ -46,6 +46,12 @@ async function remove(type, id) {
   return response.data;
 }
 
+async function update(type, id, payload) {
+  const url = BASEURL + type + `/${id}`;
+  const response = await axios.put(url, payload);
+  return response.data;
+}
+
 //TODO: need to refactor: remove the api from menu to a general s3/api/route
 async function uploadSingleImg(data) {
   const url = BASEURL + 'amazonS3/single-img';
@@ -77,6 +83,7 @@ export {
   getList,
   getSingle,
   remove,
+  update,
   uploadSingleImg,
   uploadMultiImg,
 };

@@ -4,7 +4,8 @@ import Text from '../common/Text';
 import { rem } from 'polished';
 
 const Btn = ({
-  display,
+  type,
+  clickRef,
   color,
   height,
   width,
@@ -18,7 +19,6 @@ const Btn = ({
     e && e.preventDefault();
     return !!handleOnClick ? handleOnClick() : console.log('no click');
   };
-  if (!display) return <></>;
   return (
     <BtnContainer flex={flex} justify={justify}>
       <Button onClick={click} height={height} width={width} color={color}>
@@ -26,6 +26,7 @@ const Btn = ({
           {children} {txt}
         </Text>
       </Button>
+      {type && <input ref={clickRef} type={type} style={{ display: 'none' }} />}
     </BtnContainer>
   );
 };

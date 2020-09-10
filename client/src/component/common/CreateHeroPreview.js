@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { rem } from 'polished';
-import Text from '../common/Text';
+import Text from './Text';
 
-import PreviewImg from '../common/PreviewImg';
-import Btn from '../common/Btn';
+import PreviewImg from './PreviewImg';
+import Btn from './Btn';
 import { HERO } from '../../global/reserveWord';
 
 const CreateHeroPreview = ({ props }) => {

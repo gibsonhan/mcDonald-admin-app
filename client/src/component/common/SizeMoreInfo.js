@@ -5,7 +5,7 @@ import { Controller } from 'react-hook-form';
 import { TextField } from '@material-ui/core';
 import { NUMBER } from '../../global/reserveWord';
 import { SIZEMOREINFO } from '../../global/tempData';
-import PreviewImg from '../common/PreviewImg';
+import PreviewImg from './PreviewImg';
 
 //Need to understand control and register
 const SizeMoreInfo = ({ title, register, control }) => {

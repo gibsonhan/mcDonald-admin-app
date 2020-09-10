@@ -4,36 +4,33 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
 import * as yup from 'yup';
 
-import { createServingTimeArr } from '../../util/createServingTimeArr';
-import { createImgObj } from '../../util/createImgObj';
-import { createSizeObj } from '../../util/createSizesObj';
-import handleClickRef from '../../util/handleClickRef';
-import { create } from '../../util/service';
-import { CREATE, ITEM, UPDATE, SUBMIT } from '../../global/reserveWord';
+import { createServingTimeArr } from '../util/createServingTimeArr';
+import { createImgObj } from '../util/createImgObj';
+import { createSizeObj } from '../util/createSizesObj';
+import { create, update } from '../util/service';
+import {
+  CREATE,
+  ITEM,
+  UPDATE,
+  SUBMIT,
+  SERVINGTIME,
+} from '../global/reserveWord';
 
-import Btn from '../common/Btn';
-import Input from '../common/Input';
+import Input from '../component/common/Input';
 import SwitchBtnGroup from './SwitchButtonGroup';
 
-import {
-  DEFAULTITEMVALUES as defaultValues,
-  ITEMINPUTS,
-  ITEMSIZES,
-  SERVINGTIMES,
-} from '../../global/tempData';
-import { SERVINGTIME } from '../../global/reserveWord';
-import { useAppContext } from '../../global/context';
+import { ITEMINPUTS, ITEMSIZES, SERVINGTIMES } from './../global/tempData';
+import { useAppContext } from '../global/context';
 
-const CreateItem = ({ defaultValues }) => {
-  const { dispatchAdd, dispatchUpdate } = useAppContext();
+const ItemForm = ({ preloadValues, children }) => {
+  const { dispatchAdd, dispatchUpdate, history } = useAppContext();
   const buttonRef = useRef();
-  const buttonTxt = !!defaultValues ? UPDATE + ' ' + ITEM : CREATE + ' ' + ITEM;
+  const buttonTxt = !!preloadValues ? UPDATE + ' ' + ITEM : CREATE + ' ' + ITEM;
   const inputSchema = ITEMINPUTS.reduce((acc, curr) => {
     acc[curr] = yup.string().required();
     return acc;
   }, {});
 
-  //https://www.youtube.com/watch?v=tYGTjxhzrqY
   const sizesArrSchema = ITEMSIZES.reduce((acc, curr) => {
     acc[curr] = yup.boolean().required();
     acc[curr + 'Price'] = yup.number().positive();
@@ -43,8 +40,9 @@ const CreateItem = ({ defaultValues }) => {
   }, {});
 
   const schema = yup.object().shape({ ...inputSchema, ...sizesArrSchema });
+
   const { register, handleSubmit, errors, control } = useForm({
-    defaultValues,
+    defaultValues: preloadValues,
     resolver: yupResolver(schema),
   });
 
@@ -52,9 +50,28 @@ const CreateItem = ({ defaultValues }) => {
     !!buttonRef && buttonRef.current.click();
   }
 
+  async function handleCreateItem(data) {
+    try {
+      const response = await create(ITEM, data);
+      dispatchAdd(ITEM, { ...data, id: response });
+    } catch (error) {
+      console.log('fail to create Item', error);
+    }
+  }
+
+  async function handleUpdateItem(data) {
+    const id = history.location.state.id;
+    try {
+      await update(ITEM, id, data);
+      dispatchUpdate(ITEM, { ...data, id });
+    } catch (error) {
+      console.log('fail to upage Item');
+    }
+  }
+
   const onSubmit = async (formData) => {
     const { name, group, subGroup, couponGroup, ...sizeObjInfo } = formData;
-
+    console.log('onSubmit', formData);
     const data = {
       name,
       group,
@@ -69,18 +86,12 @@ const CreateItem = ({ defaultValues }) => {
         author: 'Admin',
       },
     };
-    try {
-      const response = await create(ITEM, data);
-      const newData = { ...data, id: response };
-      dispatchAdd(ITEM, newData);
-    } catch (error) {
-      console.log('Failed to create item');
-    }
+
+    !preloadValues ? handleCreateItem(data) : handleUpdateItem(data);
   };
 
   return (
-    <CreateItemContainer>
-      <DisplayContainer>Hello</DisplayContainer>
+    <ItemFormContainer>
       <FormContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
           {ITEMINPUTS.map((item) => (
@@ -100,6 +111,7 @@ const CreateItem = ({ defaultValues }) => {
             control={control}
           />
           {/* TODO: when user enable size, group price input**/}
+          {/* { TODO refactor with watch api} */}
           <SwitchBtnGroup
             key={'sizesArr'}
             title={'Size Customization'}
@@ -107,27 +119,20 @@ const CreateItem = ({ defaultValues }) => {
             register={register}
             control={control}
           />
-          <Btn
-            type={SUBMIT}
-            clickRef={buttonRef}
-            handleOnClick={clickInput}
-            color="grey"
-            justify="center"
-            txt={buttonTxt}
-          />
+          <ChildrenContainer>{children}</ChildrenContainer>
         </form>
       </FormContainer>
-    </CreateItemContainer>
+    </ItemFormContainer>
   );
 };
 
-const CreateItemContainer = styled.div`
+const ItemFormContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
 `;
-const DisplayContainer = styled.div`
-  flex: 3;
+const ChildrenContainer = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
 `;
@@ -138,4 +143,4 @@ const FormContainer = styled.div`
   align-items: center;
   background-color: #fbab7e;
 `;
-export default CreateItem;
+export default ItemForm;

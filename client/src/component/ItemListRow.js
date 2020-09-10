@@ -5,7 +5,7 @@ import { ITEM } from '../global/reserveWord';
 import { remove } from '../util/service';
 import { useAppContext } from '../global/context';
 
-import ActiveBox from './ItemActiveBox';
+import ActiveBox from './common/ActiveBox';
 import Btn from './common/Btn';
 
 const ItemRow = ({ index, data }) => {

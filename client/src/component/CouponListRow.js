@@ -20,7 +20,7 @@ const CouponListRow = ({ index, data }) => {
       await remove(COUPON, id);
       dispatchRemove(COUPON, id);
     } catch (error) {
-      console.log('faield to catch error', error);
+      console.log('failed to catch error', error);
     }
   };
 

@@ -10,26 +10,29 @@ import EscapeBtn from '../component/common/EscapeBtn';
 import initEscapekey from '../hooks/handleEscapekey';
 import fetchDefaultValue from '../hooks/handleDefaultValues';
 
-import CreateCoupon from '../component/create/CreateCoupon';
-import CreateHero from '../component/create/CreateHero';
-import CreateItem from '../component/create/CreateItem';
-import CreateMenu from '../component/create/CreateMenu';
+import CreateCoupon from '../component/common/CreateCoupon';
+import CreateHero from '../component/common/CreateHero';
+import Item from '../component/Item';
+import CreateMenu from '../component/common/CreateMenu';
 
+//TODO Refactor Create and Edit into a single form?
 const Create = () => {
   const { history } = useAppContext();
   const id = history.location.state.id;
   const key = history.location.state.type;
-  const defaultValues = fetchDefaultValue(key, id);
+  const preloadData = fetchDefaultValue(key, id);
   const goBack = () => history.goBack();
 
+  const { defaultValues } = preloadData;
   const createObj = {
     [COUPON]: <CreateCoupon {...defaultValues} />,
     [HERO]: <CreateHero {...defaultValues} />,
-    [ITEM]: <CreateItem {...defaultValues} />,
+    [ITEM]: <Item preloadValues={defaultValues} />,
     [MENU]: <CreateMenu {...defaultValues} />,
   };
 
   initEscapekey(goBack);
+
   return (
     <CreateContainer>
       <Header>

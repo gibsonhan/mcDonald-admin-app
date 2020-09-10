@@ -1,56 +1,38 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 
-import onloadFetchList from '../util/handleFetchList';
-import { CREATE, ITEM } from '../global/reserveWord';
-import { useAppContext } from '../global/context';
+import { CREATE, ITEM, UPDATE, SUBMIT } from '../global/reserveWord';
 
-import List from './common/List';
-import ItemListRow from './ItemListRow';
 import Btn from './common/Btn';
+import Form from './ItemForm';
 
-const Item = ({ props }) => {
-  onloadFetchList(ITEM);
-  const { state, handleNavToCreate } = useAppContext();
-  const navToCreate = () => handleNavToCreate(ITEM);
+const Item = ({ preloadValues }) => {
+  const buttonTxt = !!preloadValues ? UPDATE + ' ' + ITEM : CREATE + ' ' + ITEM;
+  const buttonRef = useRef();
+
+  function clickInput() {
+    !!buttonRef && buttonRef.current.click();
+  }
   return (
-    <ItemContainer>
-      <ItemSummaryContainer>
-        <header>Item</header>
-        Number of items: {state[ITEM].length}
+    <CreateItemContainer>
+      <Form>
         <Btn
-          color="#fffff0"
-          handleOnClick={navToCreate}
-          txt={CREATE + ' ' + ITEM}
+          type={SUBMIT}
+          clickRef={buttonRef}
+          handleOnClick={clickInput}
+          color="grey"
+          justify="center"
+          txt={buttonTxt}
         />
-      </ItemSummaryContainer>
-      <ItemListContainer>
-        <List
-          title={ITEM}
-          data={state[ITEM]}
-          row={ItemListRow}
-          itemSize={250}
-        />
-      </ItemListContainer>
-    </ItemContainer>
+      </Form>
+    </CreateItemContainer>
   );
 };
 
-const ItemContainer = styled.div`
+const CreateItemContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-`;
-
-const ItemSummaryContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-`;
-const ItemListContainer = styled.div`
-  flex: 6;
 `;
 
 export default Item;

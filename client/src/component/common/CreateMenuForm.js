@@ -11,15 +11,13 @@ import { MENU } from '../../global/reserveWord';
 import { MENUINPUTS } from '../../global/tempData';
 import { useAppContext } from '../../global/context';
 
-import Input from '../common/Input';
-import PreviewImg from '../common/PreviewImg';
+import Input from './Input';
+import PreviewImg from './PreviewImg';
 
 const CreateMenuForm = ({ defaultValues, children }) => {
   const defaultImg = !!defaultValues ? defaultValues.img : '';
   const { dispatchAdd, dispatchUpdate, history } = useAppContext();
-  const { control, errors, handleSubmit, register } = useForm({
-    ...defaultValues,
-  });
+  const { control, errors, handleSubmit, register } = useForm({});
 
   async function handleCreateMenu(data) {
     try {
@@ -36,7 +34,7 @@ const CreateMenuForm = ({ defaultValues, children }) => {
       await update(MENU, id, data);
       dispatchUpdate(MENU, { ...data, id });
     } catch (error) {
-      console.log('fail to upage hero');
+      console.log('fail to upage menu');
     }
   }
 
@@ -52,6 +50,8 @@ const CreateMenuForm = ({ defaultValues, children }) => {
         author: 'Admin',
       },
     };
+
+    console.log(data);
 
     !defaultValues ? handleCreateMenu(data) : handleUpdateMenu(data);
   };

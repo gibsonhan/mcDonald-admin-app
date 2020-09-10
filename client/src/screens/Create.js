@@ -9,15 +9,16 @@ import Text from '../component/common/Text';
 import EscapeBtn from '../component/common/EscapeBtn';
 import initEscapekey from '../hooks/handleEscapekey';
 
-import CreateCoupon from '../component/create/CreateCoupon';
-import CreateHero from '../component/create/CreateHero';
-import CreateItem from '../component/create/CreateItem';
-import CreateMenu from '../component/create/CreateMenu';
+import CreateCoupon from '../component/common/CreateCoupon';
+import CreateHero from '../component/common/CreateHero';
+import CreateMenu from '../component/common/CreateMenu';
+
+import Item from '../component/Item';
 
 const createObj = {
   [COUPON]: <CreateCoupon />,
   [HERO]: <CreateHero />,
-  [ITEM]: <CreateItem />,
+  [ITEM]: <Item />,
   [MENU]: <CreateMenu />,
 };
 

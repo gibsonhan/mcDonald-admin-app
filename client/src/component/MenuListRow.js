@@ -18,7 +18,7 @@ const MenuListRow = ({ index, data }) => {
       await remove(MENU, id);
       dispatchRemove(MENU, id);
     } catch (err) {
-      console.log('failed to delete');
+      console.log('failed to delete', err);
     }
   };
 
@@ -27,8 +27,6 @@ const MenuListRow = ({ index, data }) => {
     height: 40,
     width: 100,
   };
-
-  console.log(data[index]);
 
   return (
     <RowContainer>
@@ -41,7 +39,7 @@ const MenuListRow = ({ index, data }) => {
   );
 };
 
-const RowContainer = styled.tr`
+const RowContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;

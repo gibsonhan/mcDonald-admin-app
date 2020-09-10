@@ -32,12 +32,11 @@ const singleCoupon = async (req, res) => {
 
 const updateCoupon = async (req, res) => {
   const id = req.params.id;
-  const newObject = req.params.body;
-  const updateItem = newItem({ ...newObject });
-  const message = `${updatedItem.name} was succesfully update`;
+  const data = req.body;
+  const message = `${data.title} was succesfully update`;
   try {
-    await Item.findByIdAndUpdate(id, updateItem, { new: true });
-    res.status(200).json(message, updateItem);
+    await Coupon.findByIdAndUpdate(id, data);
+    res.status(200).json(message);
   } catch (error) {
     res.status(500).json('Failed to update item');
   }

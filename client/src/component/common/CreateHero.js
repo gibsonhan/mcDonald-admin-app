@@ -11,15 +11,16 @@ import { HERO, UPDATE, CREATE, SUBMIT } from '../../global/reserveWord';
 import { HEROINPUTS } from '../../global/tempData';
 import { useAppContext } from '../../global/context';
 
-import Input from '../common/Input';
-import PreviewImg from '../common/PreviewImg';
-import Btn from '../common/Btn';
+import Input from './Input';
+import PreviewImg from './PreviewImg';
+import Btn from './Btn';
 
 const CreateHero = ({ defaultValues }) => {
   const buttonRef = useRef();
   const buttonTxt = !!defaultValues ? UPDATE + ' ' + HERO : CREATE + ' ' + HERO;
   const { dispatchAdd, dispatchUpdate, history } = useAppContext();
   const { control, errors, handleSubmit, register } = useForm({});
+  const defaultImg = !!defaultValues ? defaultValues.img : 'none';
 
   function clickInput() {
     !!buttonRef && buttonRef.current.click();
@@ -57,11 +58,7 @@ const CreateHero = ({ defaultValues }) => {
   return (
     <CreateHeroContainer>
       <FormContainer>
-        <PreviewImg
-          register={register}
-          title={HERO}
-          defaultImg={defaultValues.img}
-        />
+        <PreviewImg register={register} title={HERO} defaultImg={defaultImg} />
         <form onSubmit={handleSubmit(onSubmit)}>
           {!!HEROINPUTS &&
             HEROINPUTS.map((item) => {

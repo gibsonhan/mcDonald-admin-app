@@ -3,9 +3,9 @@ import styled from 'styled-components';
 
 import { Switch } from '@material-ui/core';
 
-import { ITEMSIZES } from '../../global/tempData';
+import { ITEMSIZES } from '../global/tempData';
 import { Controller } from 'react-hook-form';
-import SizeMoreInfo from './SizeMoreInfo';
+import SizeMoreInfo from './common/SizeMoreInfo';
 
 const SwitchButtonGroup = ({ title, data, control, register, error }) => {
   return (

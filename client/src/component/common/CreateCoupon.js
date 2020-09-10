@@ -5,7 +5,7 @@ import { COUPON, CREATE, SUBMIT, UPDATE } from '../../global/reserveWord';
 import { COUPONINPUTS } from '../../global/tempData';
 
 import Form from './CreateCouponForm';
-import Btn from '../common/Btn';
+import Btn from './Btn';
 
 const CreateCoupon = ({ defaultValues }) => {
   const buttonRef = useRef();
@@ -19,7 +19,7 @@ const CreateCoupon = ({ defaultValues }) => {
 
   return (
     <CreateCouponContainer>
-      <Form title={COUPON} inputs={COUPONINPUTS}>
+      <Form title={COUPON} inputs={COUPONINPUTS} defaultValues={defaultValues}>
         <Btn
           type={SUBMIT}
           clickRef={buttonRef}

@@ -5,7 +5,7 @@ import Form from './CreateMenuForm';
 import { CREATE, MENU, SUBMIT, UPDATE } from '../../global/reserveWord';
 
 //TODO refactor the menuInput inputs
-import Btn from '../common/Btn';
+import Btn from './Btn';
 const CreateMenu = ({ defaultValues }) => {
   const buttonTxt = !!defaultValues ? UPDATE + ' ' + MENU : CREATE + ' ' + MENU;
   const buttonRef = useRef();
@@ -13,9 +13,10 @@ const CreateMenu = ({ defaultValues }) => {
   function clickInput() {
     !!buttonRef && buttonRef.current.click();
   }
+
   return (
     <CreateMenuContainer>
-      <Form>
+      <Form defaultValues={defaultValues}>
         <Btn
           type={SUBMIT}
           clickRef={buttonRef}

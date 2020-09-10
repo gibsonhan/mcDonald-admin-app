@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import Coupon from './Coupon';
 import Edit from '../screens/Edit';
 import Hero from './Hero';
-import Item from './Item';
+import ItemList from './ItemList';
 import Menu from './Menu';
 import Summary from './Summary';
 
@@ -21,13 +21,12 @@ const switchNav = [
   { title: 'Hero', route: 'hero', component: Hero, exact: true },
   { title: 'Coupon', route: 'coupon', component: Coupon, exact: true },
   { title: 'Menu', route: 'menu', component: Menu, exact: true },
-  { title: 'Items', route: 'item', component: Item, exact: true },
+  { title: 'Items', route: 'item', component: ItemList, exact: true },
   { title: 'Summary', route: 'summary', component: Summary, exact: true },
 ];
 
 const Display = () => {
   let { path } = useRouteMatch();
-  let query = useQuery();
   return (
     <DisplayContainer>
       <Switch>

@@ -155,6 +155,9 @@ const AppProvider = ({ children }) => {
    *  Set it to local storage
    *
    */
+
+  //TODO need to figure updating local state strategy
+  //Need to diagram these stuff?
   useEffect(() => {
     const hasInitalState = getLocalStorage(INITIALSTATE);
     async function getListsAndSetLocalStorage() {

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Create from './screens/Create';
 import Dashboard from './screens/Dashboard';
 import Login from './screens/Login';
-import Edit from './screens/Edit';
+import Update from './screens/Update';
 
 import {
   BrowserRouter as Router,
@@ -22,7 +22,7 @@ function App() {
         <Switch>
           <Route path={['/admin', '/login']} component={Login} />
           <Route path="/dashboard" component={Dashboard} />
-          <Route path="/edit" component={Edit} />
+          <Route path="/update" component={Update} />
           <Route path="/create" component={Create} />
           <Route path="/" component={Dashboard}>
             <Redirect to="/dashboard/summary" />

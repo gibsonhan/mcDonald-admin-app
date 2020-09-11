@@ -9,39 +9,39 @@ import EscapeBtn from '../component/common/EscapeBtn';
 import Text from '../component/common/Text';
 import initEscapekey from '../hooks/handleEscapekey';
 
-import CreateCoupon from '../component/common/CreateCoupon';
-import CreateHero from '../component/common/CreateHero';
+import Coupon from '../component/Coupon';
+import Hero from '../component/Hero';
 import Item from '../component/Item';
-import CreateMenu from '../component/common/CreateMenu';
+import Menu from '../component/Menu';
 
-//TODO Refactor Create and Edit into a single form?
-const Create = () => {
+//TODO Refactor Update and Edit into a single form?
+const Update = () => {
   const { history } = useAppContext();
   const id = history.location.state.id;
   const key = history.location.state.type;
   const goBack = () => history.goBack();
 
   const updateObj = {
-    [COUPON]: <CreateCoupon />,
-    [HERO]: <CreateHero />,
+    [COUPON]: <Coupon />,
+    [HERO]: <Hero />,
     [ITEM]: <Item update={{ id }} />,
-    [MENU]: <CreateMenu />,
+    [MENU]: <Menu />,
   };
 
   initEscapekey(goBack);
 
   return (
-    <CreateContainer>
+    <UpdateContainer>
       <Header>
         <Text size={50}>{key.toUpperCase()}</Text>
         <EscapeBtn />
       </Header>
       <Body>{updateObj[key]}</Body>
-    </CreateContainer>
+    </UpdateContainer>
   );
 };
 
-const CreateContainer = styled.div`
+const UpdateContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 10px;
@@ -64,4 +64,4 @@ const Body = styled.div`
   align-items: center;
 `;
 
-export default Create;
+export default Update;

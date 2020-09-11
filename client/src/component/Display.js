@@ -6,11 +6,10 @@ import Color from '../global/color';
 import styled from 'styled-components';
 
 //components
-import Coupon from './Coupon';
-import Edit from '../screens/Edit';
-import Hero from './Hero';
+import CouponList from './CouponList';
+import HeroList from './HeroList';
 import ItemList from './ItemList';
-import Menu from './Menu';
+import MenuList from './MenuList';
 import Summary from './Summary';
 
 function useQuery() {
@@ -18,9 +17,9 @@ function useQuery() {
 }
 
 const switchNav = [
-  { title: 'Hero', route: 'hero', component: Hero, exact: true },
-  { title: 'Coupon', route: 'coupon', component: Coupon, exact: true },
-  { title: 'Menu', route: 'menu', component: Menu, exact: true },
+  { title: 'Hero', route: 'hero', component: HeroList, exact: true },
+  { title: 'Coupon', route: 'coupon', component: CouponList, exact: true },
+  { title: 'Menu', route: 'menu', component: MenuList, exact: true },
   { title: 'Items', route: 'item', component: ItemList, exact: true },
   { title: 'Summary', route: 'summary', component: Summary, exact: true },
 ];

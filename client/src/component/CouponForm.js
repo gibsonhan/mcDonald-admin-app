@@ -5,14 +5,14 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
 import * as yup from 'yup';
 
-import Input from './Input';
-import PreviewImg from './PreviewImg';
-import { create, update } from '../../util/service';
-import { createSingleImgUrl } from '../../util/createSingleImgUrl';
-import { COUPON } from '../../global/reserveWord';
-import { useAppContext } from '../../global/context';
+import Input from './common/Input';
+import PreviewImg from './common/PreviewImg';
+import { create, update } from '../util/service';
+import { createSingleImgUrl } from '../util/createSingleImgUrl';
+import { COUPON } from '../global/reserveWord';
+import { useAppContext } from '../global/context';
 
-const CreateCouponForm = ({ inputs, children, defaultValues }) => {
+const CouponForm = ({ inputs, children, defaultValues }) => {
   const { dispatchAdd, dispatchUpdate, history } = useAppContext();
   const { control, errors, handleSubmit, register } = useForm({});
   const defaultImg = !!defaultValues ? defaultValues.img : 'none';
@@ -86,4 +86,4 @@ const ChildrenContainer = styled.div`
   justify-content: center;
 `;
 
-export default CreateCouponForm;
+export default CouponForm;

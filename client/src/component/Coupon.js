@@ -1,31 +1,34 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 
-import { COUPON } from '../global/reserveWord';
-import onloadFetchList from '../util/handleFetchList';
-import { useAppContext } from '../global/context';
+import { COUPON, CREATE, SUBMIT, UPDATE } from '../global/reserveWord';
+import { COUPONINPUTS } from '../global/tempData';
 
-import CouponListRow from './CouponListRow';
+import Form from './CouponForm';
 import Btn from './common/Btn';
-import List from './common/List';
 
-//TODO debug the app and see what the app is firing so many times
-const Coupon = () => {
-  onloadFetchList(COUPON);
-  const { state, handleNavToCreate } = useAppContext();
-  const navToCreate = () => handleNavToCreate(COUPON);
+const Coupon = ({ defaultValues }) => {
+  const buttonRef = useRef();
+  const buttonTxt = !!defaultValues
+    ? UPDATE + ' ' + COUPON
+    : CREATE + ' ' + COUPON;
+
+  function clickInput() {
+    !!buttonRef && buttonRef.current.click();
+  }
+
   return (
     <CouponContainer>
-      <ContentContainer>
-        <div>Coupon</div>
-        <div>Number of Coupons: {state[COUPON].length}</div>
-        <Btn color="#fffff0" handleOnClick={navToCreate}>
-          Create Coupon
-        </Btn>
-      </ContentContainer>
-      <ListContainer>
-        <List title={COUPON} data={state[COUPON]} row={CouponListRow} />
-      </ListContainer>
+      <Form title={COUPON} inputs={COUPONINPUTS} defaultValues={defaultValues}>
+        <Btn
+          type={SUBMIT}
+          clickRef={buttonRef}
+          handleOnClick={clickInput}
+          color="grey"
+          justify="center"
+          txt={buttonTxt}
+        />
+      </Form>
     </CouponContainer>
   );
 };
@@ -34,22 +37,6 @@ const CouponContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100%;
-  width: 100%;
-  background: yellow;
-`;
-
-const ContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-`;
-
-const ListContainer = styled.div`
-  display: flex;
-  flex: 2;
 `;
 
 export default Coupon;

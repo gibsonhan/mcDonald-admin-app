@@ -37,6 +37,7 @@ const PreviewImg = ({ name, register, defaultImg }) => {
     return () => setImage();
   }, [defaultImg]);
 
+  const noImage = !prevImg.display || prevImg.display === NONE;
   return (
     <PrevImgContainer onClick={uploadImg} ref={imgUploadRef}>
       <input
@@ -48,8 +49,8 @@ const PreviewImg = ({ name, register, defaultImg }) => {
         onChange={(e) => updatePreview(e)}
         style={{ display: 'none' }}
       />
-      {!prevImg.display === NONE && 'Upload Img'}
-      {prevImg.display && (
+      {noImage && <div>Upload Img</div>}
+      {!noImage && (
         <img
           src={prevImg.url}
           style={{ objectFit: 'fill', width: '100px', height: '100px' }}

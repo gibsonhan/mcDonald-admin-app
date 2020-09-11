@@ -5,10 +5,9 @@ import { COUPON, HERO, ITEM, MENU } from '../global/reserveWord';
 
 import { useAppContext } from '../global/context';
 
-import Text from '../component/common/Text';
 import EscapeBtn from '../component/common/EscapeBtn';
+import Text from '../component/common/Text';
 import initEscapekey from '../hooks/handleEscapekey';
-import fetchDefaultValue from '../hooks/handleDefaultValues';
 
 import CreateCoupon from '../component/common/CreateCoupon';
 import CreateHero from '../component/common/CreateHero';
@@ -20,15 +19,13 @@ const Create = () => {
   const { history } = useAppContext();
   const id = history.location.state.id;
   const key = history.location.state.type;
-  const preloadData = fetchDefaultValue(key, id);
   const goBack = () => history.goBack();
 
-  const { defaultValues } = preloadData;
-  const createObj = {
-    [COUPON]: <CreateCoupon {...defaultValues} />,
-    [HERO]: <CreateHero {...defaultValues} />,
-    [ITEM]: <Item preloadValues={defaultValues} />,
-    [MENU]: <CreateMenu {...defaultValues} />,
+  const updateObj = {
+    [COUPON]: <CreateCoupon />,
+    [HERO]: <CreateHero />,
+    [ITEM]: <Item update={{ id }} />,
+    [MENU]: <CreateMenu />,
   };
 
   initEscapekey(goBack);
@@ -39,7 +36,7 @@ const Create = () => {
         <Text size={50}>{key.toUpperCase()}</Text>
         <EscapeBtn />
       </Header>
-      <Body>{createObj[key]}</Body>
+      <Body>{updateObj[key]}</Body>
     </CreateContainer>
   );
 };

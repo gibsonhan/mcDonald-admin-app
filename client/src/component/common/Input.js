@@ -1,73 +1,31 @@
 import React from 'react';
-import styled from 'styled-components';
 import { rem } from 'polished';
+import styled from 'styled-components';
 
 import { Controller } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
 
-const Input = ({ name, register, control, errors, defaultValue }) => {
+import Text from './Text';
+
+const Input = ({ name, type, control, errors }) => {
   const firstLetter = name[0].toUpperCase();
   const sliceWord = name.slice(1, name.length);
   const title = firstLetter + sliceWord;
   return (
     <InputContainer>
-      {!!defaultValue && (
-        <Controller
-          as={TextField}
-          autoComplete="off"
-          id={name}
-          label={title}
-          name={name}
-          defaultValue={defaultValue}
-          variant="outlined"
-          control={control}
-          error={errors[name]}
-        />
-      )}
-      {!defaultValue && (
-        <Controller
-          as={TextField}
-          autoComplete="off"
-          id={name}
-          label={title}
-          name={name}
-          variant="outlined"
-          control={control}
-          error={errors[name]}
-        />
-      )}
-      {errors[name] && errors[name].message}
-      {errors[name] && errors[name].name === 'required' && (
-        <span>This is required</span>
-      )}
-    </InputContainer>
-  );
-};
-
-const InputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding-top: ${rem(10)};
-`;
-
-/*
-const Input = ({ name, register, errors }) => {
-  const firstLetter = name[0].toUpperCase();
-  const sliceWord = name.slice(1, name.length);
-  const title = firstLetter + sliceWord;
-  return (
-    <InputContainer>
-      <label htmlFor={name}>{title}</label>
-      <input
+      <Controller
+        as={TextField}
+        label={title}
+        type={type}
         autoComplete="off"
-        type="text"
         name={name}
-        id={name}
-        ref={register({ required: true, maxLength: 30 })}
+        variant="outlined"
+        control={control}
       />
-      {errors[name] && errors[name].message}
-      {errors[name] && errors[name].name === 'required' && (
-        <span>This is required</span>
+      {errors[name] && (
+        <Text justify="center" padding={10}>
+          {errors[name] && errors[name].message}
+        </Text>
       )}
     </InputContainer>
   );
@@ -76,6 +34,7 @@ const Input = ({ name, register, errors }) => {
 const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
+  padding: ${rem(15)};
 `;
-*/
+
 export default Input;

@@ -4,53 +4,58 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
 import * as yup from 'yup';
 
-import { createServingTimeArr } from '../util/createServingTimeArr';
+import { createServingTimeObj } from '../util/handleServingTime';
 import { createImgObj } from '../util/createImgObj';
 import { createSizeObj } from '../util/createSizesObj';
 import { create, update } from '../util/service';
-import {
-  CREATE,
-  ITEM,
-  UPDATE,
-  SUBMIT,
-  SERVINGTIME,
-} from '../global/reserveWord';
+import { ITEM, SERVINGTIME, TEXT, NAME, NUMBER } from '../global/reserveWord';
 
 import Input from '../component/common/Input';
 import SwitchBtnGroup from './SwitchButtonGroup';
 
-import { ITEMINPUTS, ITEMSIZES, SERVINGTIMES } from './../global/tempData';
+import {
+  ITEMINPUTS,
+  ITEMSIZES,
+  SERVINGTIMES,
+  SIZEMOREINFO,
+} from './../global/tempData';
+
+import { ITEMVALUES_OBJ as defaultValues } from '../global/defaultValues';
 import { useAppContext } from '../global/context';
+import SwitchBtn from './common/SwitchBtn';
+import SizeSwitchBtn from './SizeSwitchBtn';
 
 const ItemForm = ({ preloadValues, children }) => {
   const { dispatchAdd, dispatchUpdate, history } = useAppContext();
-  const buttonRef = useRef();
-  const buttonTxt = !!preloadValues ? UPDATE + ' ' + ITEM : CREATE + ' ' + ITEM;
-  const inputSchema = ITEMINPUTS.reduce((acc, curr) => {
-    acc[curr] = yup.string().required();
-    return acc;
-  }, {});
 
-  const sizesArrSchema = ITEMSIZES.reduce((acc, curr) => {
-    acc[curr] = yup.boolean().required();
-    acc[curr + 'Price'] = yup.number().positive();
-    acc[curr + 'Calories'] = yup.number().positive();
-    acc[curr + 'Img'] = yup.mixed();
-    return acc;
-  }, {});
+  // const inputSchema = ITEMINPUTS.reduce((acc, curr) => {
+  //   acc[curr] = yup.string().required();
+  //   return acc;
+  // }, {});
 
-  const schema = yup.object().shape({ ...inputSchema, ...sizesArrSchema });
+  // const sizesArrSchema = ITEMSIZES.reduce((acc, curr) => {
+  //   acc[curr] = yup.boolean().required();
+  //   acc[curr + 'Price'] = yup.number().positive();
+  //   acc[curr + 'Calories'] = yup.number().positive();
+  //   acc[curr + 'Img'] = yup.mixed();
+  //   return acc;
+  // }, {});
 
-  const { register, handleSubmit, errors, control } = useForm({
-    defaultValues: preloadValues,
-    resolver: yupResolver(schema),
+  // const schema = yup.object().shape({ ...inputSchema, ...sizesArrSchema });
+
+  const { register, handleSubmit, errors, watch, control } = useForm({
+    defaultValues: preloadValues || defaultValues,
+    //resolver: yupResolver(schema),
   });
 
-  function clickInput() {
-    !!buttonRef && buttonRef.current.click();
-  }
+  const small = watch('small');
+  const xSmall = watch('xSmall');
+  const regular = watch('regular');
+  const large = watch('large');
+  const xLarge = watch('xLarge');
 
   async function handleCreateItem(data) {
+    console.log('creating item');
     try {
       const response = await create(ITEM, data);
       dispatchAdd(ITEM, { ...data, id: response });
@@ -60,6 +65,7 @@ const ItemForm = ({ preloadValues, children }) => {
   }
 
   async function handleUpdateItem(data) {
+    console.log('updaing item ');
     const id = history.location.state.id;
     try {
       await update(ITEM, id, data);
@@ -71,56 +77,72 @@ const ItemForm = ({ preloadValues, children }) => {
 
   const onSubmit = async (formData) => {
     const { name, group, subGroup, couponGroup, ...sizeObjInfo } = formData;
-    console.log('onSubmit', formData);
     const data = {
       name,
       group,
       subGroup,
       couponGroup,
-      servingTime: createServingTimeArr(formData, SERVINGTIMES),
-      size: createSizeObj(ITEMSIZES, formData, sizeObjInfo),
-      img: await createImgObj(ITEMSIZES, name, sizeObjInfo),
+      servingTime: createServingTimeObj(formData),
+      size: createSizeObj(formData),
+      img: await createImgObj(name, sizeObjInfo),
       created: new Date(),
       lastEdit: {
         date: new Date(),
         author: 'Admin',
       },
     };
-
     !preloadValues ? handleCreateItem(data) : handleUpdateItem(data);
   };
 
   return (
     <ItemFormContainer>
-      <FormContainer>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {ITEMINPUTS.map((item) => (
-            <Input
-              key={item}
-              name={item}
-              register={register}
-              control={control}
-              errors={errors}
-            />
-          ))}
-          <SwitchBtnGroup
-            key={'serving'}
-            title={SERVINGTIME}
-            data={SERVINGTIMES}
+      <FormContainer onSubmit={handleSubmit(onSubmit)}>
+        <Input name={NAME} type={TEXT} control={control} errors={errors} />
+        {SERVINGTIMES.map((time) => (
+          <SwitchBtn
+            key={time}
             register={register}
+            name={time}
             control={control}
+            errors={errors}
           />
-          {/* TODO: when user enable size, group price input**/}
-          {/* { TODO refactor with watch api} */}
-          <SwitchBtnGroup
-            key={'sizesArr'}
-            title={'Size Customization'}
-            data={ITEMSIZES}
-            register={register}
-            control={control}
-          />
-          <ChildrenContainer>{children}</ChildrenContainer>
-        </form>
+        ))}
+        <SizeSwitchBtn
+          name={'xSmall'}
+          register={register}
+          control={control}
+          showMore={xSmall}
+          errors={errors}
+        />
+        <SizeSwitchBtn
+          name={'small'}
+          register={register}
+          control={control}
+          showMore={small}
+          errors={errors}
+        />
+        <SizeSwitchBtn
+          name={'regular'}
+          register={register}
+          control={control}
+          showMore={regular}
+          errors={errors}
+        />
+        <SizeSwitchBtn
+          name={'large'}
+          register={register}
+          control={control}
+          showMore={large}
+          errors={errors}
+        />
+        <SizeSwitchBtn
+          name={'xLarge'}
+          register={register}
+          control={control}
+          showMore={xLarge}
+          errors={errors}
+        />
+        <ChildrenContainer>{children}</ChildrenContainer>
       </FormContainer>
     </ItemFormContainer>
   );
@@ -130,17 +152,19 @@ const ItemFormContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
 `;
+
+const FormContainer = styled.form`
+  display: flex;
+  flex-direction: column;
+  background-color: #fbab7e;
+`;
+
 const ChildrenContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
 `;
-const FormContainer = styled.div`
-  flex: 2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #fbab7e;
-`;
+
 export default ItemForm;

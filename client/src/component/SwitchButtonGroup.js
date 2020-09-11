@@ -38,19 +38,6 @@ const SwitchBtn = ({ title, control, register, error }) => {
     <SwitchGroup>
       <SwitchContainer>
         <label>{title}</label>
-        <Controller
-          name={title}
-          control={control}
-          render={(props) => (
-            <Switch
-              onChange={(e) => {
-                setSwitchOn((prev) => !prev);
-                return props.onChange(e.target.checked);
-              }}
-              checked={props.value}
-            />
-          )}
-        />
       </SwitchContainer>
       {showPriceAndCal && (
         <SizeMoreInfo

@@ -6,6 +6,7 @@ const MULTI = 'multi';
 const NUMBER = 'number';
 const SERVINGTIME = 'serving time';
 const SINGLE = 'single';
+const TEXT = 'text';
 const INITIALSTATE = 'inital';
 
 //Reducer & App Context
@@ -14,6 +15,7 @@ const SETINITIAL = 'set-initial';
 const SET = 'set';
 const REMOVE = 'remove';
 
+const NAME = 'name';
 const NONE = 'none';
 const CREATE = 'create';
 const EDIT = 'edit';
@@ -37,11 +39,13 @@ export {
   INITIALSTATE,
   MENU,
   MULTI,
+  NAME,
   NONE,
   NUMBER,
   RESET,
   SERVINGTIME,
   SINGLE,
   SUBMIT,
+  TEXT,
   BASEURL,
 };

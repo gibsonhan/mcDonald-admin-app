@@ -1,30 +1,57 @@
-const ITEMVALUES = {
-  name: 'Mc Donald Item',
+const ITEMVALUES_ARR = [
+  'name',
+  'xSmall',
+  'xSmallCalories',
+  'xSmallPrice',
+  'xSmallImg',
+  'small',
+  'smallCalories',
+  'smallPrice',
+  'smallImg',
+  'regular',
+  'regularCalories',
+  'regularPrice',
+  'regularImg',
+  'large',
+  'largeCalories',
+  'largePrice',
+  'largeImg',
+  'xLarge',
+  'xLargeCalories',
+  'xLargePrice',
+  'xLargeImg',
+  'breakfast',
+  'lunch',
+  'dinner',
+];
+
+const ITEMVALUES_OBJ = {
+  name: 'Mc Donald Duck',
   //sizesArr
   //xs = extra small
   xSmall: false,
-  xSmallCalories: 0,
-  xSmallPrice: 0,
+  xSmallCalories: 100,
+  xSmallPrice: 1.0,
   xSmallImg: '',
   //s = small
   small: false,
-  smallPrice: 0,
-  smallCalories: 0,
+  smallPrice: 2.0,
+  smallCalories: 200,
   smallImg: '',
   //r = regular
   regular: false,
-  regularPrice: 0,
-  regularCalories: 0,
+  regularPrice: 3.0,
+  regularCalories: 300,
   regularImg: '',
   //l = large
   large: false,
-  largePrice: 0,
-  largeCalories: 0,
+  largePrice: 4.0,
+  largeCalories: 400,
   largeImg: '',
   //xl = extra large
   xLarge: false,
-  xLargePrice: 0,
-  xLargeCalories: 0,
+  xLargePrice: 5.0,
+  xLargeCalories: 500,
   xLargeImg: '',
   //serving
   breakfast: true,
@@ -32,4 +59,4 @@ const ITEMVALUES = {
   dinner: false,
 };
 
-export { ITEMVALUES };
+export { ITEMVALUES_ARR, ITEMVALUES_OBJ };

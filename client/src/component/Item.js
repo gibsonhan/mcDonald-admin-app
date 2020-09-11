@@ -1,21 +1,38 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 
-import { CREATE, ITEM, UPDATE, SUBMIT } from '../global/reserveWord';
+import {
+  CREATE,
+  ITEM,
+  UPDATE,
+  SUBMIT,
+  SERVINGTIME,
+} from '../global/reserveWord';
 
 import Btn from './common/Btn';
 import Form from './ItemForm';
+import handleFetchPreloadValues from '../hooks/handleFetchPreloadValues';
+import { ITEMVALUES_ARR } from '../global/defaultValues';
+import { SERVINGTIMES } from '../global/tempData';
 
-const Item = ({ preloadValues }) => {
-  const buttonTxt = !!preloadValues ? UPDATE + ' ' + ITEM : CREATE + ' ' + ITEM;
+const Item = ({ update }) => {
+  const buttonTxt = !!update ? UPDATE + ' ' + ITEM : CREATE + ' ' + ITEM;
   const buttonRef = useRef();
+  const preloadData = !!update ? handleFetchPreloadValues(ITEM, update.id) : '';
 
   function clickInput() {
     !!buttonRef && buttonRef.current.click();
   }
+
+  /**
+   * before passing preloaded data into form,
+   * need to unbind serving & prices
+   *
+   * TODO: Figure out why is it rendering 4 times
+   */
   return (
     <CreateItemContainer>
-      <Form>
+      <Form preloadData={preloadData}>
         <Btn
           type={SUBMIT}
           clickRef={buttonRef}

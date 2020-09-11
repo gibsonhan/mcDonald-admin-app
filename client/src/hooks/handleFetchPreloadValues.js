@@ -5,12 +5,12 @@ export default (type, id) => {
   const [data, setData] = useState({});
 
   async function fetchSingleItem() {
-    let fetch = await getSingle(type, id);
+    const fetch = await getSingle(type, id);
     setData(fetch);
   }
   useEffect(() => {
     fetchSingleItem();
   }, []);
 
-  return { defaultValues: data };
+  return data;
 };

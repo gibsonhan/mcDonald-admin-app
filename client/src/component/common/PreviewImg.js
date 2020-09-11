@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { NONE } from '../../global/reserveWord';
 
-const PreviewImg = ({ title, register, defaultImg }) => {
+const PreviewImg = ({ name, register, defaultImg }) => {
   const imgUploadRef = useRef();
   const [prevImg, setPrevImg] = useState({ display: false, url: '' });
-  const name = title + 'Img';
+  const uniqueName = name + 'Img';
 
   const uploadImg = function handleImgUpload(e) {
     const uploadBtn = imgUploadRef.current.firstElementChild;
@@ -43,8 +43,8 @@ const PreviewImg = ({ title, register, defaultImg }) => {
         ref={register}
         accept="image/.png"
         type="file"
-        id={name}
-        name={name}
+        id={uniqueName}
+        name={uniqueName}
         onChange={(e) => updatePreview(e)}
         style={{ display: 'none' }}
       />

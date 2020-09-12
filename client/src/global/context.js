@@ -55,6 +55,7 @@ function reducer(state, action) {
 const AppContext = React.createContext(null);
 
 const AppProvider = ({ children }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [oneModalOpen, setOneModalOpen] = useState(false);
   const [state, dispatch] = useReducer(reducer, initalState);
   const history = createBrowserHistory();
@@ -128,6 +129,8 @@ const AppProvider = ({ children }) => {
       dispatchSetList,
       dispatchUpdate,
       history,
+      isLoading,
+      setIsLoading,
       oneModalOpen,
       setOneModalOpen,
       handleNavEditPage,
@@ -142,6 +145,8 @@ const AppProvider = ({ children }) => {
       dispatchSetList,
       dispatchUpdate,
       history,
+      isLoading,
+      setIsLoading,
       oneModalOpen,
       setOneModalOpen,
       handleNavEditPage,
@@ -177,6 +182,10 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     console.log('stateCheck', state);
   }, [state]);
+
+  useEffect(() => {
+    console.log('isLoading', isLoading);
+  }, [isLoading]);
 
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 };

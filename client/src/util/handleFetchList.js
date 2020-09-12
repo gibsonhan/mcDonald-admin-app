@@ -12,7 +12,7 @@ export default (type) => {
 
   useEffect(() => {
     if (state[type].length > 0) {
-      console.log(`state${type} exist, no need to fetch`);
+      console.log(`state ${type} exist, no need to fetch`);
       return;
     }
     fetchAndSet(type);

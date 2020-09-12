@@ -1,4 +1,3 @@
-const _servingTimes = ['breakfast', 'lunch', 'dinner'];
 /**Create an array with values of Store's Serving Time
  * @param {Object} _obj
  * @param {String} _arr
@@ -8,6 +7,7 @@ const _servingTimes = ['breakfast', 'lunch', 'dinner'];
  */
 
 export function createServingTimeObj(_obj) {
+  const _servingTimes = ['breakfast', 'lunch', 'dinner'];
   return _servingTimes.reduce((acc, curr) => {
     acc[curr] = _obj[curr];
     return acc;

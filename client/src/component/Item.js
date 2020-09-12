@@ -1,47 +1,71 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import {
-  CREATE,
-  ITEM,
-  UPDATE,
-  SUBMIT,
-  SERVINGTIME,
-} from '../global/reserveWord';
+import { CREATE, ITEM, SUBMIT, UPDATE } from '../global/reserveWord';
+import { getSingle } from '../util/service';
+import { useAppContext } from '../global/context';
 
 import Btn from './common/Btn';
 import Form from './ItemForm';
-import handleFetchPreloadValues from '../hooks/handleFetchPreloadValues';
-import { ITEMVALUES_ARR } from '../global/defaultValues';
-import { SERVINGTIMES } from '../global/tempData';
+import { isEmpty } from '../util/handleIsEmpty';
 
-const Item = ({ update }) => {
-  const buttonTxt = !!update ? UPDATE + ' ' + ITEM : CREATE + ' ' + ITEM;
+const Item = ({ edit, id }) => {
+  const { isLoading, setIsLoading } = useAppContext();
+  const [preloadData, setPreloadData] = useState({});
+  const buttonTxt = !!edit ? UPDATE + ' ' + ITEM : CREATE + ' ' + ITEM;
   const buttonRef = useRef();
-  const preloadData = !!update ? handleFetchPreloadValues(ITEM, update.id) : '';
 
   function clickInput() {
     !!buttonRef && buttonRef.current.click();
   }
 
-  /**
-   * before passing preloaded data into form,
-   * need to unbind serving & prices
-   *
-   * TODO: Figure out why is it rendering 4 times
-   */
+  //Fetch Single Item only when Edit is enable
+  useEffect(() => {
+    if (!edit & !id) {
+      console.log('error');
+      return;
+    }
+
+    async function fetchItem() {
+      setIsLoading((prev) => true);
+
+      let response = await getSingle(ITEM, id);
+
+      setTimeout(() => {
+        console.log('item preloaded data');
+        setPreloadData(response);
+        setIsLoading((prev) => !prev);
+      }, 2000);
+    }
+    fetchItem();
+  }, [edit]);
+
   return (
     <CreateItemContainer>
-      <Form preloadData={preloadData}>
-        <Btn
-          type={SUBMIT}
-          clickRef={buttonRef}
-          handleOnClick={clickInput}
-          color="grey"
-          justify="center"
-          txt={buttonTxt}
-        />
-      </Form>
+      {isEmpty(preloadData) && (
+        <Form>
+          <Btn
+            type={SUBMIT}
+            clickRef={buttonRef}
+            handleOnClick={clickInput}
+            color="grey"
+            justify="center"
+            txt={buttonTxt}
+          />
+        </Form>
+      )}
+      {!isEmpty(preloadData) && (
+        <Form preloadData={preloadData}>
+          <Btn
+            type={SUBMIT}
+            clickRef={buttonRef}
+            handleOnClick={clickInput}
+            color="grey"
+            justify="center"
+            txt={buttonTxt}
+          />
+        </Form>
+      )}
     </CreateItemContainer>
   );
 };

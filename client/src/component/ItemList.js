@@ -9,7 +9,7 @@ import List from './common/List';
 import ItemListRow from './ItemListRow';
 import Btn from './common/Btn';
 
-const ItemList = ({ props }) => {
+const ItemList = ({ props, history }) => {
   onloadFetchList(ITEM);
   const { state, handleNavToCreate } = useAppContext();
   const navToCreate = () => handleNavToCreate(ITEM);

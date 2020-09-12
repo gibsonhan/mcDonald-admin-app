@@ -1,9 +1,12 @@
 import { useEffect } from 'react';
+import { useAppContext } from '../global/context';
 
-export default (callback) => {
+export default () => {
+  const { history } = useAppContext();
+
   function escape(e) {
     if (e.key === 'Escape') {
-      callback();
+      history.goBack();
     }
   }
 

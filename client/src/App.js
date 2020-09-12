@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import AppGlobalEvent from './component/AppGlobalEvent';
 import Create from './screens/Create';
 import Dashboard from './screens/Dashboard';
+import Edit from './screens/Edit';
 import Login from './screens/Login';
-import Update from './screens/Update';
 
 import {
   BrowserRouter as Router,
@@ -15,20 +16,22 @@ import {
 import { useAppContext } from './global/context';
 
 function App() {
-  const { history } = useAppContext();
+  const { history, isLoading } = useAppContext();
   return (
     <AppContainer>
-      <Router history={history}>
-        <Switch>
-          <Route path={['/admin', '/login']} component={Login} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/update" component={Update} />
-          <Route path="/create" component={Create} />
-          <Route path="/" component={Dashboard}>
-            <Redirect to="/dashboard/summary" />
-          </Route>
-        </Switch>
-      </Router>
+      <AppGlobalEvent>
+        <Router history={history}>
+          <Switch>
+            <Route path={['/admin', '/login']} component={Login} />
+            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/edit" component={Edit} />
+            <Route path="/create" component={Create} />
+            <Route path="/" component={Dashboard}>
+              <Redirect to="/dashboard/summary" />
+            </Route>
+          </Switch>
+        </Router>
+      </AppGlobalEvent>
     </AppContainer>
   );
 }

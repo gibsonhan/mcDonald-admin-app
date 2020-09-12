@@ -22,7 +22,7 @@ export function createSizeObj(_formObj) {
         acc.list.push(curr);
         acc[curr] = {
           price: _formObj[curr + 'Price'],
-          cal: _formObj[curr + 'Calories'],
+          cal: _formObj[curr + 'Cal'],
         };
       }
       return acc;

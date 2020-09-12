@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
@@ -8,26 +8,28 @@ import { createServingTimeObj } from '../util/handleServingTime';
 import { createImgObj } from '../util/createImgObj';
 import { createSizeObj } from '../util/createSizesObj';
 import { create, update } from '../util/service';
-import { ITEM, SERVINGTIME, TEXT, NAME, NUMBER } from '../global/reserveWord';
+import { isEmpty } from '../util/handleIsEmpty';
+//TODO go over google style guide. I need to slow down with my work
+//Rhytem of coding.
+import { ITEMVALUES_ARR, ITEMVALUES_OBJ } from '../global/defaultValues';
+import { ITEM, NAME, TEXT } from '../global/reserveWord';
+import { SERVINGTIMES } from './../global/tempData';
+import { useAppContext } from '../global/context';
+
+import timeOut from '../util/handleTimeOut';
 
 import Input from '../component/common/Input';
-import SwitchBtnGroup from './SwitchButtonGroup';
-
-import {
-  ITEMINPUTS,
-  ITEMSIZES,
-  SERVINGTIMES,
-  SIZEMOREINFO,
-} from './../global/tempData';
-
-import { ITEMVALUES_OBJ as defaultValues } from '../global/defaultValues';
-import { useAppContext } from '../global/context';
 import SwitchBtn from './common/SwitchBtn';
 import SizeSwitchBtn from './SizeSwitchBtn';
 
-const ItemForm = ({ preloadValues, children }) => {
-  const { dispatchAdd, dispatchUpdate, history } = useAppContext();
-
+const ItemForm = ({ preloadData, children }) => {
+  const {
+    dispatchAdd,
+    dispatchUpdate,
+    history,
+    setIsLoading,
+  } = useAppContext();
+  const id = history.location.state.id;
   // const inputSchema = ITEMINPUTS.reduce((acc, curr) => {
   //   acc[curr] = yup.string().required();
   //   return acc;
@@ -41,10 +43,45 @@ const ItemForm = ({ preloadValues, children }) => {
   //   return acc;
   // }, {});
 
-  // const schema = yup.object().shape({ ...inputSchema, ...sizesArrSchema });
+  const setDefaultValues = isEmpty(preloadData)
+    ? ITEMVALUES_OBJ
+    : formatPreload(preloadData);
+
+  function formatPreload(obj) {
+    let servingTimeObj = {
+      ...obj.servingTime,
+    };
+
+    let imgObj = {
+      ...obj.img,
+    };
+
+    const { list, ...sizes } = obj.size;
+    const _arrList = new Array(...list);
+
+    let sizeObj = notEmpty(_arrList) ? unpackSizeObj(_arrList, sizes) : 'none';
+
+    function notEmpty(array) {
+      return array.length > 0 ? true : false;
+    }
+
+    function unpackSizeObj(_arr, _obj) {
+      return _arr.reduce((acc, size) => {
+        for (let item in _obj[size]) {
+          let key = size + item[0].toUpperCase() + item.slice(1, item.length);
+          acc[key] = _obj[size][item];
+        }
+        acc[size] = true;
+        return acc;
+      }, {});
+    }
+
+    //TODO handle image => update
+    return { ...ITEMVALUES_OBJ, ...servingTimeObj, ...imgObj, ...sizeObj };
+  }
 
   const { register, handleSubmit, errors, watch, control } = useForm({
-    defaultValues: preloadValues || defaultValues,
+    defaultValues: setDefaultValues,
     //resolver: yupResolver(schema),
   });
 
@@ -55,24 +92,30 @@ const ItemForm = ({ preloadValues, children }) => {
   const xLarge = watch('xLarge');
 
   async function handleCreateItem(data) {
-    console.log('creating item');
+    setIsLoading((prev) => true);
+    //Start Loading here (( LOL i need to try to think it out, I am slowly evolving. Its that I need the space. I didnt have the space for the last 3 years))
     try {
-      const response = await create(ITEM, data);
-      dispatchAdd(ITEM, { ...data, id: response });
+      await create(ITEM, data);
+      dispatchAdd(ITEM, { ...data, id });
     } catch (error) {
       console.log('fail to create Item', error);
     }
+    await timeOut(() => setIsLoading((prev) => false), 2);
+    history.goBack();
   }
 
   async function handleUpdateItem(data) {
     console.log('updaing item ');
-    const id = history.location.state.id;
+    setIsLoading((prev) => true);
     try {
       await update(ITEM, id, data);
       dispatchUpdate(ITEM, { ...data, id });
     } catch (error) {
       console.log('fail to upage Item');
     }
+
+    await timeOut(() => setIsLoading((prev) => false), 2);
+    history.goBack();
   }
 
   const onSubmit = async (formData) => {
@@ -91,7 +134,11 @@ const ItemForm = ({ preloadValues, children }) => {
         author: 'Admin',
       },
     };
-    !preloadValues ? handleCreateItem(data) : handleUpdateItem(data);
+
+    //console.log('data check', data);
+    //TODO figure out the loading stuff
+
+    !preloadData ? handleCreateItem(data) : handleUpdateItem(data);
   };
 
   return (

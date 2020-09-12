@@ -21,7 +21,7 @@ const SizeSwitchBtn = ({ showMore, name, register, control, errors }) => {
           errors={errors}
         />
         <Input
-          name={name + 'Calories'}
+          name={name + 'Cal'}
           type={NUMBER}
           register={register}
           control={control}

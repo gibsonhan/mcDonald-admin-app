@@ -33,11 +33,11 @@ export async function createImgObj(_name, _formObj) {
   if (isEmpty(sizeImgObj)) {
     console.log('is empty firing');
     return {
-      xSmall: 'none',
-      small: 'none',
-      regular: 'none',
-      large: 'none',
-      xLarege: 'none',
+      xSmallImg: '',
+      smallImg: '',
+      regularImg: '',
+      largeImg: '',
+      xLargeImg: '',
     };
   }
 
@@ -51,9 +51,7 @@ export async function createImgObj(_name, _formObj) {
   const s3_sizeImgObj = await ImgUploadRequest(formData);
 
   return ITEMSIZES.reduce((acc, curr) => {
-    acc[curr] = !!s3_sizeImgObj[curr] ? s3_sizeImgObj[curr] : 'none';
+    acc[curr + 'Img'] = !!s3_sizeImgObj[curr] ? s3_sizeImgObj[curr] : '';
     return acc;
   }, {});
-
-  console.log(test);
 }

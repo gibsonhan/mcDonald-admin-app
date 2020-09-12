@@ -14,34 +14,36 @@ import Hero from '../component/Hero';
 import Item from '../component/Item';
 import Menu from '../component/Menu';
 
-//TODO Refactor Update and Edit into a single form?
-const Update = () => {
-  const { history } = useAppContext();
+//TODO Refactor Edit and Edit into a single form?
+const Edit = ({ history }) => {
   const id = history.location.state.id;
   const key = history.location.state.type;
-  const goBack = () => history.goBack();
 
-  const updateObj = {
-    [COUPON]: <Coupon />,
-    [HERO]: <Hero />,
-    [ITEM]: <Item update={{ id }} />,
+  function handleGoBack() {
+    history.goBack();
+  }
+
+  const editObj = {
+    [COUPON]: <Coupon edit id={id} />,
+    [HERO]: <Hero edit id={id} />,
+    [ITEM]: <Item edit id={id} />,
     [MENU]: <Menu />,
   };
 
-  initEscapekey(goBack);
+  initEscapekey(handleGoBack);
 
   return (
-    <UpdateContainer>
+    <EditContainer>
       <Header>
         <Text size={50}>{key.toUpperCase()}</Text>
         <EscapeBtn />
       </Header>
-      <Body>{updateObj[key]}</Body>
-    </UpdateContainer>
+      <Body>{editObj[key]}</Body>
+    </EditContainer>
   );
 };
 
-const UpdateContainer = styled.div`
+const EditContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 10px;
@@ -64,4 +66,4 @@ const Body = styled.div`
   align-items: center;
 `;
 
-export default Update;
+export default Edit;

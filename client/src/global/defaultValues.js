@@ -59,4 +59,15 @@ const ITEMVALUES_OBJ = {
   dinner: false,
 };
 
-export { ITEMVALUES_ARR, ITEMVALUES_OBJ };
+const DEFAULTVALUES_EDIT = {
+  title: 'Set',
+  title2: 'Annoucement',
+  titleContent: '@Admin Portal',
+  btnText: 'Button Error',
+  btnColor: 'Yellow',
+  navLink: 'none',
+  legal: '',
+  img: '',
+};
+
+export { DEFAULTVALUES_EDIT, ITEMVALUES_ARR, ITEMVALUES_OBJ };

@@ -1,79 +1,43 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers';
-import * as yup from 'yup';
-
-import { createSingleImgUrl } from '../util/createSingleImgUrl';
-import { create, update } from '../util/service';
+import { isEmpty } from '../util/handleIsEmpty';
 import { HERO, UPDATE, CREATE, SUBMIT } from '../global/reserveWord';
-import { HEROINPUTS } from '../global/tempData';
+import { getSingle } from '../util/service';
 import { useAppContext } from '../global/context';
 
-import Input from './common/Input';
-import PreviewImg from './common/PreviewImg';
 import Btn from './common/Btn';
+import Form from './HeroForm';
 
-const Hero = ({ defaultValues }) => {
+const Hero = ({ edit, id }) => {
+  const [preloadData, setPreloadData] = useState({});
+  const { history, setIsLoading } = useAppContext();
   const buttonRef = useRef();
-  const buttonTxt = !!defaultValues ? UPDATE + ' ' + HERO : CREATE + ' ' + HERO;
-  const { dispatchAdd, dispatchUpdate, history } = useAppContext();
-  const { control, errors, handleSubmit, register } = useForm({});
-  const defaultImg = !!defaultValues ? defaultValues.img : 'none';
+  const buttonTxt = edit ? UPDATE + ' ' + HERO : CREATE + ' ' + HERO;
 
   function clickInput() {
     !!buttonRef && buttonRef.current.click();
   }
 
-  async function handleHero(data) {
-    try {
-      const response = await create(HERO, data);
-      dispatchAdd(HERO, { ...data, id: response });
-    } catch (error) {
-      console.log('fail to create hero', error);
+  useEffect(() => {
+    async function getSingleHero() {
+      setIsLoading((prev) => true);
+      const response = await getSingle(HERO, id);
+      setPreloadData(response);
+      setTimeout(() => {
+        setIsLoading((prev) => false);
+      }, 2000);
     }
-  }
 
-  async function handleUpdateHero(data) {
-    const id = history.location.state.id;
-    try {
-      await update(HERO, id, data);
-      dispatchUpdate(HERO, { ...data, id });
-    } catch (error) {
-      console.log('fail to upage hero');
-    }
-  }
-
-  const onSubmit = async (_formData) => {
-    const { heroImg, ...formObj } = _formData;
-    const data = {
-      ...formObj,
-      img: await createSingleImgUrl(heroImg, formObj.title),
-    };
-
-    !defaultValues ? handleHero(data) : handleUpdateHero(data);
-  };
+    if (!edit) return;
+    console.log('return?');
+    getSingleHero();
+  }, [edit]);
 
   return (
     <HeroContainer>
-      <FormContainer>
-        <PreviewImg register={register} title={HERO} defaultImg={defaultImg} />
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {!!HEROINPUTS &&
-            HEROINPUTS.map((item) => {
-              const df = !!defaultValues ? defaultValues[item] : '';
-              return (
-                <Input
-                  key={item}
-                  defaultValue={df}
-                  name={item}
-                  register={register}
-                  control={control}
-                  errors={errors}
-                />
-              );
-            })}
+      {isEmpty(preloadData) && (
+        <Form>
           <Btn
             type={SUBMIT}
             clickRef={buttonRef}
@@ -82,8 +46,20 @@ const Hero = ({ defaultValues }) => {
             justify="center"
             txt={buttonTxt}
           />
-        </form>
-      </FormContainer>
+        </Form>
+      )}
+      {!isEmpty(preloadData) && (
+        <Form preloadData={preloadData}>
+          <Btn
+            type={SUBMIT}
+            clickRef={buttonRef}
+            handleOnClick={clickInput}
+            color="grey"
+            justify="center"
+            txt={buttonTxt}
+          />
+        </Form>
+      )}
     </HeroContainer>
   );
 };
@@ -92,15 +68,6 @@ const HeroContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100%;
-  width: 100%;
-`;
-
-const FormContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
 `;
 
 export default Hero;

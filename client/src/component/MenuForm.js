@@ -22,6 +22,7 @@ const MenuForm = ({ children, preloadData }) => {
     isLoading,
     setIsLoading,
   } = useAppContext();
+
   const defaultImg = !preloadData ? '' : preloadData.img;
 
   const preloadDefault = MENUINPUTS.reduce((acc, curr) => {

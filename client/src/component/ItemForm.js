@@ -12,7 +12,7 @@ import { isEmpty } from '../util/handleIsEmpty';
 //TODO go over google style guide. I need to slow down with my work
 //Rhytem of coding.
 import { ITEMVALUES_ARR, ITEMVALUES_OBJ } from '../global/defaultValues';
-import { ITEM, NAME, TEXT } from '../global/reserveWord';
+import { ITEM, NAME, TEXT, SERVINGTIME } from '../global/reserveWord';
 import { SERVINGTIMES } from './../global/tempData';
 import { useAppContext } from '../global/context';
 
@@ -144,15 +144,13 @@ const ItemForm = ({ preloadData, children }) => {
     <ItemFormContainer>
       <FormContainer onSubmit={handleSubmit(onSubmit)}>
         <Input name={NAME} type={TEXT} control={control} errors={errors} />
-        {SERVINGTIMES.map((time) => (
-          <SwitchBtn
-            key={time}
-            register={register}
-            name={time}
-            control={control}
-            errors={errors}
-          />
-        ))}
+        <SwitchBtn
+          key={SERVINGTIME}
+          register={register}
+          name={SERVINGTIME}
+          control={control}
+          errors={errors}
+        />
         <SizeSwitchBtn
           name={'xSmall'}
           register={register}

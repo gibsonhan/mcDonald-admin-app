@@ -43,6 +43,9 @@ const ItemForm = ({ preloadData, children }) => {
   //   return acc;
   // }, {});
 
+  /** TODO: handle parsing Images into Preview Boxes
+   *
+   */
   const setDefaultValues = isEmpty(preloadData)
     ? ITEMVALUES_OBJ
     : formatPreload(preloadData);
@@ -93,7 +96,6 @@ const ItemForm = ({ preloadData, children }) => {
 
   async function handleCreateItem(data) {
     setIsLoading((prev) => true);
-    //Start Loading here (( LOL i need to try to think it out, I am slowly evolving. Its that I need the space. I didnt have the space for the last 3 years))
     try {
       await create(ITEM, data);
       dispatchAdd(ITEM, { ...data, id });
@@ -134,9 +136,6 @@ const ItemForm = ({ preloadData, children }) => {
         author: 'Admin',
       },
     };
-
-    //console.log('data check', data);
-    //TODO figure out the loading stuff
 
     !preloadData ? handleCreateItem(data) : handleUpdateItem(data);
   };

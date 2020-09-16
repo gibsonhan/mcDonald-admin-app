@@ -21,10 +21,7 @@ const Item = ({ edit, id }) => {
 
   //Fetch Single Item only when Edit is enable
   useEffect(() => {
-    if (!edit & !id) {
-      console.log('error');
-      return;
-    }
+    if (!edit & !id) return;
 
     async function fetchItem() {
       setIsLoading((prev) => true);
@@ -32,7 +29,6 @@ const Item = ({ edit, id }) => {
       let response = await getSingle(ITEM, id);
 
       setTimeout(() => {
-        console.log('item preloaded data');
         setPreloadData(response);
         setIsLoading((prev) => !prev);
       }, 2000);

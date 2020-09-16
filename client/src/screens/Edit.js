@@ -23,11 +23,13 @@ const Edit = ({ history }) => {
     history.goBack();
   }
 
+  const editProps = { edit: true, id };
+
   const editObj = {
-    [COUPON]: <Coupon edit id={id} />,
-    [HERO]: <Hero edit id={id} />,
-    [ITEM]: <Item edit id={id} />,
-    [MENU]: <Menu />,
+    [COUPON]: <Coupon {...editProps} />,
+    [HERO]: <Hero {...editProps} />,
+    [ITEM]: <Item {...editProps} />,
+    [MENU]: <Menu {...editProps} />,
   };
 
   initEscapekey(handleGoBack);

@@ -1,96 +1,66 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers';
-import * as yup from 'yup';
+import { isEmpty } from '../util/handleIsEmpty';
+import { getSingle } from '../util/service';
+import { MENU, SUBMIT, UPDATE, CREATE } from '../global/reserveWord';
 
-import { create, update } from '../util/service';
-import { createSingleImgUrl } from '../util/createSingleImgUrl';
-import { MENU } from '../global/reserveWord';
-import { MENUINPUTS } from '../global/tempData';
-import { useAppContext } from '../global/context';
+import Btn from './common/Btn';
+import Form from './MenuForm';
 
-import Input from './common/Input';
-import PreviewImg from './common/PreviewImg';
+const Menu = ({ edit, id }) => {
+  const [preloadData, setPreloadData] = useState({});
+  const buttonRef = useRef();
+  const buttonTxt = !!edit ? UPDATE + ' ' + MENU : CREATE + ' ' + MENU;
 
-const Menu = ({ defaultValues, children }) => {
-  const defaultImg = !!defaultValues ? defaultValues.img : '';
-  const { dispatchAdd, dispatchUpdate, history } = useAppContext();
-  const { control, errors, handleSubmit, register } = useForm({});
-
-  async function handleCreateMenu(data) {
-    try {
-      const response = await create(MENU, data);
-      dispatchAdd(MENU, { ...data, id: response });
-    } catch (error) {
-      console.log('fail to create hero', error);
-    }
+  function clickInput() {
+    !!buttonRef && buttonRef.current.click();
   }
 
-  async function handleUpdateMenu(data) {
-    const id = history.location.state.id;
-    try {
-      await update(MENU, id, data);
-      dispatchUpdate(MENU, { ...data, id });
-    } catch (error) {
-      console.log('fail to upage menu');
+  useEffect(() => {
+    if (!edit) return;
+    async function fetchSingleMenu() {
+      const response = await getSingle(MENU, id);
+      setPreloadData((prev) => response);
     }
-  }
-
-  const onSubmit = async (_formData) => {
-    const { name, group, menuImg } = _formData;
-    const data = {
-      name,
-      img: await createSingleImgUrl(menuImg, name),
-      //group: [{ name: 'Snacsk', items: ['A', 'B', 'C'] }],
-      created: new Date(),
-      lastEdit: {
-        date: new Date(),
-        author: 'Admin',
-      },
-    };
-
-    console.log(data);
-
-    !defaultValues ? handleCreateMenu(data) : handleUpdateMenu(data);
-  };
+    fetchSingleMenu();
+  }, [edit]);
 
   return (
-    <FormContainer>
-      <PreviewImg register={register} title={MENU} defaultImg={defaultImg} />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {!!MENUINPUTS &&
-          MENUINPUTS.map((item) => {
-            const df = !!defaultValues ? defaultValues[item] : '';
-            return (
-              <Input
-                key={item}
-                name={item}
-                defaultValue={df}
-                register={register}
-                errors={errors}
-                control={control}
-              />
-            );
-          })}
-        <ChildrenContainer>{children}</ChildrenContainer>
-      </form>
-    </FormContainer>
+    <MenuContainer>
+      {isEmpty(preloadData) && (
+        <Form>
+          <Btn
+            type={SUBMIT}
+            clickRef={buttonRef}
+            handleOnClick={clickInput}
+            color="grey"
+            justify="center"
+            txt={buttonTxt}
+          />
+        </Form>
+      )}
+      {!isEmpty(preloadData) && (
+        <Form preloadData={preloadData}>
+          <Btn
+            type={SUBMIT}
+            clickRef={buttonRef}
+            handleOnClick={clickInput}
+            color="grey"
+            justify="center"
+            txt={buttonTxt}
+          />
+        </Form>
+      )}
+    </MenuContainer>
   );
 };
 
-const FormContainer = styled.div`
+const MenuContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-`;
-
-const ChildrenContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
 `;
 
 export default Menu;

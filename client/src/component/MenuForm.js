@@ -24,7 +24,7 @@ const MenuForm = ({ children, preloadData }) => {
   } = useAppContext();
 
   const defaultImg = !preloadData ? '' : preloadData.img;
-
+  const id = history.location.state.id;
   const preloadDefault = MENUINPUTS.reduce((acc, curr) => {
     acc[curr] = !!preloadData ? preloadData[curr] : '';
     return acc;
@@ -34,11 +34,9 @@ const MenuForm = ({ children, preloadData }) => {
   const { control, errors, handleSubmit, register } = useForm({
     defaultValues: setDefaultValues,
   });
-  const id = history.location.state.id;
 
   async function handleCreateMenu(data) {
     setIsLoading((prev) => true);
-
     try {
       await create(MENU, data);
       dispatchAdd(MENU, { ...data, id });
@@ -48,16 +46,23 @@ const MenuForm = ({ children, preloadData }) => {
 
     setTimeout(() => {
       setIsLoading((prev) => false);
-    }, 2000);
+      history.goBack();
+    }, 1000);
   }
 
   async function handleUpdateMenu(data) {
+    setIsLoading((prev) => true);
     try {
       await update(MENU, id, data);
       dispatchUpdate(MENU, { ...data, id });
     } catch (error) {
       console.log('fail to upage menu');
     }
+
+    setTimeout(() => {
+      setIsLoading((prev) => false);
+      history.goBack();
+    }, 1000);
   }
 
   /**TODO: might need immer

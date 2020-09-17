@@ -102,10 +102,15 @@ const ItemForm = ({ preloadData, children }) => {
     } catch (error) {
       console.log('fail to create Item', error);
     }
-    setIsLoading((prev) => false);
+
+    setTimeout(() => {
+      setIsLoading((prev) => true);
+      history.goBack();
+    }, 0);
   }
 
   async function handleUpdateItem(data) {
+    console.log('updaing item ');
     setIsLoading((prev) => true);
     try {
       await update(ITEM, id, data);
@@ -113,7 +118,9 @@ const ItemForm = ({ preloadData, children }) => {
     } catch (error) {
       console.log('fail to upage Item');
     }
-    setIsLoading((prev) => false);
+
+    await timeOut(() => setIsLoading((prev) => false), 2);
+    history.goBack();
   }
 
   const onSubmit = async (formData) => {
@@ -134,8 +141,8 @@ const ItemForm = ({ preloadData, children }) => {
     };
 
     isEmpty(preloadData) ? handleCreateItem(data) : handleUpdateItem(data);
-    history.goBack();
   };
+
   return (
     <ItemFormContainer>
       <FormContainer onSubmit={handleSubmit(onSubmit)}>

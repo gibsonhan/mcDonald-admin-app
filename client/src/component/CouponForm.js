@@ -31,13 +31,18 @@ const CouponForm = ({ children, preloadData }) => {
   const id = history.location.state.id;
 
   async function handleCreateCoupon(data) {
+    setIsLoading((prev) => true);
     try {
       await create(COUPON, data);
       dispatchAdd(COUPON, { ...data, id });
     } catch (error) {
       console.log('fail to create coupon', error);
     }
-    setIsLoading((prev) => false);
+
+    setTimeout(() => {
+      setIsLoading((prev) => false);
+      history.goBack();
+    }, 1000);
   }
 
   async function handleUpdateCoupon(data) {
@@ -48,19 +53,21 @@ const CouponForm = ({ children, preloadData }) => {
     } catch (error) {
       console.log('fail to update coupon', error);
     }
-    setIsLoading((prev) => false);
+    setTimeout(() => {
+      setIsLoading((prev) => false);
+      history.goBack();
+    }, 1000);
   }
 
   const onSubmit = async (_formData) => {
     if (isLoading) return;
-    console.log(_formData);
     const { couponImg, ...formObj } = _formData;
     const data = {
       ...formObj,
-      // img: await createSingleImgUrl(couponImg, formObj.title),
+      img: await createSingleImgUrl(couponImg, formObj.title),
     };
 
-    //isEmpty(preloadData) ? handleCreateCoupon(data) : handleUpdateCoupon(data);
+    isEmpty(preloadData) ? handleCreateCoupon(data) : handleUpdateCoupon(data);
   };
 
   return (

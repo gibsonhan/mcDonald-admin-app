@@ -17,7 +17,12 @@ import Input from './common/Input';
 import PreviewImg from './common/PreviewImg';
 
 const HeroForm = ({ children, preloadData }) => {
-  const { dispatchAdd, dispatchUpdate, history } = useAppContext();
+  const {
+    dispatchAdd,
+    dispatchUpdate,
+    history,
+    setIsLoading,
+  } = useAppContext();
   const setDefaultValue = isEmpty(preloadData)
     ? DEFAULTVALUES_EDIT
     : preloadData;
@@ -28,21 +33,32 @@ const HeroForm = ({ children, preloadData }) => {
   const id = history.location.state.id;
 
   async function handleCreateForm(data) {
+    setIsLoading((prev) => true);
     try {
-      const response = await create(HERO, data);
-      dispatchAdd(HERO, { ...data, id: response });
+      await create(HERO, data);
+      dispatchAdd(HERO, { ...data, id });
     } catch (error) {
       console.log('fail to create hero', error);
     }
+    setTimeout(() => {
+      setIsLoading((prev) => false);
+      history.goBack();
+    }, 1000);
   }
 
   async function handleUpdateHeroForm(data) {
+    setIsLoading((prev) => true);
     try {
       await update(HERO, id, data);
       dispatchUpdate(HERO, { ...data, id });
     } catch (error) {
       console.log('fail to upage hero');
     }
+
+    setTimeout(() => {
+      setIsLoading((prev) => false);
+      history.goBack();
+    }, 1000);
   }
 
   const onSubmit = async (_formData) => {
@@ -53,9 +69,8 @@ const HeroForm = ({ children, preloadData }) => {
       img: await createSingleImgUrl(heroImg, title),
     };
 
-    preloadData ? handleCreateForm(data) : handleUpdateHeroForm(data);
+    isEmpty(preloadData) ? handleCreateForm(data) : handleUpdateHeroForm(data);
   };
-
   return (
     <HeroFormContainer>
       <PreviewImg register={register} name={HERO} defaultImg={defaultImg} />

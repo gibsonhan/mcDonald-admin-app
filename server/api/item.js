@@ -7,15 +7,12 @@ const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-console.log(controller.uploadImg);
-
 //CRUD for company profile :
 Item.route('/').get(controller.itemList);
 Item.route('/:id').get(controller.singleItem);
-Item.route('/create').post(controller.createItem);
+Item.route('/').post(controller.createItem);
 //TODO would be to refacor upload img to sw3 into one single route
-Item.route('/img-upload').post(upload.any(), controller.uploadImg);
-Item.route('/update/:id').put(controller.updateItem);
-Item.route('/delete/:id').get(controller.deleteItem);
+Item.route('/:id').put(controller.updateItem);
+Item.route('/:id').delete(controller.deleteItem);
 
 module.exports = Item;

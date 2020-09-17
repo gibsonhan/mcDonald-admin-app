@@ -1,34 +1,75 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import CreateModal from './CreateModal';
-import { HERO, MENU, ITEM, COUPON } from '../global/reserveWord';
+import { isEmpty } from '../util/handleIsEmpty';
+import { getSingle } from '../util/service';
+import { MENU, SUBMIT, UPDATE, CREATE } from '../global/reserveWord';
+import { useAppContext } from '../global/context';
 
-const Menu = () => {
-  const buttonTitle = [HERO, MENU, ITEM, COUPON];
+import Btn from './common/Btn';
+import Form from './MenuForm';
+
+const Menu = ({ edit, id }) => {
+  const [preloadData, setPreloadData] = useState({});
+  const { isLoading, setIsLoading } = useState({});
+  const buttonRef = useRef();
+  const buttonTxt = !!edit ? UPDATE + ' ' + MENU : CREATE + ' ' + MENU;
+
+  function clickInput() {
+    !!buttonRef && buttonRef.current.click();
+  }
+
+  useEffect(() => {
+    async function fetchSingleMenu() {
+      setIsLoading((prev) => true);
+      const response = await getSingle(MENU, id);
+      setPreloadData((prev) => response);
+
+      setTimeout(() => {
+        setIsLoading((prev) => false);
+      }, 2000);
+    }
+
+    if (!edit) return;
+    fetchSingleMenu();
+  }, [edit]);
+
+  if (isLoading) return <></>;
   return (
     <MenuContainer>
-      <ButtonContainer>
-        {buttonTitle.map((type) => (
-          <CreateModal key={type} type={type} />
-        ))}
-      </ButtonContainer>
+      {isEmpty(preloadData) && (
+        <Form>
+          <Btn
+            type={SUBMIT}
+            clickRef={buttonRef}
+            handleOnClick={clickInput}
+            color="grey"
+            justify="center"
+            txt={buttonTxt}
+          />
+        </Form>
+      )}
+      {!isEmpty(preloadData) && (
+        <Form preloadData={preloadData}>
+          <Btn
+            type={SUBMIT}
+            clickRef={buttonRef}
+            handleOnClick={clickInput}
+            color="grey"
+            justify="center"
+            txt={buttonTxt}
+          />
+        </Form>
+      )}
     </MenuContainer>
   );
 };
 
 const MenuContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  align-items: center;
   justify-content: center;
-  height: 100%;
-  width: 100%;
-  margin: 25px;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  flex-direction: row;
+  flex-direction: column;
 `;
 
 export default Menu;

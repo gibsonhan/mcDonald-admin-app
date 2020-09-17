@@ -3,8 +3,9 @@ import styled from 'styled-components';
 
 import { Controller } from 'react-hook-form';
 import { TextField } from '@material-ui/core';
-import { SIZEMOREINFO } from '../global/tempData';
-import PreviewImg from './common/PreviewImg';
+import { NUMBER } from '../../global/reserveWord';
+import { SIZEMOREINFO } from '../../global/tempData';
+import PreviewImg from './PreviewImg';
 
 //Need to understand control and register
 const SizeMoreInfo = ({ title, register, control }) => {
@@ -18,7 +19,7 @@ const SizeMoreInfo = ({ title, register, control }) => {
             key={title + item}
             name={title + item}
             label={item}
-            type={'number'}
+            type={NUMBER}
             InputLabelProps={{ shrink: true }}
             control={control}
           />

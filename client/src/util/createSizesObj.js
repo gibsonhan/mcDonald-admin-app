@@ -14,14 +14,15 @@
  */
 
 //This needs to be refactored
-export function createSizeObj(_arr, _formObj, _destrucObj) {
-  return _arr.reduce(
+export function createSizeObj(_formObj) {
+  const ITEMSIZES = ['xSmall', 'small', 'regular', 'large', 'xLarge'];
+  return ITEMSIZES.reduce(
     (acc, curr) => {
       if (_formObj[curr] === true) {
         acc.list.push(curr);
         acc[curr] = {
-          price: _destrucObj[curr + 'Price'],
-          cal: _destrucObj[curr + 'Calories'],
+          price: _formObj[curr + 'Price'],
+          cal: _formObj[curr + 'Cal'],
         };
       }
       return acc;

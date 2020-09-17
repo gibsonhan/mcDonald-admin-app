@@ -1,21 +1,37 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import LoginScreen from './screens/Login';
-import DashboardScreen from './screens/Dashboard';
+import AppGlobalEvent from './component/AppGlobalEvent';
+import Create from './screens/Create';
+import Dashboard from './screens/Dashboard';
+import Edit from './screens/Edit';
+import Login from './screens/Login';
 
-import { Switch, Route, Redirect } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
+import { useAppContext } from './global/context';
 
 function App() {
+  const { history, isLoading } = useAppContext();
   return (
     <AppContainer>
-      <Switch>
-        <Route path={['/admin', '/login']} component={LoginScreen} />
-        <Route path="/dashboard" component={DashboardScreen} />
-        <Route path="/" component={DashboardScreen}>
-          <Redirect to="/dashboard/menu" />
-        </Route>
-      </Switch>
+      <AppGlobalEvent>
+        <Router history={history}>
+          <Switch>
+            <Route path={['/admin', '/login']} component={Login} />
+            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/edit" component={Edit} />
+            <Route path="/create" component={Create} />
+            <Route path="/" component={Dashboard}>
+              <Redirect to="/dashboard/summary" />
+            </Route>
+          </Switch>
+        </Router>
+      </AppGlobalEvent>
     </AppContainer>
   );
 }

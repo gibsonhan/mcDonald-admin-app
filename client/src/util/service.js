@@ -1,44 +1,91 @@
 import axios from 'axios';
+import { BASEURL } from '../global/reserveWord';
 
-async function createItem(data) {
-  const url = 'http://localhost:3001/api/item/create';
+async function create(type, payload) {
+  const url = BASEURL + type;
   const requestConfig = {
     //TODO implement auth restrictions
     headers: { Authorization: 'temp' },
   };
-  return await axios.post(url, { ...data });
+  const response = await axios.post(url, payload);
+  setTimeout(() => {
+    return response.data.id;
+  }, 5000);
 }
 
-async function createMenu(data) {
-  const url = 'http://localhost:3001/api/menu/create';
-  const requestConfig = {
-    //TODO implement auth restrictions
-    headers: { Authorization: 'temp' },
-  };
-  return await axios.post(url, { ...data });
+async function getAll(types) {
+  //Create an array of promise
+  const promises = types.map((type) => {
+    const url = BASEURL + type;
+    return axios.get(url);
+  });
+
+  //THE RXJS how to we combine the stuff
+  //TODO functional program to combine to list
+  const response = await Promise.all(promises);
+
+  return response.reduce((acc, curr, indx) => {
+    acc[types[indx]] = curr.data;
+    return acc;
+  }, {});
 }
 
-async function createCoupon(data) {
-  const url = 'http://localhost:3001/api/coupon/';
-  const requestConfig = {
-    //TODO implement auth restrictions
-    headers: { Authorization: 'temp' },
-  };
-  return await axios.post(url, { ...data });
+async function getList(type) {
+  const url = BASEURL + type;
+  const response = await axios.get(url);
+  return response.data;
 }
 
+async function getSingle(type, id) {
+  const url = BASEURL + type + `/${id}`;
+  const response = await axios.get(url);
+  return response.data;
+}
+
+async function remove(type, id) {
+  const url = BASEURL + type + `/${id}`;
+  const response = await axios.delete(url);
+  return response.data;
+}
+
+async function update(type, id, payload) {
+  const url = BASEURL + type + `/${id}`;
+  const response = await axios.put(url, payload);
+  return response.data;
+}
+
+//TODO: need to refactor: remove the api from menu to a general s3/api/route
 async function uploadSingleImg(data) {
-  const url = 'https//localhost:3001/api/menu/upload-img';
-
+  const url = BASEURL + 'amazonS3/single-img';
   const requestConfig = {
     method: 'POST',
     config: {
       headers: { 'Content-Type': 'multipart/form-data' },
     },
   };
-
   const response = await axios.post(url, data, requestConfig);
   return response.data;
 }
 
-export { createCoupon, createItem, createMenu, uploadSingleImg };
+async function uploadMultiImg(data) {
+  const url = BASEURL + 'amazonS3/multi-img';
+  const requestConfig = {
+    method: 'POST',
+    config: {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    },
+  };
+  const response = await axios.post(url, data, requestConfig);
+  return response.data;
+}
+
+export {
+  create,
+  getAll,
+  getList,
+  getSingle,
+  remove,
+  update,
+  uploadSingleImg,
+  uploadMultiImg,
+};

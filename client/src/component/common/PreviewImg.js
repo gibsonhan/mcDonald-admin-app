@@ -1,10 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { NONE } from '../../global/reserveWord';
 
-const PreviewImg = ({ title, register, display }) => {
+const PreviewImg = ({ name, register, defaultImg }) => {
   const imgUploadRef = useRef();
   const [prevImg, setPrevImg] = useState({ display: false, url: '' });
-  const name = title + 'Img';
+  const uniqueName = name + 'Img';
 
   const uploadImg = function handleImgUpload(e) {
     const uploadBtn = imgUploadRef.current.firstElementChild;
@@ -24,22 +25,35 @@ const PreviewImg = ({ title, register, display }) => {
     reader.readAsDataURL(file);
   }
 
+  //For Updating Form
+  //Set image Preview if default image is passed through
+  useEffect(() => {
+    function setImage() {
+      if (!!defaultImg) {
+        setPrevImg({ display: true, url: defaultImg });
+      }
+    }
+    setImage();
+    return () => setImage();
+  }, [defaultImg]);
+
+  const noImage = !prevImg.display || prevImg.display === NONE;
   return (
     <PrevImgContainer onClick={uploadImg} ref={imgUploadRef}>
       <input
         ref={register}
         accept="image/.png"
         type="file"
-        id={name}
-        name={name}
+        id={uniqueName}
+        name={uniqueName}
         onChange={(e) => updatePreview(e)}
         style={{ display: 'none' }}
       />
-      {!prevImg.display && 'Upload Img'}
-      {prevImg.display && (
+      {noImage && <div>Upload Img</div>}
+      {!noImage && (
         <img
           src={prevImg.url}
-          style={{ objectFit: 'contain', width: '100px', height: '100px' }}
+          style={{ objectFit: 'fill', width: '100px', height: '100px' }}
         />
       )}
     </PrevImgContainer>

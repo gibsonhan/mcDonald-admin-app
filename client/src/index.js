@@ -1,17 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { BrowserRouter as Router } from 'react-router-dom';
 
-import { createBrowserHistory } from 'history';
+import AppProvider from './global/context';
+import Loading from './screens/Loading/Loading';
 
-const history = createBrowserHistory();
-
+//TODO refactor history in APPContext
 ReactDOM.render(
   <React.StrictMode>
-    <Router history={history}>
+    <AppProvider>
       <App />
-    </Router>
+    </AppProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

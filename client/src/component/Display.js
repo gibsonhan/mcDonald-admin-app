@@ -1,23 +1,27 @@
 import React from 'react';
-import { Switch, Route, useRouteMatch } from 'react-router-dom';
+import { Switch, Route, useRouteMatch, useLocation } from 'react-router-dom';
 
 //styles
 import Color from '../global/color';
 import styled from 'styled-components';
 
 //components
-import Coupon from './Coupon';
-import Hero from './Hero';
-import Items from './Items';
-import Menu from './Menu';
+import CouponList from './CouponList';
+import HeroList from './HeroList';
+import ItemList from './ItemList';
+import MenuList from './MenuList';
 import Summary from './Summary';
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 const switchNav = [
-  { title: 'Hero', route: 'hero', component: Hero },
-  { title: 'Coupon', route: 'coupon', component: Coupon },
-  { title: 'Menu', route: 'menu', component: Menu },
-  { title: 'Items', route: 'items', component: Items },
-  { title: 'Summary', route: 'summary', component: Summary },
+  { title: 'Hero', route: 'hero', component: HeroList, exact: true },
+  { title: 'Coupon', route: 'coupon', component: CouponList, exact: true },
+  { title: 'Menu', route: 'menu', component: MenuList, exact: true },
+  { title: 'Items', route: 'item', component: ItemList, exact: true },
+  { title: 'Summary', route: 'summary', component: Summary, exact: true },
 ];
 
 const Display = () => {
@@ -28,7 +32,7 @@ const Display = () => {
         {switchNav.map((obj) => (
           <Route
             key={obj.title}
-            exact
+            exact={obj.exact}
             path={`${path}/${obj.route}`}
             component={obj.component}
           />

@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useAppContext } from '../global/context';
 
-const Summary = () => {
+const Summary = (props) => {
   return <SummaryContainer>Summary</SummaryContainer>;
 };
 

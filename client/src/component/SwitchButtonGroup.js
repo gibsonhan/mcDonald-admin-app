@@ -5,7 +5,7 @@ import { Switch } from '@material-ui/core';
 
 import { ITEMSIZES } from '../global/tempData';
 import { Controller } from 'react-hook-form';
-import SizeMoreInfo from './SizeMoreInfo';
+import SizeMoreInfo from './common/SizeMoreInfo';
 
 const SwitchButtonGroup = ({ title, data, control, register, error }) => {
   return (
@@ -38,19 +38,6 @@ const SwitchBtn = ({ title, control, register, error }) => {
     <SwitchGroup>
       <SwitchContainer>
         <label>{title}</label>
-        <Controller
-          name={title}
-          control={control}
-          render={(props) => (
-            <Switch
-              onChange={(e) => {
-                setSwitchOn((prev) => !prev);
-                return props.onChange(e.target.checked);
-              }}
-              checked={props.value}
-            />
-          )}
-        />
       </SwitchContainer>
       {showPriceAndCal && (
         <SizeMoreInfo

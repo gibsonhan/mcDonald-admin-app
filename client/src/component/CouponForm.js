@@ -7,59 +7,71 @@ import * as yup from 'yup';
 
 import Input from './common/Input';
 import PreviewImg from './common/PreviewImg';
+
 import { create, update } from '../util/service';
 import { createSingleImgUrl } from '../util/createSingleImgUrl';
 import { COUPON } from '../global/reserveWord';
+import { COUPONINPUTS } from '../global/tempData';
+import { isEmpty } from '../util/handleIsEmpty';
 import { useAppContext } from '../global/context';
 
-const CouponForm = ({ inputs, children, defaultValues }) => {
-  const { dispatchAdd, dispatchUpdate, history } = useAppContext();
-  const { control, errors, handleSubmit, register } = useForm({});
-  const defaultImg = !!defaultValues ? defaultValues.img : 'none';
+const CouponForm = ({ children, preloadData }) => {
+  const {
+    dispatchAdd,
+    dispatchUpdate,
+    history,
+    isLoading,
+    setIsLoading,
+  } = useAppContext();
+  const setDefaultValues = isEmpty(preloadData) ? '' : preloadData;
+  const { control, errors, handleSubmit, register } = useForm({
+    defaultValues: setDefaultValues,
+  });
+  const defaultImg = isEmpty(preloadData) ? '' : preloadData.img;
+  const id = history.location.state.id;
 
   async function handleCreateCoupon(data) {
-    console.log('inside create');
     try {
-      const response = await create(COUPON, data);
-      dispatchAdd(COUPON, { ...data, id: response });
+      await create(COUPON, data);
+      dispatchAdd(COUPON, { ...data, id });
     } catch (error) {
-      console.log('fail to create hero', error);
+      console.log('fail to create coupon', error);
     }
+    setIsLoading((prev) => false);
   }
 
   async function handleUpdateCoupon(data) {
-    console.log('update');
-    const id = history.location.state.id;
+    setIsLoading((prev) => true);
     try {
-      let response = await update(COUPON, id, data);
-      console.log('checking response', response);
+      await update(COUPON, id, data);
       dispatchUpdate(COUPON, { ...data, id });
     } catch (error) {
-      console.log('fail to udate hero', error);
+      console.log('fail to update coupon', error);
     }
+    setIsLoading((prev) => false);
   }
 
   const onSubmit = async (_formData) => {
+    if (isLoading) return;
+    console.log(_formData);
     const { couponImg, ...formObj } = _formData;
     const data = {
       ...formObj,
-      img: await createSingleImgUrl(couponImg, formObj.title),
+      // img: await createSingleImgUrl(couponImg, formObj.title),
     };
 
-    !defaultValues ? handleCreateCoupon(data) : handleUpdateCoupon(data);
+    //isEmpty(preloadData) ? handleCreateCoupon(data) : handleUpdateCoupon(data);
   };
 
   return (
     <FormContainer>
-      <PreviewImg register={register} title={COUPON} defaultImg={defaultImg} />
+      <PreviewImg register={register} name={COUPON} defaultImg={defaultImg} />
       <form onSubmit={handleSubmit(onSubmit)}>
-        {!!inputs &&
-          inputs.map((item) => {
-            const df = !!defaultValues ? defaultValues[item] : '';
+        {!!COUPONINPUTS &&
+          COUPONINPUTS.map((item) => {
             return (
               <Input
                 key={item}
-                defaultValue={df}
                 name={item}
                 register={register}
                 control={control}

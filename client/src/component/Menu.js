@@ -4,12 +4,14 @@ import styled from 'styled-components';
 import { isEmpty } from '../util/handleIsEmpty';
 import { getSingle } from '../util/service';
 import { MENU, SUBMIT, UPDATE, CREATE } from '../global/reserveWord';
+import { useAppContext } from '../global/context';
 
 import Btn from './common/Btn';
 import Form from './MenuForm';
 
 const Menu = ({ edit, id }) => {
   const [preloadData, setPreloadData] = useState({});
+  const { isLoading, setIsLoading } = useState({});
   const buttonRef = useRef();
   const buttonTxt = !!edit ? UPDATE + ' ' + MENU : CREATE + ' ' + MENU;
 
@@ -18,14 +20,21 @@ const Menu = ({ edit, id }) => {
   }
 
   useEffect(() => {
-    if (!edit) return;
     async function fetchSingleMenu() {
+      setIsLoading((prev) => true);
       const response = await getSingle(MENU, id);
       setPreloadData((prev) => response);
+
+      setTimeout(() => {
+        setIsLoading((prev) => false);
+      }, 2000);
     }
+
+    if (!edit) return;
     fetchSingleMenu();
   }, [edit]);
 
+  if (isLoading) return <></>;
   return (
     <MenuContainer>
       {isEmpty(preloadData) && (

@@ -8,7 +8,9 @@ async function create(type, payload) {
     headers: { Authorization: 'temp' },
   };
   const response = await axios.post(url, payload);
-  return response.data.id;
+  setTimeout(() => {
+    return response.data.id;
+  }, 5000);
 }
 
 async function getAll(types) {

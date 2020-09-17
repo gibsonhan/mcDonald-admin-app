@@ -11,7 +11,7 @@ import Form from './HeroForm';
 
 const Hero = ({ edit, id }) => {
   const [preloadData, setPreloadData] = useState({});
-  const { history, setIsLoading } = useAppContext();
+  const { isLoading, setIsLoading } = useAppContext();
   const buttonRef = useRef();
   const buttonTxt = edit ? UPDATE + ' ' + HERO : CREATE + ' ' + HERO;
 
@@ -23,17 +23,15 @@ const Hero = ({ edit, id }) => {
     async function getSingleHero() {
       setIsLoading((prev) => true);
       const response = await getSingle(HERO, id);
-      setPreloadData(response);
-      setTimeout(() => {
-        setIsLoading((prev) => false);
-      }, 2000);
+      setPreloadData((prev) => response);
+      setIsLoading((prev) => false);
     }
 
     if (!edit) return;
-    console.log('return?');
     getSingleHero();
   }, [edit]);
 
+  if (isLoading) return <></>;
   return (
     <HeroContainer>
       {isEmpty(preloadData) && (

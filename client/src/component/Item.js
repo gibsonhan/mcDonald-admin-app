@@ -21,21 +21,17 @@ const Item = ({ edit, id }) => {
 
   //Fetch Single Item only when Edit is enable
   useEffect(() => {
-    if (!edit & !id) return;
-
     async function fetchItem() {
       setIsLoading((prev) => true);
-
-      let response = await getSingle(ITEM, id);
-
-      setTimeout(() => {
-        setPreloadData(response);
-        setIsLoading((prev) => !prev);
-      }, 2000);
+      const response = await getSingle(ITEM, id);
+      setPreloadData(response);
+      setIsLoading((prev) => false);
     }
+    if (!edit) return;
     fetchItem();
   }, [edit]);
 
+  if (isLoading) return <></>;
   return (
     <CreateItemContainer>
       {isEmpty(preloadData) && (

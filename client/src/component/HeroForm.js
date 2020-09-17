@@ -58,7 +58,7 @@ const HeroForm = ({ children, preloadData }) => {
 
   return (
     <HeroFormContainer>
-      <PreviewImg register={register} title={HERO} defaultImg={defaultImg} />
+      <PreviewImg register={register} name={HERO} defaultImg={defaultImg} />
       <form onSubmit={handleSubmit(onSubmit)}>
         {!!HEROINPUTS &&
           HEROINPUTS.map((item) => {

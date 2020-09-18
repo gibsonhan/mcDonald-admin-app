@@ -11,7 +11,7 @@ import Form from './MenuForm';
 
 const Menu = ({ edit, id }) => {
   const [preloadData, setPreloadData] = useState({});
-  const { isLoading, setIsLoading } = useState({});
+  const { isLoading, setIsLoading } = useAppContext();
   const buttonRef = useRef();
   const buttonTxt = !!edit ? UPDATE + ' ' + MENU : CREATE + ' ' + MENU;
 

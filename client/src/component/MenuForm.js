@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { useForm } from 'react-hook-form';
@@ -11,8 +11,10 @@ import { MENU } from '../global/reserveWord';
 import { MENUINPUTS } from '../global/tempData';
 import { useAppContext } from '../global/context';
 
+import Test from '../component/Test';
 import Input from './common/Input';
 import PreviewImg from './common/PreviewImg';
+import TransferList from './TransferList';
 
 const MenuForm = ({ children, preloadData }) => {
   const {
@@ -23,6 +25,7 @@ const MenuForm = ({ children, preloadData }) => {
     setIsLoading,
   } = useAppContext();
 
+  const [groupObj, setGroupObj] = useState({});
   const defaultImg = !preloadData ? '' : preloadData.img;
   const id = history.location.state.id;
   const preloadDefault = MENUINPUTS.reduce((acc, curr) => {
@@ -31,7 +34,7 @@ const MenuForm = ({ children, preloadData }) => {
   }, {});
 
   const setDefaultValues = !preloadData ? '' : preloadDefault;
-  const { control, errors, handleSubmit, register } = useForm({
+  const { control, errors, handleSubmit, register, watch } = useForm({
     defaultValues: setDefaultValues,
   });
 
@@ -111,6 +114,8 @@ const MenuForm = ({ children, preloadData }) => {
               />
             );
           })}
+        <TransferList register={register} control={control} errors={errors} />
+        <Test />
         <ChildrenContainer>{children}</ChildrenContainer>
       </form>
     </FormContainer>

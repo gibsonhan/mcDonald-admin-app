@@ -46,6 +46,7 @@ const ItemForm = ({ preloadData, children }) => {
   /** TODO: handle parsing Images into Preview Boxes
    *
    */
+
   const setDefaultValues = isEmpty(preloadData)
     ? ITEMVALUES_OBJ
     : formatPreload(preloadData);
@@ -104,9 +105,9 @@ const ItemForm = ({ preloadData, children }) => {
     }
 
     setTimeout(() => {
-      setIsLoading((prev) => true);
+      setIsLoading((prev) => false);
       history.goBack();
-    }, 0);
+    }, 1000);
   }
 
   async function handleUpdateItem(data) {

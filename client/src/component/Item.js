@@ -12,7 +12,7 @@ import { isEmpty } from '../util/handleIsEmpty';
 const Item = ({ edit, id }) => {
   const { isLoading, setIsLoading } = useAppContext();
   const [preloadData, setPreloadData] = useState({});
-  const buttonTxt = !!edit ? UPDATE + ' ' + ITEM : CREATE + ' ' + ITEM;
+  const buttonTxt = edit ? UPDATE + ' ' + ITEM : CREATE + ' ' + ITEM;
   const buttonRef = useRef();
 
   function clickInput() {

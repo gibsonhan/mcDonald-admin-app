@@ -7,11 +7,10 @@ import * as yup from 'yup';
 
 import { create, update } from '../util/service';
 import { createSingleImgUrl } from '../util/createSingleImgUrl';
-import { MENU } from '../global/reserveWord';
+import { MENU, NAME, GROUP } from '../global/reserveWord';
 import { MENUINPUTS } from '../global/tempData';
 import { useAppContext } from '../global/context';
 
-import Test from '../component/Test';
 import Input from './common/Input';
 import PreviewImg from './common/PreviewImg';
 import TransferList from './TransferList';
@@ -25,7 +24,6 @@ const MenuForm = ({ children, preloadData }) => {
     setIsLoading,
   } = useAppContext();
 
-  const [groupObj, setGroupObj] = useState({});
   const defaultImg = !preloadData ? '' : preloadData.img;
   const id = history.location.state.id;
   const preloadDefault = MENUINPUTS.reduce((acc, curr) => {
@@ -98,24 +96,32 @@ const MenuForm = ({ children, preloadData }) => {
     preloadData ? handleUpdateMenu(data) : handleCreateMenu(data);
   };
 
+  const groupName1 = watch('groupname1');
+  const [groupItem, setGroupItem] = useState({});
+
+  useEffect(() => {
+    console.log(groupItem);
+  }, [groupItem]);
+
   return (
     <FormContainer>
       <PreviewImg register={register} name={MENU} defaultImg={defaultImg} />
       <form onSubmit={handleSubmit(onSubmit)}>
-        {!!MENUINPUTS &&
-          MENUINPUTS.map((item) => {
-            return (
-              <Input
-                key={item}
-                name={item}
-                register={register}
-                errors={errors}
-                control={control}
-              />
-            );
-          })}
-        <TransferList register={register} control={control} errors={errors} />
-        <Test />
+        <Input
+          name={NAME}
+          register={register}
+          errors={errors}
+          control={control}
+        />
+
+        <TransferList
+          name={GROUP + NAME + '1'}
+          setGroupItem={setGroupItem}
+          register={register}
+          control={control}
+          errors={errors}
+          watch={groupName1}
+        />
         <ChildrenContainer>{children}</ChildrenContainer>
       </form>
     </FormContainer>

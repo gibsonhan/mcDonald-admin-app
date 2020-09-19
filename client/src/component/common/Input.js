@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 
 import Text from './Text';
 
-const Input = ({ name, type, control, errors }) => {
+const Input = ({ name, type, control, errors, inputRef }) => {
   const firstLetter = name[0].toUpperCase();
   const sliceWord = name.slice(1, name.length);
   const title = firstLetter + sliceWord;
@@ -21,6 +21,7 @@ const Input = ({ name, type, control, errors }) => {
         name={name}
         variant="outlined"
         control={control}
+        inputRef={inputRef}
       />
       {errors[name] && (
         <Text justify="center" padding={10}>

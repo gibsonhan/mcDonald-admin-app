@@ -17,6 +17,7 @@ const REMOVE = 'remove';
 
 const NAME = 'name';
 const NONE = 'none';
+const GROUP = 'group';
 const CREATE = 'create';
 const EDIT = 'edit';
 const RESET = 'reset';
@@ -34,6 +35,7 @@ export {
   SET,
   UPDATE,
   COUPON,
+  GROUP,
   HERO,
   ITEM,
   INITIALSTATE,

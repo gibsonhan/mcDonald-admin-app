@@ -1,27 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 
+import { isEmpty } from '../util/handleIsEmpty';
+import { ITEM, GROUP, NAME, TEXT } from '../global/reserveWord';
 import { useAppContext } from '../global/context';
-import { ITEM } from '../global/reserveWord';
 
 import AutoSizer from 'react-virtualized-auto-sizer';
-import { FixedSizeList as List } from 'react-window';
 import { Checkbox } from '@material-ui/core';
+import { Controller } from 'react-hook-form';
+import { FixedSizeList as List } from 'react-window';
+import TextField from '@material-ui/core/TextField';
+import { useForm } from 'react-hook-form';
 
 import Btn from './common/Btn';
-import { isEmpty } from '../util/handleIsEmpty';
+import Input from './common/Input';
 
 function remove(a, obj) {
-  let test = obj.filter((item) => a.includes(item.id) === false);
-  console.log(test);
-  return test;
+  return obj.filter((item) => a.includes(item.id) === false);
 }
 
 function filter(obj, b) {
   return obj.filter((item) => b.includes(item.id));
 }
 
-const TransferList = ({ edit, ref }) => {
+const TransferList = ({
+  control,
+  edit,
+  errors,
+  setGroupItem,
+  name,
+  register,
+  watch,
+}) => {
   const { state } = useAppContext();
   const [left, setLeft] = useState([]);
   const [right, setRight] = useState([]);
@@ -29,67 +39,93 @@ const TransferList = ({ edit, ref }) => {
   let rightChecked = filter(right, checked);
   let leftChecked = filter(left, checked);
 
-  function setPreload() {}
+  function setDefaultLists() {
+    setLeft([]);
+    setRight(state[ITEM]);
+  }
 
-  useEffect(() => {
-    console.log('left', left);
-    console.log('right', right);
-    console.log('checked', checked);
-  }, [left, right, checked]);
-
-  useEffect(() => {
-    console.log('item check', state[ITEM]);
-    !edit ? setRight((prev) => state[ITEM]) : setPreload({ group: 'items' });
-  }, []);
+  function setWithPreload() {
+    setRight([]);
+    setLeft([]);
+  }
 
   function handleMoveLeft() {
-    let rightChecked = filter(right, checked);
-    setLeft(rightChecked);
+    setLeft(left.concat(rightChecked));
     setRight(remove(checked, right));
     setChecked(remove(checked, rightChecked));
   }
   function handleMoveRight() {
-    setRight(leftChecked);
+    setRight(right.concat(leftChecked));
     setLeft(remove(checked, left));
     setChecked(remove(checked, leftChecked));
   }
 
   function handleReset() {
-    //!edit ? setRight(state[ITEM]) : setPreload({ group: 'items' });
+    !edit ? setDefaultLists() : setWithPreload();
   }
+
+  function handleSave(groupname, left) {
+    let test = {
+      [groupname]: left,
+    };
+    console.log(test);
+  }
+
+  useEffect(() => {
+    !edit ? setDefaultLists() : setWithPreload();
+  }, []);
+
   if (isEmpty(left) && isEmpty(right)) return <></>;
   return (
-    <TransferListContainer>
-      <TransferItemList
-        checked={checked}
-        setChecked={setChecked}
-        title={'right'}
-        data={left}
+    <>
+      <Input
+        name={name}
+        register={register}
+        errors={errors}
+        control={control}
       />
-      <TransferControlContainer>
-        <Btn
-          color="blue"
-          disable={rightChecked.length === 0}
-          handleOnClick={() => handleMoveLeft()}
-        >
-          {`<<`}
-        </Btn>
-        <Btn
-          color="grey"
-          disable={leftChecked.length == 0}
-          handleOnClick={() => handleMoveRight()}
-        >
-          {`>>`}
-        </Btn>
-        <Btn color="red"> reset </Btn>
-      </TransferControlContainer>
-      <TransferItemList
-        checked={checked}
-        setChecked={setChecked}
-        title={'left'}
-        data={right}
-      />
-    </TransferListContainer>
+      {console.log(watch)}
+      {watch && (
+        <TransferListContainer>
+          <TransferItemList
+            checked={checked}
+            setChecked={setChecked}
+            title={'right'}
+            data={left}
+          />
+          <TransferControlContainer>
+            <Btn
+              color="blue"
+              disable={rightChecked.length === 0}
+              handleOnClick={() => handleMoveLeft()}
+            >
+              {`<<`}
+            </Btn>
+            <Btn
+              color="grey"
+              disable={leftChecked.length == 0}
+              handleOnClick={() => handleMoveRight()}
+            >
+              {`>>`}
+            </Btn>
+            <Btn color="red" handleOnClick={() => handleReset()}>
+              reset
+            </Btn>
+            <Btn
+              color="green"
+              txt="save"
+              handleOnClick={() => handleSave(watch, left)}
+            />
+          </TransferControlContainer>
+          <TransferItemList
+            checked={checked}
+            setChecked={setChecked}
+            title={'left'}
+            data={right}
+          />
+        </TransferListContainer>
+      )}
+    </>
   );
 };
 

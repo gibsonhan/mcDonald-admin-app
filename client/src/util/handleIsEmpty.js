@@ -1,9 +1,10 @@
-Array.prototype.notEmpty = function () {
-  return this.length === 0 ? true : false;
-};
-
 function isEmpty(a) {
-  return Array.isArray(a) ? Array.isEmpty(a) : objIsEmpty(a);
+  return Array.isArray(a) ? arrIsEmpty(a) : objIsEmpty(a);
+}
+
+function arrIsEmpty(a) {
+  if (a.length === 0) return true;
+  else return false;
 }
 
 function objIsEmpty(b) {

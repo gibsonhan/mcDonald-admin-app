@@ -7,6 +7,7 @@ const Btn = ({
   type,
   clickRef,
   color,
+  disable,
   height,
   width,
   children,
@@ -17,7 +18,8 @@ const Btn = ({
 }) => {
   const click = (e) => {
     e && e.preventDefault();
-    return !!handleOnClick ? handleOnClick() : console.log('no click');
+    const disableButton = !handleOnClick || disable;
+    return disableButton ? console.log('no click') : handleOnClick();
   };
   return (
     <BtnContainer flex={flex} justify={justify}>

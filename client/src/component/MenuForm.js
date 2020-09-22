@@ -11,9 +11,12 @@ import { MENU, NAME, GROUP } from '../global/reserveWord';
 import { MENUINPUTS } from '../global/tempData';
 import { useAppContext } from '../global/context';
 
+import Btn from './common/Btn';
 import Input from './common/Input';
 import PreviewImg from './common/PreviewImg';
+import SubMenuPreview from './SubMenuPreview';
 import TransferList from './TransferList';
+import Modal from './common/Modal';
 
 const MenuForm = ({ children, preloadData }) => {
   const {
@@ -24,15 +27,24 @@ const MenuForm = ({ children, preloadData }) => {
     setIsLoading,
   } = useAppContext();
 
+  const [subMenu, setSubMenu] = useState({
+    size: 0,
+    list: {},
+  });
+  const [openModal, setOpenModal] = useState(false);
   const defaultImg = !preloadData ? '' : preloadData.img;
   const id = history.location.state.id;
+
   const preloadDefault = MENUINPUTS.reduce((acc, curr) => {
     acc[curr] = !!preloadData ? preloadData[curr] : '';
     return acc;
   }, {});
 
   const setDefaultValues = !preloadData ? '' : preloadDefault;
-  const { control, errors, handleSubmit, register, watch } = useForm({
+  const toggleModal = () => {
+    setOpenModal((prev) => !prev);
+  };
+  const { control, errors, handleSubmit, register } = useForm({
     defaultValues: setDefaultValues,
   });
 
@@ -81,11 +93,11 @@ const MenuForm = ({ children, preloadData }) => {
   const onSubmit = async (_formData) => {
     if (isLoading) return;
 
-    const { name, group, menuImg } = _formData;
+    const { name, menuImg } = _formData;
     const img = await createSingleImgUrl(menuImg, name);
     const data = {
       name,
-      group,
+      subMenu: subMenu,
       img,
       created: new Date(),
       lastEdit: {
@@ -93,15 +105,13 @@ const MenuForm = ({ children, preloadData }) => {
         author: 'Admin',
       },
     };
+
     preloadData ? handleUpdateMenu(data) : handleCreateMenu(data);
   };
 
-  const groupName1 = watch('groupname1');
-  const [groupItem, setGroupItem] = useState({});
-
   useEffect(() => {
-    console.log(groupItem);
-  }, [groupItem]);
+    console.log(subMenu);
+  }, [subMenu]);
 
   return (
     <FormContainer>
@@ -113,14 +123,15 @@ const MenuForm = ({ children, preloadData }) => {
           errors={errors}
           control={control}
         />
-
-        <TransferList
-          name={GROUP + NAME + '1'}
-          setGroupItem={setGroupItem}
-          register={register}
-          control={control}
-          errors={errors}
-          watch={groupName1}
+        <SubMenuPreview props={subMenu} />
+        <Modal isOpen={openModal} setIsOpen={setOpenModal}>
+          <TransferList setSubMenu={setSubMenu} setModalState={setOpenModal} />
+        </Modal>
+        <Btn
+          color="grey"
+          handleOnClick={toggleModal}
+          txt="Create Sub Menu"
+          justify="center"
         />
         <ChildrenContainer>{children}</ChildrenContainer>
       </form>

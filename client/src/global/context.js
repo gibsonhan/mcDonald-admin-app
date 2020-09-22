@@ -10,10 +10,7 @@ import { COUPON, HERO, ITEM, MENU, INITIALSTATE } from '../global/reserveWord';
 import { ADD, NONE, REMOVE, SET, SETINITIAL, UPDATE } from './reserveWord';
 import { createBrowserHistory } from 'history';
 import { getAll } from '../util/service';
-import {
-  setLocalStorage,
-  getLocalStorage,
-} from '../util/handleSetLocalStorage';
+import { setLocalStorage } from '../util/handleSetLocalStorage';
 
 const initalState = { hero: [], item: [], menu: [], coupon: [] };
 
@@ -164,7 +161,8 @@ const AppProvider = ({ children }) => {
   //TODO need to figure updating local state strategy
   //Need to diagram these stuff?
   useEffect(() => {
-    const hasInitalState = getLocalStorage(INITIALSTATE);
+    //const hasInitalState = getLocalStorage(INITIALSTATE);
+
     async function getListsAndSetLocalStorage() {
       const types = [COUPON, HERO, ITEM, MENU];
       const response = await getAll(types);
@@ -172,21 +170,14 @@ const AppProvider = ({ children }) => {
       setLocalStorage(INITIALSTATE, response);
     }
 
-    !hasInitalState
-      ? getListsAndSetLocalStorage()
-      : dispatchSetInitial(hasInitalState);
+    // !hasInitalState
+    //   ? getListsAndSetLocalStorage()
+    //   : dispatchSetInitial(hasInitalState);
 
-    return () => getListsAndSetLocalStorage();
+    // return () => getListsAndSetLocalStorage();
+
+    getListsAndSetLocalStorage();
   }, []);
-
-  useEffect(() => {
-    console.log('stateCheck', state);
-  }, [state]);
-
-  useEffect(() => {
-    console.log('isLoading', isLoading);
-  }, [isLoading]);
-
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 };
 

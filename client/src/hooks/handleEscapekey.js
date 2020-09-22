@@ -2,10 +2,16 @@ import { useEffect } from 'react';
 import { useAppContext } from '../global/context';
 
 export default () => {
-  const { history } = useAppContext();
+  const { history, oneModalOpen } = useAppContext();
+
+  useEffect(() => {
+    console.log('what is the state of one modal', oneModalOpen);
+  }, [oneModalOpen]);
 
   function escape(e) {
-    if (e.key === 'Escape') {
+    console.log(oneModalOpen);
+    if (e.key === 'Escape' && !oneModalOpen) {
+      console.log('firing esacepe key', oneModalOpen);
       history.goBack();
     }
   }

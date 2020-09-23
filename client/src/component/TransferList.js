@@ -67,13 +67,9 @@ const TransferList = ({ edit, setSubMenu, setModalState, groupName }) => {
     setSubMenu((prev) => {
       let idArr = arr.map((item) => ({ id: item.id, name: item.name }));
       let newObj = { [name]: idArr };
-
       return {
-        size: prev.size + 1,
-        list: {
-          ...prev.list,
-          ...newObj,
-        },
+        ...prev,
+        ...newObj,
       };
     });
 

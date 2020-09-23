@@ -24,7 +24,6 @@ const Menu = ({ edit, id }) => {
       setIsLoading((prev) => true);
       const response = await getSingle(MENU, id);
       setPreloadData((prev) => response);
-
       setTimeout(() => {
         setIsLoading((prev) => false);
       }, 2000);

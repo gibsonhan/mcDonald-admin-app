@@ -17,6 +17,7 @@ import PreviewImg from './common/PreviewImg';
 import SubMenuPreview from './SubMenuPreview';
 import TransferList from './TransferList';
 import Modal from './common/Modal';
+import { isEmpty } from '../util/handleIsEmpty';
 
 const MenuForm = ({ children, preloadData }) => {
   const {
@@ -27,12 +28,10 @@ const MenuForm = ({ children, preloadData }) => {
     setIsLoading,
   } = useAppContext();
 
-  const [subMenu, setSubMenu] = useState({
-    size: 0,
-    list: {},
-  });
-  const [openModal, setOpenModal] = useState(false);
+  const subMenuDefault = isEmpty(preloadData) ? {} : preloadData.subMenu;
   const defaultImg = !preloadData ? '' : preloadData.img;
+  const [openModal, setOpenModal] = useState(false);
+  const [subMenu, setSubMenu] = useState(subMenuDefault);
   const id = history.location.state.id;
 
   const preloadDefault = MENUINPUTS.reduce((acc, curr) => {
@@ -56,7 +55,6 @@ const MenuForm = ({ children, preloadData }) => {
     } catch (error) {
       console.log('fail to create hero', error);
     }
-
     setTimeout(() => {
       setIsLoading((prev) => false);
       history.goBack();
@@ -105,13 +103,8 @@ const MenuForm = ({ children, preloadData }) => {
         author: 'Admin',
       },
     };
-
     preloadData ? handleUpdateMenu(data) : handleCreateMenu(data);
   };
-
-  useEffect(() => {
-    console.log(subMenu);
-  }, [subMenu]);
 
   return (
     <FormContainer>
@@ -123,7 +116,7 @@ const MenuForm = ({ children, preloadData }) => {
           errors={errors}
           control={control}
         />
-        <SubMenuPreview props={subMenu} />
+        <SubMenuPreview list={subMenu} />
         <Modal isOpen={openModal} setIsOpen={setOpenModal}>
           <TransferList setSubMenu={setSubMenu} setModalState={setOpenModal} />
         </Modal>

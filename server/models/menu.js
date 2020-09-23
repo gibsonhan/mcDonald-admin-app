@@ -13,10 +13,7 @@ mongoose
 const menuSchema = new mongoose.Schema({
   name: String,
   img: String,
-  subMenu: {
-    length: Number,
-    list: Object,
-  },
+  subMenu: Object,
   created: Date,
   lastEdit: {
     date: Date,

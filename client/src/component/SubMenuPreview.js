@@ -3,18 +3,17 @@ import { rem } from 'polished';
 import styled from 'styled-components';
 import { isEmpty } from '../util/handleIsEmpty';
 
-const SubMenuPreview = ({ props }) => {
+const SubMenuPreview = ({ list }) => {
   const [subMenu, setSubMenu] = useState([]);
 
   useEffect(() => {
-    const { list } = props;
-
+    if (!list) return;
     let arr = [];
     for (let key in list) {
       arr.push({ name: key, items: list[key] });
     }
     setSubMenu(arr);
-  }, [props]);
+  }, [list]);
 
   if (isEmpty(subMenu)) return <></>;
   return (

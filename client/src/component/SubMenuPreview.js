@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { rem } from 'polished';
 import styled from 'styled-components';
+
 import { isEmpty } from '../util/handleIsEmpty';
 
-const SubMenuPreview = ({ list }) => {
+import Modal from './common/Modal';
+import Text from './common/Text';
+import TransferList from './TransferList';
+
+const SubMenuPreview = ({ list, editSubMenu }) => {
   const [subMenu, setSubMenu] = useState([]);
 
   useEffect(() => {
     if (!list) return;
+
     let arr = [];
     for (let key in list) {
       arr.push({ name: key, items: list[key] });
@@ -27,14 +33,14 @@ const SubMenuPreview = ({ list }) => {
 
 const SubMenu = ({ name, items }) => {
   return (
-    <ItemContainer>
-      <Name>{name}</Name>
+    <SubMenuContainer>
+      <Text size={24}>{name}</Text>
       {items.map((item) => (
         <div key={item.id} id={item.id}>
           {item.name}
         </div>
       ))}
-    </ItemContainer>
+    </SubMenuContainer>
   );
 };
 
@@ -44,11 +50,13 @@ const Container = styled.div`
   padding: ${rem(15)};
 `;
 
-const ItemContainer = styled.div`
+const SubMenuContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: ${rem(10)};
+  margin: ${rem(5)};
+  border-radius: ${rem(5)};
+  background-color: grey;
 `;
-const Name = styled.div``;
 
 export default SubMenuPreview;

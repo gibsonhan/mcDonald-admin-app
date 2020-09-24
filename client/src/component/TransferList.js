@@ -1,4 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
+
+import AutoSizer from 'react-virtualized-auto-sizer';
+import { Checkbox, TextField } from '@material-ui/core';
+import { FixedSizeList as List } from 'react-window';
 import { rem } from 'polished';
 import styled from 'styled-components';
 
@@ -6,26 +10,24 @@ import { isEmpty } from '../util/handleIsEmpty';
 import { ITEM } from '../global/reserveWord';
 import { useAppContext } from '../global/context';
 
-import AutoSizer from 'react-virtualized-auto-sizer';
-import { Checkbox, TextField } from '@material-ui/core';
-import { FixedSizeList as List } from 'react-window';
-
 import Btn from './common/Btn';
 
-const TransferList = ({ edit, setSubMenu, setModalState, groupName }) => {
+const TransferList = ({ preloadData, setSubMenu, setModalState }) => {
   const { state } = useAppContext();
   const groupNameRef = useRef();
+  const [checked, setChecked] = useState([]);
   const [left, setLeft] = useState([]);
   const [right, setRight] = useState([]);
-  const [checked, setChecked] = useState([]);
-  const defaultGroupName = !groupName ? '' : defaultGroupName;
-  let rightChecked = filter(right, checked);
-  let leftChecked = filter(left, checked);
+  const leftChecked = filter(left, checked);
+  const rightChecked = filter(right, checked);
+  const defaultGroupName = isEmpty(preloadData) ? '' : preloadData.name;
+  const tranferBtnTxt = isEmpty(preloadData) ? 'save' : 'update';
+  const transferCTA = () =>
+    isEmpty(preloadData) ? handleSave(left) : handleSave(left);
 
   const moveRight = () => handleMoveRight();
   const moveLeft = () => handleMoveLeft();
   const reset = () => handleReset();
-  const save = () => handleSave(left);
 
   function remove(a, obj) {
     return obj.filter((item) => a.includes(item.id) === false);
@@ -35,14 +37,14 @@ const TransferList = ({ edit, setSubMenu, setModalState, groupName }) => {
     return obj.filter((item) => b.includes(item.id));
   }
 
-  function setDefaultLists() {
+  function setDefaultList() {
     setLeft([]);
     setRight(state[ITEM]);
   }
 
-  function setWithPreload() {
-    setRight([]);
-    setLeft([]);
+  function setWith(obj) {
+    setLeft(filter(state[ITEM], obj.id));
+    setRight(remove(obj.id, state[ITEM]));
   }
 
   function handleMoveLeft() {
@@ -57,7 +59,7 @@ const TransferList = ({ edit, setSubMenu, setModalState, groupName }) => {
   }
 
   function handleReset() {
-    !edit ? setDefaultLists() : setWithPreload();
+    isEmpty(preloadData) ? setDefaultList() : setWith(preloadData);
   }
 
   function handleSave(arr) {
@@ -73,16 +75,17 @@ const TransferList = ({ edit, setSubMenu, setModalState, groupName }) => {
       };
     });
 
-    setModalState(false);
+    setModalState(true);
   }
 
   useEffect(() => {
-    !edit ? setDefaultLists() : setWithPreload();
+    handleReset();
   }, []);
 
   if (isEmpty(left) && isEmpty(right)) return <></>;
+
   return (
-    <>
+    <Container>
       <GroupNameContainer>
         <TextField
           id="outlined-secondary"
@@ -116,7 +119,7 @@ const TransferList = ({ edit, setSubMenu, setModalState, groupName }) => {
           <Btn color="red" handleOnClick={reset}>
             reset
           </Btn>
-          <Btn color="green" txt="save" handleOnClick={save} />
+          <Btn color="green" txt={tranferBtnTxt} handleOnClick={transferCTA} />
         </TransferControlContainer>
         <TransferItemList
           checked={checked}
@@ -125,7 +128,7 @@ const TransferList = ({ edit, setSubMenu, setModalState, groupName }) => {
           data={right}
         />
       </TransferListContainer>
-    </>
+    </Container>
   );
 };
 
@@ -219,6 +222,13 @@ const ListContainer = styled.div`
   padding: 20px;
   height: 200px;
   width: 300px;
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
 `;
 
 export default TransferList;

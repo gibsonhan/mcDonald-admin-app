@@ -7,7 +7,7 @@ import * as yup from 'yup';
 
 import { create, update } from '../util/service';
 import { createSingleImgUrl } from '../util/createSingleImgUrl';
-import { MENU, NAME, GROUP } from '../global/reserveWord';
+import { MENU, NAME, NAVLINK, GROUP } from '../global/reserveWord';
 import { MENUINPUTS } from '../global/tempData';
 import { useAppContext } from '../global/context';
 
@@ -91,10 +91,11 @@ const MenuForm = ({ children, preloadData }) => {
   const onSubmit = async (_formData) => {
     if (isLoading) return;
 
-    const { name, menuImg } = _formData;
+    const { name, navLink, menuImg } = _formData;
     const img = await createSingleImgUrl(menuImg, name);
     const data = {
       name,
+      navLink,
       subMenu: subMenu,
       img,
       created: new Date(),
@@ -116,7 +117,17 @@ const MenuForm = ({ children, preloadData }) => {
           errors={errors}
           control={control}
         />
-        <SubMenuPreview list={subMenu} />
+        <Input
+          name={NAVLINK}
+          register={register}
+          errors={errors}
+          control={control}
+        />
+        <SubMenuPreview
+          list={subMenu}
+          viewSubMenu={subMenu}
+          editSubMenu={setSubMenu}
+        />
         <Modal isOpen={openModal} setIsOpen={setOpenModal}>
           <TransferList setSubMenu={setSubMenu} setModalState={setOpenModal} />
         </Modal>

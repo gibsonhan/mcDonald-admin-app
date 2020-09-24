@@ -9,7 +9,7 @@ export default () => {
   }, [oneModalOpen]);
 
   function escape(e) {
-    console.log(oneModalOpen);
+    console.log('one modal open', oneModalOpen);
     if (e.key === 'Escape' && !oneModalOpen) {
       console.log('firing esacepe key', oneModalOpen);
       history.goBack();

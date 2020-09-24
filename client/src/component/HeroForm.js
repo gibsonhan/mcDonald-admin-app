@@ -65,6 +65,7 @@ const HeroForm = ({ children, preloadData }) => {
     const { title, heroImg, ...formObj } = _formData;
 
     const data = {
+      title,
       ...formObj,
       img: await createSingleImgUrl(heroImg, title),
     };

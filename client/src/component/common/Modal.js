@@ -7,7 +7,7 @@ const Modal = ({ isOpen, setIsOpen, children }) => {
   const modalRef = useRef();
   const { setOneModalOpen } = useAppContext();
 
-  const closeModal = function hanleCloseModal(e) {
+  const closeModal = function handleCloseModal(e) {
     e.preventDefault();
     setIsOpen(false);
     setOneModalOpen(false);

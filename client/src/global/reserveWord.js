@@ -16,6 +16,7 @@ const SET = 'set';
 const REMOVE = 'remove';
 
 const NAME = 'name';
+const NAVLINK = 'navlink';
 const NONE = 'none';
 const GROUP = 'group';
 const CREATE = 'create';
@@ -42,6 +43,7 @@ export {
   MENU,
   MULTI,
   NAME,
+  NAVLINK,
   NONE,
   NUMBER,
   RESET,

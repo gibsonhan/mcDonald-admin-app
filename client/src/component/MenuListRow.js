@@ -10,7 +10,7 @@ import Btn from './common/Btn';
 const MenuListRow = ({ index, data }) => {
   const { name, group, subMenu, id } = data[index];
   const { dispatchRemove, handleNavEditPage } = useAppContext();
-  const numSubMenu = Object.keys(subMenu).length;
+  const numSubMenu = !subMenu ? 0 : Object.keys(subMenu).length;
   const totalItems = calcMenuItem(subMenu);
 
   const navToEdit = () => handleNavEditPage(MENU, id);

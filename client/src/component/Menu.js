@@ -23,10 +23,9 @@ const Menu = ({ edit, id }) => {
     async function fetchSingleMenu() {
       setIsLoading((prev) => true);
       const response = await getSingle(MENU, id);
+      console.log('what is resposne', response);
       setPreloadData((prev) => response);
-      setTimeout(() => {
-        setIsLoading((prev) => false);
-      }, 2000);
+      setIsLoading((prev) => false);
     }
 
     if (!edit) return;

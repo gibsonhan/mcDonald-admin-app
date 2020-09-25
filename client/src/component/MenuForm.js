@@ -36,10 +36,12 @@ const MenuForm = ({ children, preloadData }) => {
 
   const preloadDefault = MENUINPUTS.reduce((acc, curr) => {
     acc[curr] = !!preloadData ? preloadData[curr] : '';
+    console.log(acc);
     return acc;
   }, {});
 
-  const setDefaultValues = !preloadData ? '' : preloadDefault;
+  console.log(preloadData, NAVLINK);
+  const setDefaultValues = isEmpty(preloadData) ? '' : preloadDefault;
   const toggleModal = () => {
     setOpenModal((prev) => !prev);
   };
@@ -90,7 +92,7 @@ const MenuForm = ({ children, preloadData }) => {
 
   const onSubmit = async (_formData) => {
     if (isLoading) return;
-
+    console.log(_formData);
     const { name, navLink, menuImg } = _formData;
     const img = await createSingleImgUrl(menuImg, name);
     const data = {

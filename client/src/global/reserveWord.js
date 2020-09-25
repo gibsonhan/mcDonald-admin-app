@@ -16,7 +16,7 @@ const SET = 'set';
 const REMOVE = 'remove';
 
 const NAME = 'name';
-const NAVLINK = 'navlink';
+const NAVLINK = 'navLink';
 const NONE = 'none';
 const GROUP = 'group';
 const CREATE = 'create';

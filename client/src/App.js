@@ -16,7 +16,7 @@ import {
 import { useAppContext } from './global/context';
 
 function App() {
-  const { history, isLoading } = useAppContext();
+  const { history } = useAppContext();
   return (
     <AppContainer>
       <AppGlobalEvent>

@@ -7,7 +7,7 @@ const Modal = ({ isOpen, setIsOpen, children }) => {
   const modalRef = useRef();
   const { setOneModalOpen } = useAppContext();
 
-  const closeModal = function hanleCloseModal(e) {
+  const closeModal = function handleCloseModal(e) {
     e.preventDefault();
     setIsOpen(false);
     setOneModalOpen(false);
@@ -18,7 +18,7 @@ const Modal = ({ isOpen, setIsOpen, children }) => {
       if (!modalRef.current) return;
       return modalRef.current.contains(e.target) ? false : true;
     }
-    if (e.key === 'Escape' || clickOutsideModal()) {
+    if (clickOutsideModal()) {
       setIsOpen(false);
       setOneModalOpen(false);
     }
@@ -27,11 +27,9 @@ const Modal = ({ isOpen, setIsOpen, children }) => {
   useEffect(() => {
     if (!!isOpen) {
       window.addEventListener('click', EL_closeModal);
-      window.addEventListener('keydown', EL_closeModal);
     }
     return () => {
       window.removeEventListener('click', EL_closeModal);
-      window.removeEventListener('keydown', EL_closeModal);
     };
   }, [isOpen]);
 
@@ -53,12 +51,12 @@ const ModalContainer = styled.div`
   align-items: center;
   position: absolute;
 
-  top: 200px;
-  left: 100px;
+  top: 0;
+  left: 0;
 
-  height: 500px;
-  width: 500px;
-  background: green;
+  height: auto;
+  width: auto;
+  background: grey;
   z-index: 10;
 `;
 
@@ -69,7 +67,7 @@ const CloseContainer = styled.div`
   flex: 1;
   height: 100px;
   min-width: 100%;
-  background: yellow;
+  background: lightblue;
 `;
 
 const CloseButton = styled.div`

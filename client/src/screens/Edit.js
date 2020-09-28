@@ -15,13 +15,9 @@ import Item from '../component/Item';
 import Menu from '../component/Menu';
 
 //TODO Refactor Edit and Edit into a single form?
-const Edit = ({ history }) => {
+const Edit = ({ history, oneModalOpen }) => {
   const id = history.location.state.id;
   const key = history.location.state.type;
-
-  function handleGoBack() {
-    history.goBack();
-  }
 
   const editProps = { edit: true, id };
 
@@ -32,7 +28,7 @@ const Edit = ({ history }) => {
     [MENU]: <Menu {...editProps} />,
   };
 
-  initEscapekey(handleGoBack);
+  initEscapekey();
 
   return (
     <EditContainer>

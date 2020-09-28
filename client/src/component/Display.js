@@ -10,18 +10,12 @@ import CouponList from './CouponList';
 import HeroList from './HeroList';
 import ItemList from './ItemList';
 import MenuList from './MenuList';
-import Summary from './Summary';
-
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
 
 const switchNav = [
   { title: 'Hero', route: 'hero', component: HeroList, exact: true },
   { title: 'Coupon', route: 'coupon', component: CouponList, exact: true },
   { title: 'Menu', route: 'menu', component: MenuList, exact: true },
   { title: 'Items', route: 'item', component: ItemList, exact: true },
-  { title: 'Summary', route: 'summary', component: Summary, exact: true },
 ];
 
 const Display = () => {

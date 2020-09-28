@@ -11,7 +11,7 @@ import Form from './MenuForm';
 
 const Menu = ({ edit, id }) => {
   const [preloadData, setPreloadData] = useState({});
-  const { isLoading, setIsLoading } = useState({});
+  const { isLoading, setIsLoading } = useAppContext();
   const buttonRef = useRef();
   const buttonTxt = !!edit ? UPDATE + ' ' + MENU : CREATE + ' ' + MENU;
 
@@ -23,11 +23,9 @@ const Menu = ({ edit, id }) => {
     async function fetchSingleMenu() {
       setIsLoading((prev) => true);
       const response = await getSingle(MENU, id);
+      console.log('what is resposne', response);
       setPreloadData((prev) => response);
-
-      setTimeout(() => {
-        setIsLoading((prev) => false);
-      }, 2000);
+      setIsLoading((prev) => false);
     }
 
     if (!edit) return;

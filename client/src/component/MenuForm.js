@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { useForm } from 'react-hook-form';
@@ -7,12 +7,17 @@ import * as yup from 'yup';
 
 import { create, update } from '../util/service';
 import { createSingleImgUrl } from '../util/createSingleImgUrl';
-import { MENU } from '../global/reserveWord';
+import { MENU, NAME, NAVLINK, GROUP } from '../global/reserveWord';
 import { MENUINPUTS } from '../global/tempData';
 import { useAppContext } from '../global/context';
 
+import Btn from './common/Btn';
 import Input from './common/Input';
 import PreviewImg from './common/PreviewImg';
+import SubMenuPreview from './SubMenuPreview';
+import TransferList from './TransferList';
+import Modal from './common/Modal';
+import { isEmpty } from '../util/handleIsEmpty';
 
 const MenuForm = ({ children, preloadData }) => {
   const {
@@ -23,14 +28,23 @@ const MenuForm = ({ children, preloadData }) => {
     setIsLoading,
   } = useAppContext();
 
+  const subMenuDefault = isEmpty(preloadData) ? {} : preloadData.subMenu;
   const defaultImg = !preloadData ? '' : preloadData.img;
+  const [openModal, setOpenModal] = useState(false);
+  const [subMenu, setSubMenu] = useState(subMenuDefault);
   const id = history.location.state.id;
+
   const preloadDefault = MENUINPUTS.reduce((acc, curr) => {
     acc[curr] = !!preloadData ? preloadData[curr] : '';
+    console.log(acc);
     return acc;
   }, {});
 
-  const setDefaultValues = !preloadData ? '' : preloadDefault;
+  console.log(preloadData, NAVLINK);
+  const setDefaultValues = isEmpty(preloadData) ? '' : preloadDefault;
+  const toggleModal = () => {
+    setOpenModal((prev) => !prev);
+  };
   const { control, errors, handleSubmit, register } = useForm({
     defaultValues: setDefaultValues,
   });
@@ -43,7 +57,6 @@ const MenuForm = ({ children, preloadData }) => {
     } catch (error) {
       console.log('fail to create hero', error);
     }
-
     setTimeout(() => {
       setIsLoading((prev) => false);
       history.goBack();
@@ -79,12 +92,13 @@ const MenuForm = ({ children, preloadData }) => {
 
   const onSubmit = async (_formData) => {
     if (isLoading) return;
-
-    const { name, group, menuImg } = _formData;
+    console.log(_formData);
+    const { name, navLink, menuImg } = _formData;
     const img = await createSingleImgUrl(menuImg, name);
     const data = {
       name,
-      group,
+      navLink,
+      subMenu: subMenu,
       img,
       created: new Date(),
       lastEdit: {
@@ -99,18 +113,32 @@ const MenuForm = ({ children, preloadData }) => {
     <FormContainer>
       <PreviewImg register={register} name={MENU} defaultImg={defaultImg} />
       <form onSubmit={handleSubmit(onSubmit)}>
-        {!!MENUINPUTS &&
-          MENUINPUTS.map((item) => {
-            return (
-              <Input
-                key={item}
-                name={item}
-                register={register}
-                errors={errors}
-                control={control}
-              />
-            );
-          })}
+        <Input
+          name={NAME}
+          register={register}
+          errors={errors}
+          control={control}
+        />
+        <Input
+          name={NAVLINK}
+          register={register}
+          errors={errors}
+          control={control}
+        />
+        <SubMenuPreview
+          list={subMenu}
+          viewSubMenu={subMenu}
+          editSubMenu={setSubMenu}
+        />
+        <Modal isOpen={openModal} setIsOpen={setOpenModal}>
+          <TransferList setSubMenu={setSubMenu} setModalState={setOpenModal} />
+        </Modal>
+        <Btn
+          color="grey"
+          handleOnClick={toggleModal}
+          txt="Create Sub Menu"
+          justify="center"
+        />
         <ChildrenContainer>{children}</ChildrenContainer>
       </form>
     </FormContainer>

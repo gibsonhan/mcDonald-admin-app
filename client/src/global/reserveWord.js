@@ -16,7 +16,9 @@ const SET = 'set';
 const REMOVE = 'remove';
 
 const NAME = 'name';
+const NAVLINK = 'navLink';
 const NONE = 'none';
+const GROUP = 'group';
 const CREATE = 'create';
 const EDIT = 'edit';
 const RESET = 'reset';
@@ -34,12 +36,14 @@ export {
   SET,
   UPDATE,
   COUPON,
+  GROUP,
   HERO,
   ITEM,
   INITIALSTATE,
   MENU,
   MULTI,
   NAME,
+  NAVLINK,
   NONE,
   NUMBER,
   RESET,

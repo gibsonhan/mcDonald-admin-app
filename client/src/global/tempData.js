@@ -14,7 +14,7 @@ const HEROINPUTS = [
   'legal',
 ];
 const ITEMINPUTS = ['name'];
-const MENUINPUTS = ['name', 'groups'];
+const MENUINPUTS = ['name', 'navLink'];
 
 export {
   COUPONINPUTS,

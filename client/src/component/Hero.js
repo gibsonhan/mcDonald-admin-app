@@ -23,6 +23,7 @@ const Hero = ({ edit, id }) => {
     async function getSingleHero() {
       setIsLoading((prev) => true);
       const response = await getSingle(HERO, id);
+      console.log('response', response);
       setPreloadData((prev) => response);
       setIsLoading((prev) => false);
     }

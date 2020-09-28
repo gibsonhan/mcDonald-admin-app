@@ -30,22 +30,6 @@ const ItemForm = ({ preloadData, children }) => {
     setIsLoading,
   } = useAppContext();
   const id = history.location.state.id;
-  // const inputSchema = ITEMINPUTS.reduce((acc, curr) => {
-  //   acc[curr] = yup.string().required();
-  //   return acc;
-  // }, {});
-
-  // const sizesArrSchema = ITEMSIZES.reduce((acc, curr) => {
-  //   acc[curr] = yup.boolean().required();
-  //   acc[curr + 'Price'] = yup.number().positive();
-  //   acc[curr + 'Calories'] = yup.number().positive();
-  //   acc[curr + 'Img'] = yup.mixed();
-  //   return acc;
-  // }, {});
-
-  /** TODO: handle parsing Images into Preview Boxes
-   *
-   */
   const setDefaultValues = isEmpty(preloadData)
     ? ITEMVALUES_OBJ
     : formatPreload(preloadData);
@@ -104,9 +88,9 @@ const ItemForm = ({ preloadData, children }) => {
     }
 
     setTimeout(() => {
-      setIsLoading((prev) => true);
+      setIsLoading((prev) => false);
       history.goBack();
-    }, 0);
+    }, 1000);
   }
 
   async function handleUpdateItem(data) {
@@ -124,12 +108,9 @@ const ItemForm = ({ preloadData, children }) => {
   }
 
   const onSubmit = async (formData) => {
-    const { name, group, subGroup, couponGroup, ...sizeObjInfo } = formData;
+    const { name, ...sizeObjInfo } = formData;
     const data = {
       name,
-      group,
-      subGroup,
-      couponGroup,
       servingTime: createServingTimeObj(formData),
       size: createSizeObj(formData),
       img: await createImgObj(name, sizeObjInfo),
@@ -139,21 +120,24 @@ const ItemForm = ({ preloadData, children }) => {
         author: 'Admin',
       },
     };
-
-    isEmpty(preloadData) ? handleCreateItem(data) : handleUpdateItem(data);
+    console.log(data);
+    //isEmpty(preloadData) ? handleCreateItem(data) : handleUpdateItem(data);
   };
 
   return (
     <ItemFormContainer>
       <FormContainer onSubmit={handleSubmit(onSubmit)}>
         <Input name={NAME} type={TEXT} control={control} errors={errors} />
-        <SwitchBtn
-          key={SERVINGTIME}
-          register={register}
-          name={SERVINGTIME}
-          control={control}
-          errors={errors}
-        />
+        {SERVINGTIMES.map((time) => (
+          <SwitchBtn
+            key={time}
+            register={register}
+            name={time}
+            control={control}
+            errors={errors}
+          />
+        ))}
+
         <SizeSwitchBtn
           name={'xSmall'}
           register={register}

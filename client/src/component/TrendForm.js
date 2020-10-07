@@ -16,10 +16,17 @@ import { useAppContext } from '../global/context';
 
 const TrendForm = ({ children, preloadData }) => {
   const defaultImg = isEmpty(preloadData) ? '' : preloadData.img;
-  const { dispatchAdd, history, isLoading, setIsLoading } = useAppContext();
-  const id = history.location.state.id;
+  const {
+    dispatchAdd,
+    dispatchUpdate,
+    history,
+    isLoading,
+    setIsLoading,
+  } = useAppContext();
+  const setDefaultValues = isEmpty(preloadData) ? '' : preloadData;
+
   const { register, handleSubmit, errors, control } = useForm({
-    defaultValues: '',
+    defaultValues: setDefaultValues,
     //resolver: yupResolver(schema),
   });
 
@@ -37,6 +44,21 @@ const TrendForm = ({ children, preloadData }) => {
     }, 1000);
   }
 
+  async function handleUpdateTrendCard(data) {
+    setIsLoading((prev) => true);
+    try {
+      let id = preloadData.id;
+      let response = await update(TREND, id, data);
+      dispatchUpdate(TREND, { ...data, id });
+    } catch (error) {
+      console.log('fail to create trend card', error);
+    }
+    setTimeout(() => {
+      setIsLoading((prev) => false);
+      history.goBack();
+    }, 1000);
+  }
+
   const onSubmit = async (formData) => {
     const { trendImg, ...formObj } = formData;
     const img = await createSingleImgUrl(trendImg, formObj.title);
@@ -45,7 +67,9 @@ const TrendForm = ({ children, preloadData }) => {
       img: img,
     };
 
-    await handleCreateTrendCard(data);
+    isEmpty(preloadData)
+      ? handleCreateTrendCard(data)
+      : handleUpdateTrendCard(data);
   };
 
   return (

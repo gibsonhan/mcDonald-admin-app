@@ -10,8 +10,7 @@ import Btn from './common/Btn';
 const TrendListRow = ({ index, data }) => {
   const { id, title, title2, navLink } = data[index];
   const { dispatchRemove, handleNavEditPage } = useAppContext();
-
-  const navToEdit = () => handleNavEditPage(EDIT, id);
+  const navToEdit = () => handleNavEditPage(TREND, id);
   const removeMenu = () => handleRemoveMenu();
 
   const btnProps = {
@@ -50,10 +49,6 @@ const Name = styled.div`
   flex: 1;
 `;
 const NavLink = styled.div`
-  flex: 1;
-`;
-
-const Item = styled.div`
   flex: 1;
 `;
 

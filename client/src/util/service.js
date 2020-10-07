@@ -49,6 +49,7 @@ async function remove(type, id) {
 async function update(type, id, payload) {
   const url = BASEURL + type + `/${id}`;
   const response = await axios.put(url, payload);
+  console.log('checking update inside service', response);
   return response.data;
 }
 

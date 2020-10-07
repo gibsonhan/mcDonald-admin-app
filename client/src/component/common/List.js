@@ -4,6 +4,7 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 
 const List = ({ data, row, itemSize }) => {
   const itmSize = !!itemSize ? itemSize : 30;
+  console.log('yo i exist');
   return (
     <AutoSizer>
       {({ height, width }) => (

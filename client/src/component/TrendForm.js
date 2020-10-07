@@ -26,16 +26,15 @@ const TrendForm = ({ children, preloadData }) => {
   async function handleCreateTrendCard(data) {
     setIsLoading((prev) => true);
     try {
-      await create(TREND, data);
+      const id = await create(TREND, data);
       dispatchAdd(TREND, { ...data, id });
     } catch (error) {
       console.log('fail to create trend card', error);
     }
-
-    // setTimeout(() => {
-    //   setIsLoading((prev) => false);
-    //   history.goBack();
-    // }, 1000);
+    setTimeout(() => {
+      setIsLoading((prev) => false);
+      history.goBack();
+    }, 1000);
   }
 
   const onSubmit = async (formData) => {
@@ -46,7 +45,7 @@ const TrendForm = ({ children, preloadData }) => {
       img: img,
     };
 
-    handleCreateTrendCard(data);
+    await handleCreateTrendCard(data);
   };
 
   return (

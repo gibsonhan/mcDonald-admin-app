@@ -6,13 +6,20 @@ import React, {
   useState,
 } from 'react';
 
-import { COUPON, HERO, ITEM, MENU, INITIALSTATE } from '../global/reserveWord';
+import {
+  COUPON,
+  HERO,
+  ITEM,
+  MENU,
+  INITIALSTATE,
+  TREND,
+} from '../global/reserveWord';
 import { ADD, NONE, REMOVE, SET, SETINITIAL, UPDATE } from './reserveWord';
 import { createBrowserHistory } from 'history';
 import { getAll } from '../util/service';
 import { setLocalStorage } from '../util/handleSetLocalStorage';
 
-const initalState = { hero: [], item: [], menu: [], coupon: [] };
+const initalState = { hero: [], item: [], menu: [], coupon: [], trend: [] };
 
 function init(initalState) {
   return { ...initalState };
@@ -21,6 +28,7 @@ function init(initalState) {
 function reducer(state, action) {
   const { payload } = action;
   const { type, data } = payload;
+
   switch (action.type) {
     case SETINITIAL:
       return init(data);
@@ -164,10 +172,12 @@ const AppProvider = ({ children }) => {
     //const hasInitalState = getLocalStorage(INITIALSTATE);
 
     async function getListsAndSetLocalStorage() {
-      const types = [COUPON, HERO, ITEM, MENU];
+      const types = [COUPON, HERO, ITEM, MENU, TREND];
       const response = await getAll(types);
       dispatchSetInitial(response);
       setLocalStorage(INITIALSTATE, response);
+
+      console.log('check response', response);
     }
 
     // !hasInitalState

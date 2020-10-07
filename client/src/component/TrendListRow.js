@@ -1,17 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { TREND } from '../global/reserveWord';
+import { EDIT, TREND } from '../global/reserveWord';
 import { remove } from '../util/service';
 import { useAppContext } from '../global/context';
 
 import Btn from './common/Btn';
 
 const TrendListRow = ({ index, data }) => {
-  const { name, group, id } = data[index];
+  const { id, title, title2, navLink } = data[index];
   const { dispatchRemove, handleNavEditPage } = useAppContext();
-  const numSubMenu = !subMenu ? 0 : Object.keys(subMenu).length;
-  const totalItems = calcMenuItem(subMenu);
 
   const navToEdit = () => handleNavEditPage(EDIT, id);
   const removeMenu = () => handleRemoveMenu();
@@ -32,10 +30,8 @@ const TrendListRow = ({ index, data }) => {
   }
   return (
     <RowContainer>
-      <Name>{name}</Name>
-      <Group>{group}</Group>
-      <SubMenu>Sub Menu: {numSubMenu}</SubMenu>
-      <Item>Item {totalItems}</Item>
+      <Name>{title + ' ' + title2}</Name>
+      <NavLink>{'NavLink: ' + navLink}</NavLink>
       <Btn handleOnClick={navToEdit} {...btnProps} color="blue" txt="Edit" />
       <Btn handleOnClick={removeMenu} {...btnProps} color="red" txt="Remove" />
     </RowContainer>
@@ -53,11 +49,7 @@ const RowContainer = styled.div`
 const Name = styled.div`
   flex: 1;
 `;
-const Group = styled.div`
-  flex: 1;
-`;
-
-const SubMenu = styled.div`
+const NavLink = styled.div`
   flex: 1;
 `;
 

@@ -48,7 +48,7 @@ const TrendForm = ({ children, preloadData }) => {
     setIsLoading((prev) => true);
     try {
       let id = preloadData.id;
-      let response = await update(TREND, id, data);
+      await update(TREND, id, data);
       dispatchUpdate(TREND, { ...data, id });
     } catch (error) {
       console.log('fail to create trend card', error);
@@ -60,6 +60,8 @@ const TrendForm = ({ children, preloadData }) => {
   }
 
   const onSubmit = async (formData) => {
+    if (isLoading) return;
+
     const { trendImg, ...formObj } = formData;
     const img = await createSingleImgUrl(trendImg, formObj.title);
     const data = {

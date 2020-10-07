@@ -2,14 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { isEmpty } from '../util/handleIsEmpty';
-import {
-  MENU,
-  SUBMIT,
-  UPDATE,
-  CREATE,
-  CARD,
-  TREND,
-} from '../global/reserveWord';
+import { SUBMIT, UPDATE, CREATE, CARD, TREND } from '../global/reserveWord';
 
 import { getSingle } from '../util/service';
 import { useAppContext } from '../global/context';
@@ -19,7 +12,7 @@ import Form from './TrendForm';
 
 const Trend = ({ edit, id }) => {
   const [preloadData, setPreloadData] = useState({});
-  const { isLoading, setIsLoading } = useAppContext();
+  const { setIsLoading } = useAppContext();
 
   const buttonRef = useRef();
   const buttonTxt = !edit
@@ -34,7 +27,6 @@ const Trend = ({ edit, id }) => {
     async function fetchSingleTrendCard() {
       setIsLoading((prev) => true);
       const rep = await getSingle(TREND, id);
-      console.log('1check resposne', rep);
       setPreloadData((prev) => rep);
       setIsLoading((prev) => false);
     }
@@ -43,10 +35,6 @@ const Trend = ({ edit, id }) => {
     fetchSingleTrendCard();
   }, [edit]);
 
-  useEffect(() => {
-    console.log('what is preloadData', preloadData);
-  }, [preloadData]);
-  //Pass information into form
   return (
     <TrendContainer>
       {isEmpty(preloadData) && (

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Controller } from 'react-hook-form';
 import { TextField } from '@material-ui/core';
 import { NUMBER } from '../../global/reserveWord';
-import { SIZEMOREINFO } from '../../global/tempData';
+import { SIZEMOREINFO } from '../../global/defaultInputs';
 import PreviewImg from './PreviewImg';
 
 //Need to understand control and register

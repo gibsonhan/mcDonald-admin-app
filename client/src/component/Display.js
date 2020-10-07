@@ -10,12 +10,14 @@ import CouponList from './CouponList';
 import HeroList from './HeroList';
 import ItemList from './ItemList';
 import MenuList from './MenuList';
+import TrendList from './TrendList';
 
 const switchNav = [
   { title: 'Hero', route: 'hero', component: HeroList, exact: true },
   { title: 'Coupon', route: 'coupon', component: CouponList, exact: true },
   { title: 'Menu', route: 'menu', component: MenuList, exact: true },
   { title: 'Items', route: 'item', component: ItemList, exact: true },
+  { title: 'Trend', route: 'trend', component: TrendList, exact: true },
 ];
 
 const Display = () => {

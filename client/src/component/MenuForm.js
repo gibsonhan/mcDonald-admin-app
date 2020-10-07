@@ -8,7 +8,7 @@ import * as yup from 'yup';
 import { create, update } from '../util/service';
 import { createSingleImgUrl } from '../util/createSingleImgUrl';
 import { MENU, NAME, NAVLINK, GROUP } from '../global/reserveWord';
-import { MENUINPUTS } from '../global/tempData';
+import { MENUINPUTS } from '../global/defaultInputs';
 import { useAppContext } from '../global/context';
 
 import Btn from './common/Btn';
@@ -40,7 +40,6 @@ const MenuForm = ({ children, preloadData }) => {
     return acc;
   }, {});
 
-  console.log(preloadData, NAVLINK);
   const setDefaultValues = isEmpty(preloadData) ? '' : preloadDefault;
   const toggleModal = () => {
     setOpenModal((prev) => !prev);

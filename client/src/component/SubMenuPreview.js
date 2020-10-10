@@ -9,32 +9,21 @@ import Text from './common/Text';
 import TransferList from './TransferList';
 
 const SubMenuPreview = ({ list, editSubMenu }) => {
-  const [subMenu, setSubMenu] = useState([]);
-
-  useEffect(() => {
-    if (!list) return;
-
-    let arr = [];
-    for (let key in list) {
-      arr.push({ name: key, items: list[key] });
-    }
-    setSubMenu(arr);
-  }, [list]);
-
-  if (isEmpty(subMenu)) return <></>;
+  console.log('whati is list', list);
+  if (isEmpty(list)) return <></>;
   return (
     <Container>
-      {subMenu.map((menu) => (
+      {list.map((menu) => (
         <SubMenu key={menu.name} name={menu.name} items={menu.items} />
       ))}
     </Container>
   );
 };
 
-const SubMenu = ({ name, items }) => {
+const SubMenu = ({ title, items }) => {
   return (
     <SubMenuContainer>
-      <Text size={24}>{name}</Text>
+      <Text size={24}>{title}</Text>
       {items.map((item) => (
         <div key={item.id} id={item.id}>
           {item.name}

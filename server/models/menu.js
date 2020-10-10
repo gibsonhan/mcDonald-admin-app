@@ -14,7 +14,7 @@ const menuSchema = new mongoose.Schema({
   name: String,
   img: String,
   navLink: String,
-  subMenu: Object,
+  subMenu: Array,
   created: Date,
   lastEdit: {
     date: Date,

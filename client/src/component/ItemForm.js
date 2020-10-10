@@ -120,8 +120,7 @@ const ItemForm = ({ preloadData, children }) => {
         author: 'Admin',
       },
     };
-    console.log(data);
-    //isEmpty(preloadData) ? handleCreateItem(data) : handleUpdateItem(data);
+    isEmpty(preloadData) ? handleCreateItem(data) : handleUpdateItem(data);
   };
 
   return (

@@ -28,7 +28,7 @@ const MenuForm = ({ children, preloadData }) => {
     setIsLoading,
   } = useAppContext();
 
-  const subMenuDefault = isEmpty(preloadData) ? {} : preloadData.subMenu;
+  const subMenuDefault = isEmpty(preloadData) ? [] : preloadData.subMenu;
   const defaultImg = !preloadData ? '' : preloadData.img;
   const [openModal, setOpenModal] = useState(false);
   const [subMenu, setSubMenu] = useState(subMenuDefault);

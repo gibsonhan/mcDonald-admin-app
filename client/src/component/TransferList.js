@@ -68,11 +68,13 @@ const TransferList = ({ preloadData, setSubMenu, setModalState }) => {
 
     setSubMenu((prev) => {
       let idArr = arr.map((item) => ({ id: item.id, name: item.name }));
-      let newObj = { [name]: idArr };
-      return {
-        ...prev,
-        ...newObj,
+
+      let newObj = {
+        name: name,
+        items: idArr,
       };
+      if (prev.length === 0) return [newObj];
+      return [prev, newObj];
     });
 
     setModalState(true);

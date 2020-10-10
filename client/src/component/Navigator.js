@@ -13,6 +13,7 @@ const Navigator = ({ history }) => {
     { title: 'Coupon', route: 'coupon' },
     { title: 'Menu', route: 'menu' },
     { title: 'Items', route: 'item' },
+    { title: 'Trending', route: 'trend' },
     { title: 'Settings', route: 'setting' },
   ];
   return (

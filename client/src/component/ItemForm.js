@@ -13,7 +13,7 @@ import { isEmpty } from '../util/handleIsEmpty';
 //Rhytem of coding.
 import { ITEMVALUES_ARR, ITEMVALUES_OBJ } from '../global/defaultValues';
 import { ITEM, NAME, TEXT, SERVINGTIME } from '../global/reserveWord';
-import { SERVINGTIMES } from './../global/tempData';
+import { SERVINGTIMES } from '../global/defaultInputs';
 import { useAppContext } from '../global/context';
 
 import timeOut from '../util/handleTimeOut';

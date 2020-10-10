@@ -10,7 +10,7 @@ import { create, update } from '../util/service';
 import { DEFAULTVALUES_EDIT } from '../global/defaultValues';
 import { isEmpty } from '../util/handleIsEmpty';
 import { HERO } from '../global/reserveWord';
-import { HEROINPUTS } from '../global/tempData';
+import { HEROINPUTS } from '../global/defaultInputs';
 import { useAppContext } from '../global/context';
 
 import Input from './common/Input';

@@ -16,6 +16,17 @@ const HEROINPUTS = [
 const ITEMINPUTS = ['name'];
 const MENUINPUTS = ['name', 'navLink'];
 
+const TRENDINPUTS = [
+  'title',
+  'title2',
+  'titleContent',
+  'btnText',
+  'btnColor',
+  'navLink',
+  'dateRestriction',
+  'legal',
+];
+
 export {
   COUPONINPUTS,
   HEROINPUTS,
@@ -24,4 +35,5 @@ export {
   MENUINPUTS,
   SERVINGTIMES,
   SIZEMOREINFO,
+  TRENDINPUTS,
 };

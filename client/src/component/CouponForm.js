@@ -11,7 +11,7 @@ import PreviewImg from './common/PreviewImg';
 import { create, update } from '../util/service';
 import { createSingleImgUrl } from '../util/createSingleImgUrl';
 import { COUPON } from '../global/reserveWord';
-import { COUPONINPUTS } from '../global/tempData';
+import { COUPONINPUTS } from '../global/defaultInputs';
 import { isEmpty } from '../util/handleIsEmpty';
 import { useAppContext } from '../global/context';
 

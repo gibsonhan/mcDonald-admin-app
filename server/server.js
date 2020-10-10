@@ -14,14 +14,14 @@ const couponRoutes = require('./api/coupon');
 const heroRoutes = require('./api/hero');
 const itemRoutes = require('./api/item');
 const menuRoutes = require('./api/menu');
-//const trendRoutes = require('./api/trend');
+const trendRoutes = require('./api/trend');
 
 app.use('/api/amazonS3', s3Routes);
 app.use('/api/coupon', couponRoutes);
 app.use('/api/hero', heroRoutes);
 app.use('/api/item', itemRoutes);
 app.use('/api/menu', menuRoutes);
-//app.use('/api/trend', trendRoutes);
+app.use('/api/trend', trendRoutes);
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello wolrd </h1>');

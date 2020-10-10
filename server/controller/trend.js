@@ -1,17 +1,17 @@
-const Trend = require('../models/Trend');
+const Trend = require('../models/trend');
 
-const createTrend = async (req, res) => {
+const create = async (req, res) => {
   const data = req.body;
-  const Trend = await new Trend({ ...data });
+  const trend = await new Trend({ ...data });
   try {
-    Trend.save();
-    res.status(201).json(Trend);
+    trend.save();
+    res.status(201).json(trend);
   } catch (error) {
-    console.log('faied to create Trend', error);
+    res.status(500).json('Failed to Create a Trend', error);
   }
 };
 
-const TrendList = async (req, res) => {
+const list = async (req, res) => {
   try {
     const trend = await Trend.find({});
     res.status(200).json(trend);
@@ -20,43 +20,43 @@ const TrendList = async (req, res) => {
   }
 };
 
-const singleTrend = async (req, res) => {
+const single = async (req, res) => {
   const id = req.params.id;
   try {
-    const item = await Item.findById(id);
-    await res.status(200).json(item.toJSON());
+    const trend = await Trend.findById(id);
+    await res.status(200).json(trend);
   } catch (error) {
     res.status(400).json('Failed to find Item', error);
   }
 };
 
-const updateTrend = async (req, res) => {
+const update = async (req, res) => {
   const id = req.params.id;
-  const newObject = req.params.body;
-  const updateItem = newItem({ ...newObject });
-  const message = `${updatedItem.name} was succesfully update`;
+  const data = req.body;
+  const message = `${data.title} was succesfully update`;
   try {
-    await Item.findByIdAndUpdate(id, updateItem, { new: true });
-    res.status(200).json(message, updateItem);
+    await Trend.findByIdAndUpdate(id, data);
+    res.status(200).json(message);
   } catch (error) {
     res.status(500).json('Failed to update item');
   }
 };
 
-const deleteTrend = async (req, res) => {
+const remove = async (req, res) => {
   const id = req.params.id;
+  const message = `${id} was successfully deleted`;
   try {
     await Trend.findByIdAndRemove(id);
-    res.status(200);
+    res.status(200).json(message);
   } catch (error) {
     res.status(500).json('fail to Delete', error);
   }
 };
 
 module.exports = {
-  TrendList,
-  singleTrend,
-  createTrend,
-  updateTrend,
-  deleteTrend,
+  list,
+  single,
+  create,
+  update,
+  remove,
 };

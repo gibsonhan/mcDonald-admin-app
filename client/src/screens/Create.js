@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-import { COUPON, HERO, ITEM, MENU } from '../global/reserveWord';
+import { COUPON, HERO, ITEM, MENU, TREND } from '../global/reserveWord';
 
 import { useAppContext } from '../global/context';
 
@@ -13,19 +13,20 @@ import Coupon from '../component/Coupon';
 import Hero from '../component/Hero';
 import Item from '../component/Item';
 import Menu from '../component/Menu';
+import Trend from '../component/Trend';
 
 const createObj = {
   [COUPON]: <Coupon />,
   [HERO]: <Hero />,
   [ITEM]: <Item />,
   [MENU]: <Menu />,
+  [TREND]: <Trend />,
 };
 
 const Create = () => {
   const { history } = useAppContext();
   const key = history.location.state;
   const goBack = () => history.goBack();
-
   initEscapekey(goBack);
 
   return (

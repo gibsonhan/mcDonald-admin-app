@@ -1,3 +1,4 @@
+const CARD = 'card';
 const COUPON = 'coupon';
 const HERO = 'hero';
 const ITEM = 'item';
@@ -7,6 +8,7 @@ const NUMBER = 'number';
 const SERVINGTIME = 'serving time';
 const SINGLE = 'single';
 const TEXT = 'text';
+const TREND = 'trend';
 const INITIALSTATE = 'inital';
 
 //Reducer & App Context
@@ -29,6 +31,7 @@ const BASEURL = 'http://localhost:3001/api/';
 
 export {
   ADD,
+  CARD,
   CREATE,
   EDIT,
   REMOVE,
@@ -51,5 +54,6 @@ export {
   SINGLE,
   SUBMIT,
   TEXT,
+  TREND,
   BASEURL,
 };
